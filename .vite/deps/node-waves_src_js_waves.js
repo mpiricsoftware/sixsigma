@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-HKJ2B2AA.js";
+} from "./chunk-PLDDJCW6.js";
 
 // node_modules/node-waves/src/js/waves.js
 var require_waves = __commonJS({

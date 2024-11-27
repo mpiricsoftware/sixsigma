@@ -2,69 +2,222 @@
   "hash": "35d94418",
   "configHash": "1265733f",
   "lockfileHash": "606c5501",
-  "browserHash": "a8dfc664",
+  "browserHash": "1c64fc44",
   "optimized": {
     "jquery/dist/jquery": {
       "src": "../../node_modules/jquery/dist/jquery.js",
       "file": "jquery_dist_jquery.js",
-      "fileHash": "6c2d6138",
+      "fileHash": "2d1cbe44",
       "needsInterop": true
     },
     "bootstrap": {
       "src": "../../node_modules/bootstrap/dist/js/bootstrap.esm.js",
       "file": "bootstrap.js",
-      "fileHash": "b273dde4",
+      "fileHash": "800de0bb",
       "needsInterop": false
     },
     "@popperjs/core/dist/umd/popper.min": {
       "src": "../../node_modules/@popperjs/core/dist/umd/popper.min.js",
       "file": "@popperjs_core_dist_umd_popper__min.js",
-      "fileHash": "369bb710",
+      "fileHash": "e6c5e04b",
       "needsInterop": true
     },
     "perfect-scrollbar/dist/perfect-scrollbar": {
       "src": "../../node_modules/perfect-scrollbar/dist/perfect-scrollbar.js",
       "file": "perfect-scrollbar_dist_perfect-scrollbar.js",
-      "fileHash": "0d8dfdf7",
+      "fileHash": "a4ef43a4",
       "needsInterop": true
     },
     "hammerjs/hammer.js": {
       "src": "../../node_modules/hammerjs/hammer.js",
       "file": "hammerjs_hammer__js.js",
-      "fileHash": "4f875fc8",
+      "fileHash": "5b72277f",
       "needsInterop": true
     },
     "swiper/bundle": {
       "src": "../../node_modules/swiper/swiper-bundle.mjs",
       "file": "swiper_bundle.js",
-      "fileHash": "7dc7d4ca",
+      "fileHash": "47fd5bc7",
       "needsInterop": false
     },
     "node-waves/src/js/waves": {
       "src": "../../node_modules/node-waves/src/js/waves.js",
       "file": "node-waves_src_js_waves.js",
-      "fileHash": "2f0d3aab",
+      "fileHash": "5c18a8e5",
       "needsInterop": true
     },
     "typeahead.js/dist/typeahead.bundle": {
       "src": "../../node_modules/typeahead.js/dist/typeahead.bundle.js",
       "file": "typeahead__js_dist_typeahead__bundle.js",
-      "fileHash": "198f05f2",
+      "fileHash": "ccabf42d",
       "needsInterop": true
     },
     "apexcharts-clevision": {
       "src": "../../node_modules/apexcharts-clevision/dist/apexcharts.common.js",
       "file": "apexcharts-clevision.js",
-      "fileHash": "bf0879a2",
+      "fileHash": "268334b1",
+      "needsInterop": true
+    },
+    "@yaireo/tagify": {
+      "src": "../../node_modules/@yaireo/tagify/dist/tagify.min.js",
+      "file": "@yaireo_tagify.js",
+      "fileHash": "47ec70d7",
+      "needsInterop": true
+    },
+    "bs-stepper/dist/js/bs-stepper": {
+      "src": "../../node_modules/bs-stepper/dist/js/bs-stepper.js",
+      "file": "bs-stepper_dist_js_bs-stepper.js",
+      "fileHash": "a274e1eb",
+      "needsInterop": true
+    },
+    "select2/dist/js/select2.full": {
+      "src": "../../node_modules/select2/dist/js/select2.full.js",
+      "file": "select2_dist_js_select2__full.js",
+      "fileHash": "d6a140e3",
+      "needsInterop": true
+    },
+    "cleave.js/dist/cleave": {
+      "src": "../../node_modules/cleave.js/dist/cleave.js",
+      "file": "cleave__js_dist_cleave.js",
+      "fileHash": "77d7d635",
+      "needsInterop": true
+    },
+    "cleave.js/dist/addons/cleave-phone.us": {
+      "src": "../../node_modules/cleave.js/dist/addons/cleave-phone.us.js",
+      "file": "cleave__js_dist_addons_cleave-phone__us.js",
+      "fileHash": "6846aa72",
+      "needsInterop": true
+    },
+    "@form-validation/plugin-auto-focus": {
+      "src": "../../node_modules/@form-validation/plugin-auto-focus/lib/index.js",
+      "file": "@form-validation_plugin-auto-focus.js",
+      "fileHash": "ee3b0934",
+      "needsInterop": true
+    },
+    "@form-validation/plugin-bootstrap5": {
+      "src": "../../node_modules/@form-validation/plugin-bootstrap5/lib/index.js",
+      "file": "@form-validation_plugin-bootstrap5.js",
+      "fileHash": "2260c4d6",
+      "needsInterop": true
+    },
+    "@form-validation/bundle/popular": {
+      "src": "../../node_modules/@form-validation/bundle/lib/popular.js",
+      "file": "@form-validation_bundle_popular.js",
+      "fileHash": "d8ef3e66",
+      "needsInterop": true
+    },
+    "jszip": {
+      "src": "../../node_modules/jszip/dist/jszip.min.js",
+      "file": "jszip.js",
+      "fileHash": "62b9205b",
+      "needsInterop": true
+    },
+    "pdfmake": {
+      "src": "../../node_modules/pdfmake/build/pdfmake.js",
+      "file": "pdfmake.js",
+      "fileHash": "af22febf",
+      "needsInterop": true
+    },
+    "pdfmake/build/vfs_fonts": {
+      "src": "../../node_modules/pdfmake/build/vfs_fonts.js",
+      "file": "pdfmake_build_vfs_fonts.js",
+      "fileHash": "02788f1d",
+      "needsInterop": true
+    },
+    "datatables.net-bs5": {
+      "src": "../../node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs",
+      "file": "datatables__net-bs5.js",
+      "fileHash": "5fea8a27",
+      "needsInterop": false
+    },
+    "datatables.net-fixedcolumns-bs5": {
+      "src": "../../node_modules/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.mjs",
+      "file": "datatables__net-fixedcolumns-bs5.js",
+      "fileHash": "18a01653",
+      "needsInterop": false
+    },
+    "datatables.net-fixedheader-bs5": {
+      "src": "../../node_modules/datatables.net-fixedheader-bs5/js/fixedHeader.bootstrap5.mjs",
+      "file": "datatables__net-fixedheader-bs5.js",
+      "fileHash": "cad370b7",
+      "needsInterop": false
+    },
+    "datatables.net-select-bs5": {
+      "src": "../../node_modules/datatables.net-select-bs5/js/select.bootstrap5.mjs",
+      "file": "datatables__net-select-bs5.js",
+      "fileHash": "e5429f1d",
+      "needsInterop": false
+    },
+    "datatables.net-buttons": {
+      "src": "../../node_modules/datatables.net-buttons/js/dataTables.buttons.mjs",
+      "file": "datatables__net-buttons.js",
+      "fileHash": "39a7c1fb",
+      "needsInterop": false
+    },
+    "datatables.net-buttons-bs5": {
+      "src": "../../node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.mjs",
+      "file": "datatables__net-buttons-bs5.js",
+      "fileHash": "e972d3df",
+      "needsInterop": false
+    },
+    "datatables.net-buttons/js/buttons.html5": {
+      "src": "../../node_modules/datatables.net-buttons/js/buttons.html5.mjs",
+      "file": "datatables__net-buttons_js_buttons__html5.js",
+      "fileHash": "b84df519",
+      "needsInterop": false
+    },
+    "datatables.net-buttons/js/buttons.print": {
+      "src": "../../node_modules/datatables.net-buttons/js/buttons.print.mjs",
+      "file": "datatables__net-buttons_js_buttons__print.js",
+      "fileHash": "181ef603",
+      "needsInterop": false
+    },
+    "datatables.net-responsive": {
+      "src": "../../node_modules/datatables.net-responsive/js/dataTables.responsive.mjs",
+      "file": "datatables__net-responsive.js",
+      "fileHash": "a298939a",
+      "needsInterop": false
+    },
+    "datatables.net-responsive-bs5": {
+      "src": "../../node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.mjs",
+      "file": "datatables__net-responsive-bs5.js",
+      "fileHash": "9c2d2b95",
+      "needsInterop": false
+    },
+    "datatables.net-rowgroup-bs5": {
+      "src": "../../node_modules/datatables.net-rowgroup-bs5/js/rowGroup.bootstrap5.mjs",
+      "file": "datatables__net-rowgroup-bs5.js",
+      "fileHash": "ee411b3a",
+      "needsInterop": false
+    },
+    "jquery-datatables-checkboxes": {
+      "src": "../../node_modules/jquery-datatables-checkboxes/js/dataTables.checkboxes.js",
+      "file": "jquery-datatables-checkboxes.js",
+      "fileHash": "d167ee4b",
       "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-3NO2VHWG": {
-      "file": "chunk-3NO2VHWG.js"
+    "chunk-O6BQQYNC": {
+      "file": "chunk-O6BQQYNC.js"
     },
-    "chunk-HKJ2B2AA": {
-      "file": "chunk-HKJ2B2AA.js"
+    "chunk-M64INKMA": {
+      "file": "chunk-M64INKMA.js"
+    },
+    "chunk-5JUA3IPY": {
+      "file": "chunk-5JUA3IPY.js"
+    },
+    "chunk-RC3T3Y4R": {
+      "file": "chunk-RC3T3Y4R.js"
+    },
+    "chunk-LKZ2HHYN": {
+      "file": "chunk-LKZ2HHYN.js"
+    },
+    "chunk-VI44FUY3": {
+      "file": "chunk-VI44FUY3.js"
+    },
+    "chunk-PLDDJCW6": {
+      "file": "chunk-PLDDJCW6.js"
     }
   }
 }

@@ -1,4 +1,4 @@
-import "./chunk-HKJ2B2AA.js";
+import "./chunk-PLDDJCW6.js";
 
 // node_modules/swiper/shared/ssr-window.esm.mjs
 function isObject(obj) {

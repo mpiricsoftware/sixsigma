@@ -953,7 +953,7 @@
       "name": "Modal Examples",
       "slug": "modal-examples",
 
-      "role": ["Super Admin"]
+      "role": []
     },
     {
       "menuHeader": "Components",
@@ -1276,7 +1276,7 @@
       "url": "icons/icons-ri",
       "icon": "menu-icon tf-icons ri-remixicon-line",
       "slug": "icons-ri",
-     "role": [""]
+     "role": []
     },
     {
       "menuHeader": "Forms & Tables",
@@ -1501,7 +1501,7 @@
       "name": "Leaflet Maps",
       "slug": "maps-leaflet",
 
-      "role": ["Super Admin"]
+      "role": [""]
     },
     {
       "menuHeader": "Misc",
