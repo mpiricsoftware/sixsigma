@@ -56,6 +56,25 @@ $customizerHidden = 'customizer-hide';
               </span>
             @enderror
           </div>
+          <div class="form-floating form-floating-outline mb-5">
+            <input type="text" class="form-control @error('mobileno') is-invalid @enderror" id="mobileno" name="mobileno" placeholder="1234567890" value="{{ old('mobileno') }}">
+            <label for="mobileno">Mobile No</label>
+            @error('mobileno')
+              <span class="invalid-feedback" role="alert">
+                <span class="fw-medium">{{ $message }}</span>
+              </span>
+            @enderror
+          </div>
+
+            <div class="form-floating form-floating-outline mb-5">
+              <input type="text" class="form-control @error('company') is-invalid  @enderror" id="company" name="company" placeholder="Mpiric" value="{{old('company')}}">
+              <label for="company">Company</label>
+              @error('company')
+                <span class="invalid-feedback" role="alert">
+                  <span class="fw-medium">{{ $message }}</span>
+                </span>
+              @enderror
+            </div>
             <div class="mb-5 form-password-toggle">
             <div class="input-group input-group-merge @error('password') is-invalid @enderror">
               <div class="form-floating form-floating-outline">
@@ -134,4 +153,6 @@ $customizerHidden = 'customizer-hide';
     <!-- /Register -->
   </div>
 </div>
+
 @endsection
+

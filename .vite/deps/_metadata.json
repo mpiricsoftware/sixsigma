@@ -1,0 +1,70 @@
+{
+  "hash": "35d94418",
+  "configHash": "1265733f",
+  "lockfileHash": "606c5501",
+  "browserHash": "a8dfc664",
+  "optimized": {
+    "jquery/dist/jquery": {
+      "src": "../../node_modules/jquery/dist/jquery.js",
+      "file": "jquery_dist_jquery.js",
+      "fileHash": "6c2d6138",
+      "needsInterop": true
+    },
+    "bootstrap": {
+      "src": "../../node_modules/bootstrap/dist/js/bootstrap.esm.js",
+      "file": "bootstrap.js",
+      "fileHash": "b273dde4",
+      "needsInterop": false
+    },
+    "@popperjs/core/dist/umd/popper.min": {
+      "src": "../../node_modules/@popperjs/core/dist/umd/popper.min.js",
+      "file": "@popperjs_core_dist_umd_popper__min.js",
+      "fileHash": "369bb710",
+      "needsInterop": true
+    },
+    "perfect-scrollbar/dist/perfect-scrollbar": {
+      "src": "../../node_modules/perfect-scrollbar/dist/perfect-scrollbar.js",
+      "file": "perfect-scrollbar_dist_perfect-scrollbar.js",
+      "fileHash": "0d8dfdf7",
+      "needsInterop": true
+    },
+    "hammerjs/hammer.js": {
+      "src": "../../node_modules/hammerjs/hammer.js",
+      "file": "hammerjs_hammer__js.js",
+      "fileHash": "4f875fc8",
+      "needsInterop": true
+    },
+    "swiper/bundle": {
+      "src": "../../node_modules/swiper/swiper-bundle.mjs",
+      "file": "swiper_bundle.js",
+      "fileHash": "7dc7d4ca",
+      "needsInterop": false
+    },
+    "node-waves/src/js/waves": {
+      "src": "../../node_modules/node-waves/src/js/waves.js",
+      "file": "node-waves_src_js_waves.js",
+      "fileHash": "2f0d3aab",
+      "needsInterop": true
+    },
+    "typeahead.js/dist/typeahead.bundle": {
+      "src": "../../node_modules/typeahead.js/dist/typeahead.bundle.js",
+      "file": "typeahead__js_dist_typeahead__bundle.js",
+      "fileHash": "198f05f2",
+      "needsInterop": true
+    },
+    "apexcharts-clevision": {
+      "src": "../../node_modules/apexcharts-clevision/dist/apexcharts.common.js",
+      "file": "apexcharts-clevision.js",
+      "fileHash": "bf0879a2",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-3NO2VHWG": {
+      "file": "chunk-3NO2VHWG.js"
+    },
+    "chunk-HKJ2B2AA": {
+      "file": "chunk-HKJ2B2AA.js"
+    }
+  }
+}

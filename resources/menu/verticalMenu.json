@@ -222,131 +222,149 @@
 
     {
       "menuHeader": "Apps & Pages",
-      "role": ["Super Admin"]
+      "role": []
     },
     {
       "url": "app/email",
       "name": "Email",
       "icon": "menu-icon tf-icons ri-mail-open-line",
       "slug": "app-email",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "url": "app/chat",
       "name": "Chat",
       "icon": "menu-icon tf-icons ri-wechat-line",
       "slug": "app-chat",
-      "role": ["Super Admin"]
+      "role": []
     },
     {
       "url": "app/calendar",
       "name": "Calendar",
       "icon": "menu-icon tf-icons ri-calendar-line",
       "slug": "app-calendar",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "url": "app/kanban",
       "name": "Kanban",
       "icon": "menu-icon tf-icons ri-drag-drop-line",
       "slug": "app-kanban",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "name": "eCommerce",
       "icon": "menu-icon tf-icons ri-shopping-bag-3-line",
       "slug": "app-ecommerce",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "app/ecommerce/dashboard",
           "name": "Dashboard",
           "slug": "app-ecommerce-dashboard",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "name": "Products",
           "slug": "app-ecommerce-product",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "app/ecommerce/product/list",
               "name": "Product List",
               "slug": "app-ecommerce-product-list",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/product/add",
               "name": "Add Product",
               "slug": "app-ecommerce-product-add",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/product/category",
               "name": "Category List",
               "slug": "app-ecommerce-product-category",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Order",
           "slug": "app-ecommerce-order",
-          "role": ["Super Admin"],
+          "role": [],
           "submenu": [
             {
               "url": "app/ecommerce/order/list",
               "name": "Order List",
               "slug": "app-ecommerce-order-list",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/order/details",
               "name": "Order Details",
               "slug": "app-ecommerce-order-details",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Customer",
           "slug": "app-ecommerce-customer",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "app/ecommerce/customer/all",
               "name": "All Customers",
               "slug": "app-ecommerce-customer-all",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "name": "Customer Details",
               "slug": "app-ecommerce-customer-details",
-              "role": ["Super Admin"],
+              "role": [],
+
               "submenu": [
                 {
                   "url": "app/ecommerce/customer/details/overview",
                   "name": "Overview",
                   "slug": "app-ecommerce-customer-details-overview",
-                  "role": ["Super Admin"]
+                  "role": []
+
                 },
                 {
                   "url": "app/ecommerce/customer/details/security",
                   "name": "Security",
                   "slug": "app-ecommerce-customer-details-security",
-                  "role": ["Super Admin"]
+                  "role": []
+
                 },
                 {
                   "url": "app/ecommerce/customer/details/billing",
                   "name": "Address & Billing",
                   "slug": "app-ecommerce-customer-details-billing",
-                  "role": ["Super Admin"]
+                  "role": []
+
                 },
                 {
                   "url": "app/ecommerce/customer/details/notifications",
                   "name": "Notifications",
                   "slug": "app-ecommerce-customer-details-notifications",
-                  "role": ["Super Admin"]
+                  "role": []
+
                 }
               ]
             }
@@ -356,54 +374,63 @@
           "url": "app/ecommerce/manage/reviews",
           "name": "Manage Reviews",
           "slug": "app-ecommerce-manage-reviews",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "app/ecommerce/referrals",
           "name": "Referrals",
           "slug": "app-ecommerce-referrals",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "name": "Settings",
           "slug": "app-ecommerce-settings",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "app/ecommerce/settings/details",
               "name": "Store details",
               "slug": "app-ecommerce-settings-details",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/settings/payments",
               "name": "Payments",
               "slug": "app-ecommerce-settings-payments",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/settings/checkout",
               "name": "Checkout",
               "slug": "app-ecommerce-settings-checkout",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/settings/shipping",
               "name": "Shipping & Delivery",
               "slug": "app-ecommerce-settings-shipping",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/settings/locations",
               "name": "Locations",
               "slug": "app-ecommerce-settings-locations",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/ecommerce/settings/notifications",
               "name": "Notifications",
               "slug": "app-ecommerce-settings-notifications",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         }
@@ -413,25 +440,29 @@
       "name": "Academy",
       "icon": "menu-icon tf-icons ri-graduation-cap-line",
       "slug": "app-academy",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "app/academy/dashboard",
           "name": "Dashboard",
           "slug": "app-academy-dashboard",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "app/academy/course",
           "name": "My Course",
           "slug": "app-academy-course",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "app/academy/course-details",
           "name": "Course Details",
           "slug": "app-academy-course-details",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -439,19 +470,22 @@
       "name": "Logistics",
       "icon": "menu-icon tf-icons ri-car-line",
       "slug": "app-logistics",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "app/logistics/dashboard",
           "name": "Dashboard",
           "slug": "app-logistics-dashboard",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "app/logistics/fleet",
           "name": "Fleet",
           "slug": "app-logistics-fleet",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -459,31 +493,35 @@
       "name": "Invoice",
       "icon": "menu-icon tf-icons ri-bill-line",
       "slug": "app-invoice",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "app/invoice/list",
           "name": "List",
-          "slug": "app-invoice-list",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "app/invoice/preview",
           "name": "Preview",
           "slug": "app-invoice-preview",
-          "role": ["Super Admin"]
+          "role": []
         },
+
         {
           "url": "app/invoice/edit",
           "name": "Edit",
           "slug": "app-invoice-edit",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "app/invoice/add",
           "name": "Add",
           "slug": "app-invoice-add",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -491,48 +529,56 @@
       "name": "Users",
       "icon": "menu-icon tf-icons ri-user-line",
       "slug": "app-user",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "app/user/list",
           "name": "List",
           "slug": "app-user-list",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "name": "View",
           "slug": "app-user-view",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "app/user/view/account",
               "name": "Account",
               "slug": "app-user-view-account",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/user/view/security",
               "name": "Security",
               "slug": "app-user-view-security",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/user/view/billing",
               "name": "Billing & Plans",
               "slug": "app-user-view-billing",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/user/view/notifications",
               "name": "Notifications",
               "slug": "app-user-view-notifications",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "app/user/view/connections",
               "name": "Connections",
               "slug": "app-user-view-connections",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         }
@@ -542,19 +588,22 @@
       "name": "role & Permissions",
       "icon": "menu-icon tf-icons ri-lock-2-line",
       "slug": "app-access",
-      "role" : ["Super Admin"],
+      "role" : [],
+
       "submenu": [
         {
           "url": "app/access-roles",
           "name": "role",
           "slug": "app-access-role",
-          "role" : ["Super Admin"]
+          "role" : []
+
         },
         {
           "url": "app/access-permission",
           "name": "Permission",
           "slug": "app-access-permission",
-          "role" : ["Super Admin"]
+          "role" : []
+
         }
       ]
     },
@@ -562,73 +611,85 @@
       "name": "Pages",
       "icon": "menu-icon tf-icons ri-layout-left-line",
       "slug": "pages",
-      "role" : ["Super Admin"],
+      "role" : [],
+
       "submenu": [
         {
           "name": "User Profile",
           "slug": "pages-profile",
-          "role" : ["Super Admin"],
+          "role" : [],
+
           "submenu": [
             {
               "url": "pages/profile-user",
               "name": "Profile",
               "slug": "pages-profile-user",
-              "role" : ["Super Admin"]
+              "role" : []
+
             },
             {
               "url": "pages/profile-teams",
               "name": "Teams",
               "slug": "pages-profile-teams",
-              "role" : ["Super Admin"]
+              "role" : []
+
             },
             {
               "url": "pages/profile-projects",
               "name": "Projects",
               "slug": "pages-profile-projects",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/profile-connections",
               "name": "Connections",
               "slug": "pages-profile-connections",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Account Settings",
           "slug": "pages-account-settings",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "pages/account-settings-account",
               "name": "Account",
               "slug": "pages-account-settings-account",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/account-settings-security",
               "name": "Security",
               "slug": "pages-account-settings-security",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/account-settings-billing",
               "name": "Billing & Plans",
               "slug": "pages-account-settings-billing",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/account-settings-notifications",
               "name": "Notifications",
               "slug": "pages-account-settings-notifications",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/account-settings-connections",
               "name": "Connections",
               "slug": "pages-account-settings-connections",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
@@ -636,53 +697,60 @@
           "url": "pages/faq",
           "name": "FAQ",
           "slug": "pages-faq",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "pages/pricing",
           "name": "Pricing",
           "slug": "pages-pricing",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "name": "Misc",
           "slug": "pages-misc",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "pages/misc-error",
               "name": "Error",
               "slug": "pages-misc-error",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/misc-under-maintenance",
               "name": "Under Maintenance",
               "slug": "pages-misc-under-maintenance",
-              "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/misc-comingsoon",
               "name": "Coming Soon",
               "slug": "pages-misc-comingsoon",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/misc-not-authorized",
               "name": "Not Authorized",
               "slug": "pages-misc-not-authorized",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "pages/misc-server-error",
               "name": "Server Error",
               "slug": "pages-misc-server-error",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         }
@@ -692,138 +760,158 @@
       "name": "Authentications",
       "icon": "menu-icon tf-icons ri-shield-keyhole-line",
       "slug": "auth",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "name": "Login",
           "slug": "auth-login",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "auth/login-basic",
               "name": "Basic",
               "slug": "auth-login-basic",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/login-cover",
               "name": "Cover",
               "slug": "auth-login-cover",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Register",
           "slug": "auth-register",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "auth/register-basic",
               "name": "Basic",
               "slug": "auth-register-basic",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/register-cover",
               "name": "Cover",
               "slug": "auth-register-cover",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/register-multisteps",
               "name": "Multi-steps",
               "slug": "auth-register-multisteps",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Verify Email",
           "slug": "auth-verify-email",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "auth/verify-email-basic",
               "name": "Basic",
               "slug": "auth-verify-email-basic",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/verify-email-cover",
               "name": "Cover",
               "slug": "auth-verify-email-cover",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Reset Password",
           "slug": "auth-reset-password",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "auth/reset-password-basic",
               "name": "Basic",
               "slug": "auth-reset-password-basic",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/reset-password-cover",
               "name": "Cover",
               "slug": "auth-reset-password-cover",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Forgot Password",
           "slug": "auth-forgot-password",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "auth/forgot-password-basic",
               "name": "Basic",
               "slug": "auth-forgot-password-basic",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/forgot-password-cover",
               "name": "Cover",
               "slug": "auth-forgot-password-cover",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
         {
           "name": "Two Steps",
           "slug": "auth-two-steps",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "auth/two-steps-basic",
               "name": "Basic",
               "slug": "auth-two-steps-basic",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "auth/two-steps-cover",
               "name": "Cover",
               "slug": "auth-two-steps-cover",
               "target": "_blank",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         }
@@ -833,25 +921,29 @@
       "name": "Wizard Examples",
       "icon": "menu-icon tf-icons ri-git-commit-line",
       "slug": "wizard-ex",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "wizard/ex-checkout",
           "name": "Checkout",
           "slug": "wizard-ex-checkout",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "wizard/ex-property-listing",
           "name": "Property Listing",
           "slug": "wizard-ex-property-listing",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "wizard/ex-create-deal",
           "name": "Create Deal",
           "slug": "wizard-ex-create-deal",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -860,17 +952,24 @@
       "icon": "menu-icon tf-icons ri-tv-2-line",
       "name": "Modal Examples",
       "slug": "modal-examples",
+
       "role": ["Super Admin"]
     },
     {
       "menuHeader": "Components",
-      "role": ["Super Admin"]
+      "role": []
+    },
+    {
+      "menuHeader": "Components",
+      "role": []
+
     },
     {
       "name": "Cards",
       "icon": "menu-icon tf-icons ri-bank-card-2-line",
       "slug": "cards",
-      "role": ["Super Admin"],
+      "role": [],
+
       "badge": [
         "primary",
         "6"
@@ -880,37 +979,43 @@
           "url": "cards/basic",
           "name": "Basic",
           "slug": "cards-basic",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "cards/advance",
           "name": "Advance",
           "slug": "cards-advance",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "cards/statistics",
           "name": "Statistics",
           "slug": "cards-statistics",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "cards/analytics",
           "name": "Analytics",
           "slug": "cards-analytics",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "cards/gamifications",
           "name": "Gamifications",
           "slug": "cards-gamifications",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "cards/actions",
           "name": "Actions",
           "slug": "cards-actions",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -918,121 +1023,141 @@
       "name": "User interface",
       "icon": "menu-icon tf-icons ri-toggle-line",
       "slug": "ui",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "ui/accordion",
           "name": "Accordion",
           "slug": "ui-accordion",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/alerts",
           "name": "Alerts",
           "slug": "ui-alerts",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/badges",
           "name": "Badges",
           "slug": "ui-badges",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/buttons",
           "name": "Buttons",
           "slug": "ui-buttons",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/carousel",
           "name": "Carousel",
           "slug": "ui-carousel",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/collapse",
           "name": "Collapse",
           "slug": "ui-collapse",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/dropdowns",
           "name": "Dropdowns",
           "slug": "ui-dropdowns",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/footer",
           "name": "Footer",
           "slug": "ui-footer",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/list-groups",
           "name": "List groups",
           "slug": "ui-list-groups",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/modals",
           "name": "Modals",
           "slug": "ui-modals",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/navbar",
           "name": "Navbar",
           "slug": "ui-navbar",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/offcanvas",
           "name": "Offcanvas",
           "slug": "ui-offcanvas",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/pagination-breadcrumbs",
           "name": "Pagination & Breadcrumbs",
           "slug": "ui-pagination-breadcrumbs",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/progress",
           "name": "Progress",
           "slug": "ui-progress",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/spinners",
           "name": "Spinners",
           "slug": "ui-spinners",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/tabs-pills",
           "name": "Tabs & Pills",
           "slug": "ui-tabs-pills",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/toasts",
           "name": "Toasts",
           "slug": "ui-toasts",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/tooltips-popovers",
           "name": "Tooltips & Popovers",
           "slug": "ui-tooltips-popovers",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "ui/typography",
           "name": "Typography",
           "slug": "ui-typography",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -1040,72 +1165,85 @@
       "name": "Extended UI",
       "icon": "menu-icon tf-icons ri-box-3-line",
       "slug": "extended",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "extended/ui-avatar",
           "name": "Avatar",
           "slug": "extended-ui-avatar",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-blockui",
           "name": "BlockUI",
           "slug": "extended-ui-blockui",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-drag-and-drop",
           "name": "Drag & Drop",
           "slug": "extended-ui-drag-and-drop",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-media-player",
           "name": "Media Player",
           "slug": "extended-ui-media-player",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-perfect-scrollbar",
           "name": "Perfect Scrollbar",
           "slug": "extended-ui-perfect-scrollbar",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-star-ratings",
           "name": "Star Ratings",
           "slug": "extended-ui-star-ratings",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-sweetalert2",
           "name": "SweetAlert2",
           "slug": "extended-ui-sweetalert2",
-          "role": ["Super Admin"]
+
+          "role": []
+
         },
         {
           "url": "extended/ui-text-divider",
           "name": "Text Divider",
           "slug": "extended-ui-text-divider",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "name": "Timeline",
           "slug": "extended-ui-timeline",
-          "role": ["Super Admin"],
+          "role": [],
+
           "submenu": [
             {
               "url": "extended/ui-timeline-basic",
               "name": "Basic",
               "slug": "extended-ui-timeline-basic",
-              "role": ["Super Admin"]
+              "role": []
+
             },
             {
               "url": "extended/ui-timeline-fullscreen",
               "name": "Fullscreen",
               "slug": "extended-ui-timeline-fullscreen",
-              "role": ["Super Admin"]
+              "role": []
+
             }
           ]
         },
@@ -1113,19 +1251,23 @@
           "url": "extended/ui-tour",
           "name": "Tour",
           "slug": "extended-ui-tour",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-treeview",
           "name": "Treeview",
           "slug": "extended-ui-treeview",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "extended/ui-misc",
           "name": "Miscellaneous",
           "slug": "extended-ui-misc",
-          "role": ["Super Admin"]
+
+          "role": []
+
         }
       ]
     },
@@ -1134,77 +1276,95 @@
       "url": "icons/icons-ri",
       "icon": "menu-icon tf-icons ri-remixicon-line",
       "slug": "icons-ri",
-      "role": ["Super Admin"]
+     "role": [""]
     },
     {
       "menuHeader": "Forms & Tables",
-      "role": ["Super Admin"]
+
+      "role": []
+    },
+    {
+      "menuHeader": "Forms & Tables",
+      "role": []
+
     },
     {
       "name": "Form Elements",
       "icon": "menu-icon tf-icons ri-radio-button-line",
       "slug": "forms",
-      "role": ["Super Admin"],
+
+      "role": [],
+
       "submenu": [
         {
           "url": "forms/basic-inputs",
           "name": "Basic Inputs",
           "slug": "forms-basic-inputs",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/input-groups",
           "name": "Input groups",
           "slug": "forms-input-groups",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/custom-options",
           "name": "Custom Options",
           "slug": "forms-custom-options",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/editors",
           "name": "Editors",
           "slug": "forms-editors",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/file-upload",
           "name": "File Upload",
           "slug": "forms-file-upload",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/pickers",
           "name": "Pickers",
           "slug": "forms-pickers",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/selects",
           "name": "Select & Tags",
           "slug": "forms-selects",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/sliders",
           "name": "Sliders",
           "slug": "forms-sliders",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/switches",
           "name": "Switches",
           "slug": "forms-switches",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "forms/extras",
           "name": "Extras",
           "slug": "forms-extras",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -1212,25 +1372,29 @@
       "name": "Form Layouts",
       "icon": "menu-icon tf-icons ri-box-3-line",
       "slug": "form-layouts",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "form/layouts-vertical",
           "name": "Vertical Form",
           "slug": "form-layouts-vertical",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "form/layouts-horizontal",
           "name": "Horizontal Form",
           "slug": "form-layouts-horizontal",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "form/layouts-sticky",
           "name": "Sticky Actions",
           "slug": "form-layouts-sticky",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -1238,19 +1402,22 @@
       "name": "Form Wizard",
       "icon": "menu-icon tf-icons ri-git-commit-line",
       "slug": "form-wizard",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "form/wizard-numbered",
           "name": "Numbered",
           "slug": "form-wizard-numbered",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "form/wizard-icons",
           "name": "Icons",
           "slug": "form-wizard-icons",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -1259,62 +1426,72 @@
       "icon": "menu-icon tf-icons ri-checkbox-multiple-line",
       "name": "Form Validation",
       "slug": "form-validation",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "url": "tables/basic",
       "icon": "menu-icon tf-icons ri-table-alt-line",
       "name": "Tables",
       "slug": "tables-basic",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "name": "Datatables",
       "icon": "menu-icon tf-icons ri-grid-line",
       "slug": "tables-datatables",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "tables/datatables-basic",
           "name": "Basic",
           "slug": "tables-datatables-basic",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "tables/datatables-advanced",
           "name": "Advanced",
           "slug": "tables-datatables-advanced",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "tables/datatables-extensions",
           "name": "Extensions",
           "slug": "tables-datatables-extensions",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
     {
       "menuHeader": "Charts & Maps",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "name": "Charts",
       "icon": "menu-icon tf-icons ri-bar-chart-2-line",
       "slug": "charts",
-      "role": ["Super Admin"],
+      "role": [],
+
       "submenu": [
         {
           "url": "charts/apex",
           "name": "Apex Charts",
           "slug": "charts-apex",
-          "role": ["Super Admin"]
+          "role": []
+
         },
         {
           "url": "charts/chartjs",
           "name": "ChartJS",
           "slug": "charts-chartjs",
-          "role": ["Super Admin"]
+          "role": []
+
         }
       ]
     },
@@ -1323,11 +1500,17 @@
       "icon": "menu-icon tf-icons ri-map-2-line",
       "name": "Leaflet Maps",
       "slug": "maps-leaflet",
+
       "role": ["Super Admin"]
     },
     {
       "menuHeader": "Misc",
-      "role": ["Super Admin"]
+      "role": [""]
+    },
+    {
+      "menuHeader": "Misc",
+      "role": []
+
     },
     {
       "url": "https://pixinvent.ticksy.com/",
@@ -1335,7 +1518,8 @@
       "name": "Support",
       "slug": "support",
       "target": "_blank",
-      "role": ["Super Admin"]
+      "role": []
+
     },
     {
       "url": "https://demos.pixinvent.com/materialize-html-admin-template/documentation/laravel-introduction.html",
@@ -1343,7 +1527,8 @@
       "name": "Documentation",
       "slug": "documentation",
       "target": "_blank",
-      "role" : ["Super Admin"]
+      "role" : []
+
     }
   ]
 }

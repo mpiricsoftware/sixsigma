@@ -166,7 +166,7 @@ use App\Http\Controllers\SubPlanController;
 use App\Http\Controllers\VideoStreamController;
 
 // Main Page Route
-Route::group(['middleware' => ['auth']], function ($request)
+Route::group(['middleware' => ['auth','verified']], function ($request)
 {
     Route::group(['middleware' => ['role:Super Admin']], function () {
         Route::resource('/permission-list', AccessPermission::class);
