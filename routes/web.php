@@ -164,6 +164,12 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\subgroupController;
 use App\Http\Controllers\SubPlanController;
 use App\Http\Controllers\VideoStreamController;
+use App\Http\Controllers\InputController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\StagesController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\SectionController;
 
 // Main Page Route
 Route::group(['middleware' => ['auth','verified']], function ($request)
@@ -202,13 +208,26 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('subscription/plan',[SubPlanController::class, 'index'])->name('subscription.index');
     Route::resource('/subplan-list',SubPlanController::class);
 
+    Route::get('input',[InputController::class, 'index']);
+    Route::resource('input-list',InputController::class);
+    Route::get('form',[FormController::class,'index']);
+    Route::resource('form-list',FormController::class);
+    Route::get('getInputFields',[FormController::class,'getInputFields'])->name('getInputFields');
+    Route::get('stages',[StagesController::class,'index']);
+    Route::resource('stages-list',StagesController::class);
+    Route::get('question',[QuestionController::class,'index']);
+    Route::resource('question-list',QuestionController::class);
+    Route::get('answer',[AnswerController::class,'index']);
+    Route::resource('answer-list',AnswerController::class);
+    Route::resource('section-list',SectionController::class);
+    Route::get('section',[SectionController::class,'index']);
 
     // layout
     Route::get('/layouts/collapsed-menu', [CollapsedMenu::class, 'index'])->name('layouts-collapsed-menu');
     Route::get('/layouts/content-navbar', [ContentNavbar::class, 'index'])->name('layouts-content-navbar');
     Route::get('/layouts/content-nav-sidebar', [ContentNavSidebar::class, 'index'])->name('layouts-content-nav-sidebar');
-     Route::get('/layouts/horizontal', [Horizontal::class, 'index'])->name('dashboard-analytics');
-     Route::get('/layouts/vertical', [Vertical::class, 'index'])->name('dashboard-analytics');
+    Route::get('/layouts/horizontal', [Horizontal::class, 'index'])->name('dashboard-analytics');
+    Route::get('/layouts/vertical', [Vertical::class, 'index'])->name('dashboard-analytics');
     Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
     Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
     Route::get('/layouts/fluid', [Fluid::class, 'index'])->name('layouts-fluid');

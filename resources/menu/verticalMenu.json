@@ -35,6 +35,36 @@
           "name": "Academy",
           "slug": "app-academy-dashboard",
           "role": ["Super Admin"]
+        },
+        {
+          "url": "input",
+          "name":"Input Master",
+          "slug": "input",
+          "role": ["Admin"]
+        },
+        {
+          "url": "form",
+          "name":"Form Master",
+          "slug": "form",
+          "role":["Admin"]
+        },
+        {
+          "url":"stages",
+          "name":"Stages Master",
+          "slug": "stages",
+          "role":["Admin"]
+        },
+        {
+          "url":"question",
+          "name":"Question",
+          "slug": "question",
+          "role":["Admin"]
+        },
+        {
+          "url":"answer",
+          "name":"Answer",
+          "slug":"answer",
+          "role":["Admin"]
         }
       ]
     },
