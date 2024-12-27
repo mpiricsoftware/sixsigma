@@ -1,95 +1,141 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Question Answer System</title>
-</head>
-<body>
-    <h1>Dynamic Form</h1>
+@extends('layouts.layoutMaster')
 
-    <!-- Form Type Selection (For selecting Form ID) -->
-    <label for="formId">Select Form ID:</label>
-    <select id="formId">
-        <option value="" disabled selected>Select a Form</option>
-        <option value="1">Form 1</option>
-        <option value="2">Form 2</option>
-    </select>
-    <br><br>
+@section('title', 'Answers')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Questions will be dynamically loaded here -->
-    <div id="questionsContainer"></div>
+@section('vendor-style')
+    @vite([
+        'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
+        'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
+        'resources/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.scss',
+        'resources/assets/vendor/libs/select2/select2.scss',
+        'resources/assets/vendor/libs/@form-validation/form-validation.scss',
+        'resources/assets/vendor/libs/animate-css/animate.scss',
+        'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
+    ])
+@endsection
 
-    <script>
-        // Fetch and display questions based on Form ID
-        document.getElementById('formId').addEventListener('change', function() {
-            const formId = this.value;
-            if (formId) {
-                fetchQuestions(formId);
-            }
-        });
+@section('vendor-script')
+    @vite([
+        'resources/assets/vendor/libs/moment/moment.js',
+        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
+        'resources/assets/vendor/libs/select2/select2.js',
+        'resources/assets/vendor/libs/@form-validation/popular.js',
+        'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
+        'resources/assets/vendor/libs/@form-validation/auto-focus.js',
+        'resources/assets/vendor/libs/cleavejs/cleave.js',
+        'resources/assets/vendor/libs/cleavejs/cleave-phone.js',
+        'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'
+    ])
+@endsection
 
-        // Function to fetch questions for a specific Form ID
-        function fetchQuestions(formId) {
-            fetch(`/form/${formId}/questions`)
+@section('content')
+<div class="card">
+  <div class="card-header">
+    <h5>Answers</h5>
+  </div>
+
+  <div class="card-body" style="padding-top:2%; margin:2%">
+      <div class="row">
+          <!-- Section Dropdown -->
+          <div class="col-md-6">
+              <div class="form-floating form-floating-outline">
+                  <select name="section" id="section" class="form-select">
+                      <option value="">Select a Section</option>
+                      @foreach ($section as $s)
+                          <option value="{{ $s->id }}">{{ $s->section_name }}</option>
+                      @endforeach
+                  </select>
+                  <label for="section">Select Section</label>
+              </div>
+          </div>
+
+          <!-- Question Dropdown -->
+          <div class="col-md-6">
+              <div class="form-floating form-floating-outline">
+                  <select name="question" id="question" class="form-select">
+                      <option value="">Select Questions</option>
+                  </select>
+              </div>
+          </div>
+      </div>
+<br>
+      <!-- Question Input Area -->
+      <div id="question-input-area"></div>
+      <br>
+      <div class="col-12 text-end" style="padding-bottm: 1%">
+        <button type="submit" class="btn btn-secondary rounded-0 non-shadow">Submit</button>
+      </div>
+  </div>
+
+
+
+</div>
+
+<script>
+    document.getElementById('section').addEventListener('change', function() {
+        var sectionId = this.value;
+
+        // Clear the question dropdown and input area
+        var questionSelect = document.getElementById('question');
+        var inputArea = document.getElementById('question-input-area');
+        questionSelect.innerHTML = '<option value="">Select Questions</option>';
+        inputArea.innerHTML = ''; // Clear previous input fields
+
+        if (sectionId) {
+            // Make an AJAX request to fetch questions for the selected section
+            fetch('/get-questions/' + sectionId)
                 .then(response => response.json())
                 .then(data => {
-                    const questionsContainer = document.getElementById('questionsContainer');
-                    questionsContainer.innerHTML = ''; // Clear previous questions
-
-                    data.questions.forEach((question) => {
-                        const questionDiv = document.createElement('div');
-                        questionDiv.style.marginBottom = '10px';
-
-                        // Create the question text
-                        const questionLabel = document.createElement('label');
-                        questionLabel.textContent = question.text;
-                        questionDiv.appendChild(questionLabel);
-
-                        // Create the dropdown to answer the question
-                        const answerDropdown = document.createElement('select');
-                        answerDropdown.setAttribute('data-question-id', question.id);  // Store question ID
-
-                        // Example answers: You can dynamically load these based on question or form type
-                        const answers = ['Answer 1', 'Answer 2', 'Answer 3'];  // Placeholder answers
-
-                        answers.forEach((answer) => {
-                            const option = document.createElement('option');
-                            option.value = answer;
-                            option.textContent = answer;
-                            answerDropdown.appendChild(option);
-                        });
-
-                        questionDiv.appendChild(answerDropdown);
-                        questionsContainer.appendChild(questionDiv);
-
-                        // Handle answer submission when a dropdown answer is selected
-                        answerDropdown.addEventListener('change', function() {
-                            const selectedAnswer = this.value;
-                            const questionId = this.getAttribute('data-question-id');
-                            submitAnswer(questionId, selectedAnswer);
-                        });
+                    // Populate the questions dropdown
+                    data.questions.forEach(function(question) {
+                        var option = document.createElement('option');
+                        option.value = question.id;
+                        option.textContent = question.question_text;
+                        questionSelect.appendChild(option);
                     });
                 })
-                .catch(error => console.error('Error fetching questions:', error));
+                .catch(error => console.error('Error:', error));
         }
+    });
 
-        // Function to submit the answer for a question
-        function submitAnswer(questionId, answer) {
-            fetch(`/form/${questionId}/answer`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Laravel CSRF token
-                },
-                body: JSON.stringify({ answer: answer })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
-            })
-            .catch(error => console.error('Error submitting answer:', error));
+    // Handle question selection
+    document.getElementById('question').addEventListener('change', function() {
+        var questionId = this.value;
+        var inputArea = document.getElementById('question-input-area');
+        inputArea.innerHTML = ''; // Clear the input area
+
+        if (questionId) {
+            // Find the selected question's details from the previously fetched questions
+            fetch(`/get-questions/${document.getElementById('section').value}`)
+                .then(response => response.json())
+                .then(data => {
+                    var question = data.questions.find(q => q.id == questionId);
+                    if (question) {
+                        // Generate the appropriate input field based on the question type
+                        var inputElement;
+                        if (question.type == 'text') {
+                            inputElement = `<textarea name="answer" class="form-control" placeholder="Your answer"></textarea>`;
+                        } else if (question.type == 'rating') {
+                            inputElement = `<input type="number" name="rating" class="form-control" min="1" max="5" placeholder="Rate from 1 to 5">`;
+                        } else if (question.type == 'multiple-choice' && question.options) {
+                            inputElement = '';
+                            JSON.parse(question.options).forEach(function(option) {
+                                inputElement += `
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="answer" value="${option}">
+                                        <label class="form-check-label">${option}</label>
+                                    </div>
+                                `;
+                            });
+                        }
+
+                        inputArea.innerHTML = inputElement;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
-    </script>
-</body>
-</html>
+    });
+</script>
+
+@endsection

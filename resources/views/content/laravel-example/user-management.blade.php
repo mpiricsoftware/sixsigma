@@ -50,8 +50,9 @@
                   <p class="text-heading mb-1">Users</p>
                   <div class="d-flex align-items-center">
                     <h4 class="mb-1 me-2">{{$totalUser}}</h4>
-                    <p class="text-success mb-1">(100%)</p>
+                    <p class="text-success mb-1">({{ number_format($percentage, 2) }}%)</p>
                   </div>
+
                   <small class="mb-0">Total Users</small>
                 </div>
                 <div class="avatar">
@@ -72,7 +73,7 @@
                   <p class="text-heading mb-1">Verified Users</p>
                   <div class="d-flex align-items-center">
                     <h4 class="mb-1 me-1">{{$verified}}</h4>
-                    <p class="text-success mb-1">(+95%)</p>
+                    <p class="text-success mb-1">({{number_format($verified_p, 2)}}%)</p>
                   </div>
                   <small class="mb-0">Recent analytics</small>
                 </div>
@@ -94,7 +95,7 @@
                   <p class="text-heading mb-1">Duplicate Users</p>
                   <div class="d-flex align-items-center">
                     <h4 class="mb-1 me-1">{{$userDuplicates}}</h4>
-                    <p class="text-danger mb-1">(0%)</p>
+                    <p class="text-danger mb-1">({{number_format($p_duplicates, 2)}}%)</p>
                   </div>
                   <small class="mb-0">Recent analytics</small>
                 </div>
@@ -116,7 +117,7 @@
                   <p class="text-heading mb-1">Verification Pending</p>
                   <div class="d-flex align-items-center">
                     <h4 class="mb-1 me-1">{{$notVerified}}</h4>
-                    <p class="text-success mb-1">(+6%)</p>
+                    <p class="text-success mb-1">({{number_format($p_notVerified, 2)}}%)</p>
                   </div>
                   <small class="mb-0">Recent analytics</small>
                 </div>
@@ -141,10 +142,15 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Id</th>
+                        {{-- <th>Id</th> --}}
                         <th>User</th>
-                        <th>Email</th>
+                        <th>Last Name</th>
                         <th>Company</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>PhoneNo</th>
+                        <th>Status</th>
+                        {{-- <th>Email</th> --}}
                         <th>Verified</th>
                         <th>Actions</th>
                     </tr>
@@ -165,11 +171,23 @@
                     </div>
                     <form id="addNewUserForm" class="row add-new-user g-5">
                         <input type="hidden" name="id" id="user_id">
-                        <div class="col-12">
+                        <div class="col-12 col-md-4">
+                          <div class="form-floating form-floating-outline">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your UserName">
+                            <label for="username">Username</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input type="text" class="form-control" id="add-user-fullname" placeholder="Full Name" name="name" aria-label="Full Name" />
-                                <label for="add-user-fullname">Full Name</label>
+                                <input type="text" class="form-control" id="add-user-fullname" placeholder="First Name" name="name" aria-label="First Name" />
+                                <label for="add-user-firstname">First Name</label>
                             </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-floating form-floating-outline">
+                               <input type="text" class="form-control" id="add-user-lastname" placeholder="Last Name" name="lastname" aria-label="Last Name">
+                               <label for="lastname">Last Name</label>
+                          </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-floating form-floating-outline">
@@ -179,16 +197,45 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-floating form-floating-outline">
-                                <select name="company_id" id="add-user-company" class="select2 form-select" data-placeholder="Select company" data-allow-clear="true">
-                                    <option></option>
-                                    @foreach ($companies as $company)
-                                        <option value="{{$company->id}}">{{ $company->company_name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" name="company" id="add-user-company" class="form-control" placeholder="Enter Company" data-allow-clear="true">
                                 <label for="add-user-company">Company</label>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
+
+                        <div class="col-12">
+                          <div class="form-floating form-floating-outline">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Enter Your Address">
+                            <label for="address">Address</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-floating form-floating-outline">
+                            <select name="country" id="country" class="select2 form-select country" data-placeholder="Select country" data-allow-clear="true">
+                              <option></option>
+                              @foreach ($country as $c)
+                                  <option value="{{$c->id}}">{{ $c->name }}</option>
+                              @endforeach
+                          </select>
+                          <label for="country">Country</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-floating form-floating-outline">
+                            <select name="state" id="state" class="select2 form-select state" data-placeholder="Select State" data-allow-clear="true">
+                              <option></option>
+                            </select>
+                            <label for="state">State</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-floating form-floating-outline">
+                            <select name="city" id="city" class="select2 form-select city" data-placeholder="Select City" data-allow-clear="true">
+                              <option value=""></option>
+                            </select>
+                            <label for="city">City</label>
+                          </div>
+                        </div>
+                        {{-- <div class="col-12 col-md-6">
                             <div class="form-floating form-floating-outline">
                                 <select name="site_id" id="add-user-site" class="select2 form-select" data-placeholder="Select site" data-allow-clear="true">
                                     <option></option>
@@ -198,21 +245,56 @@
                                 </select>
                                 <label for="add-user-company">Site</label>
                             </div>
+                        </div> --}}
+                        {{-- <div class="col-12 col-md-6">
+                            <div class="form-floating form-floating-outline">
+                                <select name="role" id="add-user-department" class="select2 form-select" data-placeholder="Select Role" data-allow-clear="true">
+                                    <option value="role">User</option>
+                                    <option value="role">Admin</option>
+
+                                </select>
+                                <label for="add-user-company">Roles</label>
+                            </div>
+                        </div> --}}
+                        <div class="col-12">
+                          <div class="form-floating form-floating-outline">
+                            <input type="number" id="office_no" class="form-control" name="office_no" placeholder="Enter Your OfficeNo">
+                            <label for="office_no">Office No</label>
+                          </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="form-floating form-floating-outline">
-                                <select name="department_id" id="add-user-department" class="select2 form-select" data-placeholder="Select department" data-allow-clear="true">
-                                    <option></option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{$department->id}}">{{ $department->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="add-user-company">Department</label>
-                            </div>
+                          <div class="form-floating form-floating-outline">
+                            <input type="number" class="form-control" name="mobileno" id="mobileno" placeholder="Enter Your PhoneNo" data-allow-clear="true">
+                            <label for="PhoneNo">PhoneNo</label>
+                          </div>
                         </div>
+
+                        {{-- <div class="col-md-6">
+                          <div class="form-floating form-floting-outline">
+                            <select name="role" id="role" class="select2 form-select role" data-placeholder="Select Role" data-allow-clear="true">
+                              <option></option>
+                              @foreach ($roles as $r)
+                                <option value="{{$r->id}}">{{$r->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div> --}}
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                           <select name="usertype" id="usertype" class="select2 form-select usertype" data-placeholder="Select Role" data-allow-clear="true">
+                              <option>Select Role</option>
+                              @foreach ($roles as $r)
+                              <option value="{{ $r->id }}" {{ old('usertype') == $r->id ? 'selected' : '' }}>
+                                {{ $r->name }}
+                            </option>
+                              @endforeach
+                           </select>
+                          </div>
+                        </div>
+
                         <div class="col-12 mt-6 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-outline-secondary rounded-0" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark rounded-0">Submit</button>
                         </div>
                     </form>
                 </div>

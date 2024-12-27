@@ -9,6 +9,9 @@ use App\Models\Site;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -21,11 +24,18 @@ class UserManagement extends Controller
         // dd('UserManagement');
         $users = User::all();
         $userCount = $users->count();
+        $percentage = ($userCount/100) * 100;
         $verified = User::whereNotNull('email_verified_at')->get()->count();
         $notVerified = User::whereNull('email_verified_at')->get()->count();
+        $verified_p = ($verified/$notVerified) * 100;
         $usersUnique = $users->unique(['email']);
         $userDuplicates = $users->diff($usersUnique)->count();
+        $p_duplicates = ($userDuplicates/$userCount) * 100;
+        $p_notVerified = ($notVerified/$userCount) *100;
         $companies = company::get();
+        $roles = role::get();
+        $country = Country::all();
+        // dd($roles);
         $sites = Site::where('comp_id',Auth::user()->company_id)->get();
         $departments = Department::where('comp_id',Auth::user()->company_id)->get();
         return view('content.laravel-example.user-management', [
@@ -36,89 +46,84 @@ class UserManagement extends Controller
             'companies' => $companies,
             'sites' => $sites,
             'departments' => $departments,
+            'roles' => $roles,
+            'country' => $country,
+            'percentage' => $percentage,
+            'verified_p' => $verified_p,
+            'p_duplicates' => $p_duplicates,
+            'p_notVerified' => $p_notVerified,
+
         ]);
     }
 
     public function index(Request $request)
     {
-        $columns = [
-            1 => 'id',
-            2 => 'name',
-            3 => 'email',
-            4 => 'company_id',
-            // 5 => 'email_verified_at',
-        ];
+      // dd('re');
+        if ($request->ajax()) {
 
-        $search = [];
-
-        $totalData = User::count();
-
-        $totalFiltered = $totalData;
-
-        $limit = $request->input('length');
-        $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
-
-        if (empty($request->input('search.value'))) {
-            $users = User::offset($start)
-                ->with('company')
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
-        } else {
+            $columns = [
+                1 => 'id',
+                2 => 'name',
+                3 => 'lastname',
+                4 => 'company',
+                5 => 'state',
+                6 => 'city',
+                7 => 'mobileno',
+                8 => 'status',
+                9 => 'email_verified_at',
+            ];
             $search = $request->input('search.value');
+            $start = (int) $request->input('start', 0);
+            $length = (int) $request->input('length', 10);
+            $draw = (int) $request->input('draw', 1);
+            $query = User::query();
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('id', 'LIKE', "%{$search}%")
+                      ->orWhere('name', 'LIKE', "%{$search}%")
+                      ->orWhere('email', 'LIKE', "%{$search}%")
+                      ->orWhere('company', 'LIKE', "%{$search}%");
 
-            $users = User::where('id', 'LIKE', "%{$search}%")
-                ->orWhere('name', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%")
-                ->orWhereHas('company',function($query) use($search) {
-                    $query->where('company_name','LIKE', "%{$search}%");
-                })
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
+                });
+            }
+            $totalData = $query->count();
 
-            $totalFiltered = User::where('id', 'LIKE', "%{$search}%")
-                ->orWhere('name', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%")
-                ->orWhereHas('company',function($query) use($search) {
-                    $query->where('company_name','LIKE', "%{$search}%");
-                })
-                ->count();
-        }
-        $data = [];
 
-        if (!empty($users)) {
-            // providing a dummy id instead of database ids
-            $ids = $start;
+            $query->offset($start)
+                  ->limit($length);
+            if ($request->has('order.0.column') && $request->has('order.0.dir')) {
+                $orderColumn = $request->input('order.0.column');
+                $orderDirection = $request->input('order.0.dir');
 
+                // Map the column index to actual database column names
+                $orderByColumn = $columns[$orderColumn] ?? 'id'; // Default to 'id' if not found
+                $query->orderBy($orderByColumn, $orderDirection);
+            }
+
+            // Get the filtered users
+            $users = $query->get();
+
+            // Prepare the data for the response
+            $data = [];
             foreach ($users as $user) {
                 $nestedData['id'] = $user->id;
-                $nestedData['fake_id'] = ++$ids;
                 $nestedData['name'] = $user->name;
+                $nestedData['lastname'] = $user->lastname;
                 $nestedData['email'] = $user->email;
-                $nestedData['company'] = $user->company->company_name;
+                $nestedData['company'] = $user->company;
+                $nestedData['state'] = isset(State::find($user->state)->name) ? State::find($user->state)->name : '';
+                $nestedData['city'] = isset(City::find($user->city)->name) ? City::find($user->city)->name : '';
+                $nestedData['mobileno'] = $user->mobileno;
+                $nestedData['status'] = $user->status;
                 $nestedData['email_verified_at'] = $user->email_verified_at;
-
                 $data[] = $nestedData;
             }
-        }
-
-        if ($data) {
+            // dd($data);
             return response()->json([
-                'draw' => intval($request->input('draw')),
-                'recordsTotal' => intval($totalData),
-                'recordsFiltered' => intval($totalFiltered),
-                'code' => 200,
+                'draw' => $draw,
+                'recordsTotal' => $totalData,
+                'recordsFiltered' => $totalData,
                 'data' => $data,
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Internal Server Error',
-                'code' => 500,
-                'data' => [],
             ]);
         }
     }
@@ -131,64 +136,91 @@ class UserManagement extends Controller
     public function store(Request $request)
     {
         $userID = $request->id;
-        // dd($request->all());
-        if ($userID) {
-            // update the value
-            $users = User::updateOrCreate(
+        $roleName = Role::find($request->usertype)?->name ?? 'N/A';
+        $role = Role::findOrFail($request->usertype); // Ensure role exists
+
+            if ($userID) {
+            $users= User::updateOrCreate(
+              ['id' => $userID],
+              [
+                'name' => $request->name,
+                'email' => $request->email,
+                'username' => $request->username,
+                'lastname' => $request->lastname,
+                'company' => $request->company,
+                'address' => $request->address,
+                'country' => $request->country,
+                'state' => $request->state,
+                'city' => $request->city,
+                'office_no' => $request->office_no,
+                'mobileno' => $request->mobileno,
+                'usertype' => $role,
+                'password' => Hash::make('12345678'),
+            ]);
+            // $users->syncRoles([$role]);
+            return response()->json('Updated');
+        } else {
+
+            $userEmail = User::where('email', $request->email)->first();
+            $role = Role::findOrFail($request->usertype);
+            if (empty($userEmail)) {
+               $users = User::updateOrCreate(
                 ['id' => $userID],
                 [
                     'name' => $request->name,
                     'email' => $request->email,
-                    'company_id' => $request->company_id,
-                    'site_id' => $request->site_id,
-                    'department_id' => $request->department_id,
-                    // 'usertype' => 'User'
-                ]
-            );
-            $users->syncRoles('User');
-            // user updated
-            return response()->json('Updated');
-        } else {
-            // create new one if email is unique
-            $userEmail = User::where('email', $request->email)->first();
-
-            if (empty($userEmail)) {
-                $users = User::updateOrCreate(
-                    ['id' => $userID],
-                    [
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'company_id' => $request->company_id,
-                        'site_id' => $request->site_id,
-                        'department_id' => $request->department_id,
-                        'usertype' => 'User',
-                        'password' => Hash::make('12345678'),
-                        'status' => '1'
-                    ]
-                );
-                $users->assignRole('User');
-                // user created
+                    'username' => $request->username,
+                    'lastname' => $request->lastname,
+                    'company' => $request->company,
+                    'address' => $request->address,
+                    'country' => $request->country,
+                    'state' => $request->state,
+                    'city' => $request->city,
+                    'office_no' => $request->office_no,
+                    'mobileno' => $request->mobileno,
+                    'usertype' => $role,
+                    'password' => Hash::make('12345678'),
+                    'status' => '1'
+                ]);
+                 // Ensure role exists
+                // $users->syncRoles([$role]);
                 return response()->json('Created');
-            } else {
-                // user already exist
-                return response()->json(['message' => "already exits"], 422);
             }
-        }
+          }
     }
-
     public function show($id)
     {
-        // $id = $id;
-        $user = User::where('id',$id)->first();
-        // dd($user);
-        return view('content.laravel-example.user-management-view',compact('user'));
+
+        $user = User::findOrFail($id);
+        $countryName = Country::where('id', $user->country)->first();
+        $countryName = $countryName->name ?? 'N/A';
+        $roleName = $user->roles->first()?->name ?? 'N/A';
+        return view('content.laravel-example.user-management-view', compact('user', 'roleName', 'countryName'));
     }
 
     public function edit($id): JsonResponse
-    {
-        $user = User::findOrFail($id);
-        return response()->json($user);
-    }
+{
+    $user = User::findOrFail($id);
+    $role = $user->roles->first()?->id ?? 'N/A';
+
+    return response()->json([
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'username' => $user->username,
+        'lastname' => $user->lastname,
+        'company' => $user->company,
+        'address' => $user->address,
+        'country' => $user->country,
+        'state' => $user->state,
+        'city' => $user->city,
+        'office_no' => $user->office_no,
+        'mobileno' => $user->mobileno,
+        'usertype' => $role,
+    ]);
+}
+
+
 
     public function update(Request $request, $id)
     {
@@ -197,6 +229,18 @@ class UserManagement extends Controller
 
     public function destroy($id)
     {
-        $users = User::where('id', $id)->delete();
+        // $users = User::where('id', $id)->delete();
+    }
+    public function getstate(Request $request)
+    {
+         $countryID = $request->input('country_id');
+         $state = State::where('country_id',$countryID)->get();
+         return response()->json(['state' => $state]);
+    }
+    public function getcity(Request $request)
+    {
+       $stateId = $request->input('state_id');
+       $city = City::where('state_id',$stateId)->get();
+       return response()->json(['city' => $city]);
     }
 }

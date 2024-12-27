@@ -66,7 +66,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        return view('panel.form.create');
+        return view('panel.form.show');
     }
 
     /**
@@ -77,11 +77,11 @@ class SectionController extends Controller
     // Validate the request
     $request->validate([
         'section_name.*' => 'required|string|max:255',
-        'section_description.*' => 'nullable|string|max:1000',
+        'section_description.*' => 'nullable|string|max:10000',
         'question_text.*' => 'nullable|array',
         'question_text.*.*' => 'nullable|string|max:255',
         'question_description.*' => 'nullable|array',
-        'question_description.*.*' => 'nullable|string|max:1000',
+        'question_description.*.*' => 'nullable|string|max:5000',
         'type.*' => 'required|array',
         'type.*.*' => 'required|string',
         'options.*' => 'nullable|array',
@@ -93,8 +93,6 @@ class SectionController extends Controller
         foreach ($request->section_name as $key => $sectionName) {
           // dd($request->all(),$request->question_text[$i] );
             $sectionDescription = $request->section_description[$key] ?? null;
-
-
             $section = Section::create([
                 'form_id' => $form,
                 'section_name' => $sectionName,
@@ -105,10 +103,28 @@ class SectionController extends Controller
               foreach ($request->question_text[$i] as $key => $questionText) {
                   $description = $request->question_description[$i][$key] ?? null;
                   $type = $request->type[$i][$key] ?? null;
-                  $options = $request->options["choice_{$i}"] ?? [];
-                  if ($type === 'choice' ) {
-                    $options = !empty($options) ? json_encode($options) : null;
+                  $choiceOptions = [];
+                  $ratingOptions = [];
+
+                  // Fetch choice options based on the type
+                  if (!empty($request->options["choice_{$i}"])) {
+                      $choiceOptions = $request->options["choice_{$i}"];
                   }
+
+                  // Fetch rating options if available
+                  if (!empty($request->options["rating_{$i}"])) {
+                      $ratingOptions = $request->options["rating_{$i}"];
+                  }
+
+                  // Determine final options to store
+                  if ($type === 'radio' || $type === 'checkbox') {
+                      $options = !empty($choiceOptions) ? json_encode($choiceOptions) : null;
+                  } elseif ($type === 'rating') {
+                      $options = !empty($ratingOptions) ? json_encode($ratingOptions) : null;
+                  } else {
+                      $options = null; // For other types, no options
+                  }
+
                   if ($questionText) {
                       $question = Question::create([
                           'section_id' => $section->id,
@@ -125,31 +141,9 @@ class SectionController extends Controller
           $i++;
 
         }
+        dd($request->all());
     }
-    $createdQuestions = [];
-    foreach ($createdSections as $sectionKey => $section) {
-        // if (isset($request->question_text[$sectionKey]) && is_array($request->question_text[$sectionKey])) {
-        //     foreach ($request->question_text[$sectionKey] as $key => $questionText) {
-        //         $description = $request->question_description[$sectionKey][$key] ?? null;
-        //         $type = $request->type[$sectionKey][$key] ?? null;
-        //         $options = $request->options[$sectionKey][$key] ?? null;
-        //         if ($type === 'choice' || $type === 'rating') {
-        //             $options = !empty($options) ? json_encode($options) : null;
-        //         }
-        //         if ($questionText) {
-        //             $question = Question::create([
-        //                 'section_id' => $section->id,
-        //                 'form_id' => $form,
-        //                 'question_text' => $questionText,
-        //                 'question_description' => $description,
-        //                 'type' => $type,
-        //                 'options' => $options,
-        //             ]);
-        //             $createdQuestions[] = $question;
-        //         }
-        //     }
-        // }
-    }
+
 
     // dd($request->all(), $createdSections, $createdQuestions);
     return redirect()->route('form-list.index')->with('success', 'Sections and questions created successfully!');

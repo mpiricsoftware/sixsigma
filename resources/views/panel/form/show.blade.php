@@ -44,42 +44,38 @@
   <div class="modal-content">
     <form class="add-new-vendor pt-9" method="POST" action="{{ route('section-list.store') }}">
       @csrf
-      <input type="hidden" value="" name="id" id="id">
-
-      <!-- Modal Body -->
+     <!-- Modal Body -->
       <div class="modal-body">
 
         <!-- Text Question -->
         <div class="row g-6 ms-3 me-3">
           <div class="col-md-12">
+            @foreach ($form as $form)
+            <input type="hidden" name="id" id="id">
 
-              <div class="card shadow-sm rounded">
+
+            <div class="card shadow-sm rounded">
                 <div class="card-body">
-                    @if($form->first())
-                        <h5 class="card-title font-weight-bold">{{ $form->first()->name }}</h5>
-                        <p class="card-text">{{ $form->first()->description }}</p>
+                    @if($form)
+                        <h5 class="card-title font-weight-bold">{{ $form->name }}</h5>
+                        <p class="card-text">{{ $form->description }}</p>
                     @else
                         <p class="text-warning">No form data available.</p>
                     @endif
                 </div>
-
-            </div>
           </div>
+           @endforeach
         </div>
-
-        <!-- Multiple Choice Question -->
         <div class="row g-6 ms-3 me-3 mt-4">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                {{-- <h5 class="card-title">Section 1</h5> --}}
                 <div class="col-md-12">
                   <div class="form-floating form-floating-outline">
                     <input type="text" name="section_name[]" id="section_name" placeholder="Enter Section Name" class="form-control">
                     <label for="section_name">Section Name</label>
                   </div>
                 </div>
-
                 <div class="col-md-12 mt-3">
                   <div class="form-floating form-floating-outline">
                    <textarea name="section_description[]" id="section_description" class="form-control" placeholder="Enter Section Description"></textarea>
@@ -88,8 +84,6 @@
                 </div>
               </div>
               <div class="card-body">
-
-                <!-- Add Option Button -->
                 <button type="button" class="btn btn-primary" id="addSection">+ Add Option</button>
                 <div id="dynamicFields">&nbsp;</div>
               </div>
@@ -175,7 +169,7 @@ $(document).ready(function() {
             </div>
         `;
 
-        // Append the new section to the dynamic fields container
+
         $('#dynamicFields').append(newSection);
     });
 });
@@ -183,7 +177,6 @@ $(document).ready(function() {
 function addChoiceField(sectionId) {
     const container = $(`#dynamicFields_${sectionId}`);
 
-    // Create choice field with question and description inputs
     const choiceField = `
         <div class="row mt-5 choice-field">
             <div class="col-md-12">
@@ -192,73 +185,99 @@ function addChoiceField(sectionId) {
             <div class="col-md-12 mt-2">
                 <input type="text" class="form-control" placeholder="Enter your Description" name="question_description[${sectionId}][]">
             </div>
-        </div>
-        <div class="row mt-2 choice-options">
-            <div class="col-md-12">
-                <div class="d-flex align-items-center mb-2">
-                    <input type="radio" id="radio1_${sectionId}" name="choice_${sectionId}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
-                    <input type="text" class="form-control me-2" placeholder="Option 1" onchange="updateOptionValue(${sectionId}, 0, this)">
+            <div class="col-md-12 mt-2">
+                <div class="btn-group" role="group" aria-label="Choice Type">
+                    <button type="button" class="btn btn-white" onclick="showChoiceOptions(${sectionId}, 'radio', this)">Radio Button</button>
+                    <button type="button" class="btn btn-primary" onclick="showChoiceOptions(${sectionId}, 'checkbox', this)">Checkbox</button>
                 </div>
-                <div class="d-flex align-items-center">
-                    <input type="radio" id="radio2_${sectionId}" name="choice_${sectionId}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
-                    <input type="text" class="form-control me-2" placeholder="Option 2" onchange="updateOptionValue(${sectionId}, 1, this)">
-                </div>
+                <div class="choice-options mt-4"></div>
                 <button type="button" class="btn btn-primary mt-2" onclick="addChoiceOption(${sectionId})">+</button>
                 <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
                     <i class="ri-delete-bin-7-line ri-20px"></i>
                 </button>
             </div>
+            <input type="hidden" name="type[${sectionId}][]" class="choice-type-hidden" value="">
         </div>
     `;
     container.append(choiceField);
-    const hiddenTypeField = `<input type="hidden" name="type[${sectionId}][]" value="choice">`;
-    container.append(hiddenTypeField);
-    const hiddenOptionsField1 = `<input type="hidden" name="options[choice_${sectionId}][]" class="option-value" data-option-index="0">`;
-    container.append(hiddenOptionsField1);
-    const hiddenOptionsField2 = `<input type="hidden" name="options[choice_${sectionId}][]" class="option-value" data-option-index="1">`;
-    container.append(hiddenOptionsField2);
-    const hiddenSelectedValueField = `<input type="hidden" name="selected_value[choice_${sectionId}]" id="selectedValue_${sectionId}" value="">`;
-    container.append(hiddenSelectedValueField);
+}
+
+function showChoiceOptions(sectionId, type, button) {
+    const choiceContainer = $(`#dynamicFields_${sectionId} .choice-options`);
+    choiceContainer.empty(); 
+
+    $(button).siblings().removeClass('btn-primary').addClass('btn-outline-primary');
+    $(button).removeClass('btn-outline-primary').addClass('btn-primary');
+
+    const typeField = $(`#dynamicFields_${sectionId} .choice-type-hidden`);
+    typeField.val(type);
+
+    const initialOption = `
+        <div class="d-flex align-items-center mb-2 choice-option">
+            <input type="${type}" name="choice_${sectionId}${type === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
+            <input type="text" class="form-control me-2" placeholder="Option 1" onchange="updateOptionValue(${sectionId}, 0, this)">
+        </div>
+    `;
+    choiceContainer.append(initialOption);
 }
 
 function addChoiceOption(sectionId) {
-    const container = $(`#dynamicFields_${sectionId}`);
+    const container = $(`#dynamicFields_${sectionId} .choice-options`);
+    const newIndex = container.find('.choice-option').length;
+
+    const choiceType = $(`#dynamicFields_${sectionId} .choice-type-hidden`).val();
+
+    if (!choiceType) {
+        alert("Please select Radio or Checkbox type first.");
+        return;
+    }
+
     const choiceOption = `
         <div class="d-flex align-items-center mt-2 choice-option">
-            <input type="radio" class="me-2" name="choice_${sectionId}" onclick="updateSelectedValue(${sectionId}, this)">
-            <input type="text" class="form-control me-2" placeholder="Choice option" onchange="updateOptionValue(${sectionId}, ${container.find('.choice-option').length}, this)">
-            <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
+            <input type="${choiceType}" name="choice_${sectionId}${choiceType === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
+            <input type="text" class="form-control me-2" placeholder="Option ${newIndex + 1}" onchange="updateOptionValue(${sectionId}, ${newIndex}, this)">
+            <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeOption(this)">
                 <i class="ri-delete-bin-7-line ri-20px"></i>
             </button>
         </div>
     `;
+
     container.append(choiceOption);
-    const optionValue = container.find('.choice-option').last().find('input[type="text"]').val();
-    const hiddenOptionsField = `<input type="hidden" name="options[choice_${sectionId}][]" class="option-value" data-option-index="${container.find('.choice-option').length - 1}" value="${optionValue}">`;
+    const hiddenOptionsField = `
+        <input type="hidden" name="options[choice_${sectionId}][]" class="option-value" data-option-index="${newIndex}" value="">
+    `;
     container.append(hiddenOptionsField);
 }
 
+
 function updateOptionValue(sectionId, index, element) {
-    // Update the hidden field for the option value
     const optionValue = element.value;
     const hiddenOptionField = $(`#dynamicFields_${sectionId} input.option-value[data-option-index="${index}"]`);
     hiddenOptionField.val(optionValue);
 }
 
-function updateSelectedValue(sectionId, element) {
-    const selectedValue = element.value;
-    const selectedRadio = $(`#dynamicFields_${sectionId} input[type="radio"]:checked`).next("input[type='text']").val();
 
-    // Update the hidden field with the selected value
-    $(`#selectedValue_${sectionId}`).val(selectedRadio);
+function updateSelectedValue(sectionId, element) {
+    const selectedValue = $(element).siblings("input[type='text']").val();
+    $(`#selectedValue_${sectionId}`).val(selectedValue);
 }
+
+
+function removeOption(element) {
+    $(element).closest('.choice-option').remove();
+}
+
+
+function updateSelectedValue(sectionId, element) {
+    const selectedRadioValue = $(element).siblings("input[type='text']").val();
+    $(`#selectedValue_${sectionId}`).val(selectedRadioValue);
+}
+
 
 
 
 function addRatingField(sectionId) {
     const container = $(`#dynamicFields_${sectionId}`);
-
-    // Create the rating field HTML
     const ratingField = `
         <div class="row mt-5">
             <div class="col-md-12">
@@ -269,11 +288,11 @@ function addRatingField(sectionId) {
             </div>
             <div class="col-md-4 mt-2">
                 <div class="rating" id="rating_${sectionId}">
-                    <span class="star" data-index="1" onclick="setRating(${sectionId}, 1)">&#9733;</span>
-                    <span class="star" data-index="2" onclick="setRating(${sectionId}, 2)">&#9733;</span>
-                    <span class="star" data-index="3" onclick="setRating(${sectionId}, 3)">&#9733;</span>
-                    <span class="star" data-index="4" onclick="setRating(${sectionId}, 4)">&#9733;</span>
-                    <span class="star" data-index="5" onclick="setRating(${sectionId}, 5)">&#9733;</span>
+                    <span class="star" name="rating_${sectionId}" data-index="1" onclick="setRating(${sectionId}, 1)">&#9733;</span>
+                    <span class="star" name="rating_${sectionId}" data-index="2" onclick="setRating(${sectionId}, 2)">&#9733;</span>
+                    <span class="star" name="rating_${sectionId}" data-index="3" onclick="setRating(${sectionId}, 3)">&#9733;</span>
+                    <span class="star" name="rating_${sectionId}" data-index="4" onclick="setRating(${sectionId}, 4)">&#9733;</span>
+                    <span class="star" name="rating_${sectionId}" data-index="5" onclick="setRating(${sectionId}, 5)">&#9733;</span>
                 </div>
             </div>
             <div class="col-md-1 mt-2">
@@ -285,42 +304,51 @@ function addRatingField(sectionId) {
     `;
 
     container.append(ratingField);
-
-    // Add hidden type field
     const hiddenTypeField = `<input type="hidden" name="type[${sectionId}][]" value="rating">`;
     container.append(hiddenTypeField);
-
-
+    const hiddenRatingField = `<input type="hidden" name="options[rating_${sectionId}][]" id="selectedRating_${sectionId}" value="0">`;
+    container.append(hiddenRatingField);
     const stars = $(`#rating_${sectionId} .star`);
-    stars.each(function() {
+    stars.each(function () {
         $(this).css("font-size", "40px");
         $(this).css("color", "#ccc");
         $(this).css("cursor", "pointer");
     });
-    stars.hover(function() {
-        const index = $(this).data('index');
-        stars.each(function(i) {
-            $(this).css("color", i < index ? "gold" : "#ccc");
-        });
-    }, function() {
-
-        const rating = $(`#selectedRating_${sectionId}`).val();
-        stars.each(function(i) {
-            $(this).css("color", i < rating ? "gold" : "#ccc");
-        });
+    stars.hover(
+        function () {
+            const index = $(this).data("index");
+            stars.each(function (i) {
+                $(this).css("color", i < index ? "gold" : "#ccc");
+            });
+        },
+        function () {
+            const rating = $(`#selectedRating_${sectionId}`).val();
+            stars.each(function (i) {
+                $(this).css("color", i < rating ? "gold" : "#ccc");
+            });
+        }
+    );
+    const initialRating = $(`#selectedRating_${sectionId}`).val();
+    stars.each(function (i) {
+        $(this).css("color", i < initialRating ? "gold" : "#ccc");
     });
 }
 
 function setRating(sectionId, rating) {
     const stars = $(`#rating_${sectionId} .star`);
-    stars.each(function(i) {
-        $(this).css("color", i < rating ? "gold" : "#ccc");
-    });
-    $(`#selectedRating_${sectionId}`).val(rating);
+    const currentRating = parseInt($(`#selectedRating_${sectionId}`).val());
+    if (currentRating === rating) {
+        stars.each(function (i) {
+            $(this).css("color", "#ccc");
+        });
+        $(`#selectedRating_${sectionId}`).val(0);
+    } else {
+        stars.each(function (i) {
+            $(this).css("color", i < rating ? "gold" : "#ccc");
+        });
+        $(`#selectedRating_${sectionId}`).val(rating);
+    }
 }
-
-
-
 function addDateField(sectionId) {
     const container = $(`#dynamicFields_${sectionId}`);
     const dateField = `
@@ -382,7 +410,6 @@ function addTextField(sectionId) {
               </div>
             <div class="col-md-4 mt-2">
                 <input type="text" class="form-control" name="text_${sectionId}" placeholder="Text input">
-
                 </div>
                  <div class="col-md-1 mt-2">
                 <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)"><i class="ri-delete-bin-7-line ri-20px"></i></button>
@@ -464,13 +491,16 @@ window.fieldCount = 1;
 // Function to remove a field
 function removeField(button) {
     $(button).closest('.row').remove();
-}
 
+}
+function removeoption(button){
+  const choiceOption = $(button).closest('.choice-option');
+    choiceOption.remove();
+}
 // Function to remove a section
 function removeSection(sectionId) {
     $(`#section_${sectionId}`).remove();
 }
-
 
 </script>
 

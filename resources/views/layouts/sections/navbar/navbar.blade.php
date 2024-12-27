@@ -65,7 +65,7 @@ $navbarDetached = ($navbarDetached ?? '');
           @endif
 
           <!-- Language -->
-          <li class="nav-item dropdown-language dropdown">
+          {{-- <li class="nav-item dropdown-language dropdown">
             <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
               <i class='ri-translate-2 ri-22px'></i>
             </a>
@@ -91,10 +91,10 @@ $navbarDetached = ($navbarDetached ?? '');
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
           <!--/ Language -->
 
-          @if($configData['hasCustomizer'] == true)
+          {{-- @if($configData['hasCustomizer'] == true)
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown me-1 me-xl-0">
               <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -119,10 +119,10 @@ $navbarDetached = ($navbarDetached ?? '');
               </ul>
             </li>
             <!-- / Style Switcher -->
-          @endif
+          @endif --}}
 
           <!-- Quick links  -->
-          <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-1 me-xl-0">
+          {{-- <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-1 me-xl-0">
             <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
               <i class='ri-star-smile-line ri-22px'></i>
             </a>
@@ -200,7 +200,7 @@ $navbarDetached = ($navbarDetached ?? '');
                 </div>
               </div>
             </div>
-          </li>
+          </li> --}}
           <!-- Quick links -->
 
           <!-- Notification -->

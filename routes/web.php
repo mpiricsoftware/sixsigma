@@ -170,8 +170,15 @@ use App\Http\Controllers\StagesController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Models\State;
+use App\Models\City;
+
 
 // Main Page Route
+
+Route::get('login/google', [GoogleController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::group(['middleware' => ['auth','verified']], function ($request)
 {
     Route::group(['middleware' => ['role:Super Admin']], function () {
@@ -183,6 +190,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
         Route::get('/admin/add/subplans',[adminController::class, 'getSubplans']);
         Route::resource('/admin-list', adminController::class);
     });
+
 
     Route::get('/video-stream', [VideoStreamController::class, 'videoStreamManage'])->name('video-stream');
     Route::resource('/video-stream-list', VideoStreamController::class);
@@ -215,13 +223,22 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('getInputFields',[FormController::class,'getInputFields'])->name('getInputFields');
     Route::get('stages',[StagesController::class,'index']);
     Route::resource('stages-list',StagesController::class);
-    Route::get('question',[QuestionController::class,'index']);
+    Route::get('define/{sectionId}',[QuestionController::class,'define'])->name('define');
     Route::resource('question-list',QuestionController::class);
+    // Route::get('define/{sectionId}', [QuestionController::class, 'define'])->name('define');
     Route::get('answer',[AnswerController::class,'index']);
     Route::resource('answer-list',AnswerController::class);
+    Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
+    Route::get('/home',[QuestionController::class,'home'])->name('home');
     Route::resource('section-list',SectionController::class);
     Route::get('section',[SectionController::class,'index']);
 
+   Route::get('/states/{countryId}', function ($countryId) {
+      return State::where('country_id', $countryId)->get();
+  });
+  Route::get('/cities/{stateId}', function ($stateId) {
+      return City::where('state_id', $stateId)->get();
+  });
     // layout
     Route::get('/layouts/collapsed-menu', [CollapsedMenu::class, 'index'])->name('layouts-collapsed-menu');
     Route::get('/layouts/content-navbar', [ContentNavbar::class, 'index'])->name('layouts-content-navbar');
@@ -277,9 +294,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('/app/invoice/edit', [InvoiceEdit::class, 'index'])->name('app-invoice-edit');
     Route::get('/app/invoice/add', [InvoiceAdd::class, 'index'])->name('app-invoice-add');
     Route::get('/app/user/list', [UserList::class, 'index'])->name('app-user-list');
-    Route::get('/app/user/view/account', [UserViewAccount::class, 'index'])->name('app-user-view-account');
-    Route::get('/app/user/view/security', [UserViewSecurity::class, 'index'])->name('app-user-view-security');
-    Route::get('/app/user/view/billing', [UserViewBilling::class, 'index'])->name('app-user-view-billing');
+    Route::get('/app/user/view/account/{id}', [UserViewAccount::class, 'index'])->name('app-user-view-account');
+    Route::get('/app/user/view/security/{id}', [UserViewSecurity::class, 'index'])->name('app-user-view-security');
+    Route::get('/app/user/view/billing', [UserViewBilling::class, 'index'])->name('app-user-viebillw-billing');
     Route::get('/app/user/view/notifications', [UserViewNotifications::class, 'index'])->name('app-user-view-notifications');
     Route::get('/app/user/view/connections', [UserViewConnections::class, 'index'])->name('app-user-view-connections');
     Route::get('/app/access-roles', [AccessRoles::class, 'AccessRole'])->name('app-access-roles');
@@ -309,6 +326,8 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     // authentication
     Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
     Route::get('/auth/login-cover', [LoginCover::class, 'index'])->name('auth-login-cover');
+
+
     Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
     Route::get('/auth/register-cover', [RegisterCover::class, 'index'])->name('auth-register-cover');
     Route::get('/auth/register-multisteps', [RegisterMultiSteps::class, 'index'])->name('auth-register-multisteps');
@@ -414,6 +433,8 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     // laravel example
     Route::get('/user-management', [UserManagement::class, 'UserManagement'])->name('laravel-example-user-management');
     Route::resource('/user-list', UserManagement::class);
+    Route::get('getstate',[UserManagement::class, 'getstate'])->name('getstate');
+    Route::get('getcity',[UserManagement::class, 'getcity'])->name('getcity');
 
 });
 

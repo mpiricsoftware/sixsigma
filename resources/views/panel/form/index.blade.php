@@ -106,7 +106,7 @@
 </div>
 
 <script>
-     var showUrl = @json(route('form-list.create', ':id'));
+     var showUrl = @json(route('form-list.show', ':id'));
   </script>
 
 @endsection

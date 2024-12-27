@@ -8,6 +8,10 @@
   </x-slot>
 
   <x-slot name="form">
+    <x-action-message on="saved">
+      {{ __('Update Password.') }}
+    </x-action-message>
+
     <div class="mb-5">
       <x-label class="form-label" for="current_password" value="{{ __('Current Password') }}" />
       <x-input id="current_password" type="password"
@@ -15,21 +19,22 @@
         autocomplete="current-password" />
       <x-input-error for="current_password" />
     </div>
-
-    <div class="mb-5">
+<div class="row">
+    <div class="col-md-6 mb-5">
       <x-label class="form-label" for="password" value="{{ __('New Password') }}" />
       <x-input id="password" type="password" class="{{ $errors->has('password') ? 'is-invalid' : '' }}"
         wire:model="state.password" autocomplete="new-password" />
       <x-input-error for="password" />
     </div>
 
-    <div class="mb-5">
+    <div class="col-md-6 mb-5">
       <x-label class="form-label" for="password_confirmation" value="{{ __('Confirm Password') }}" />
       <x-input id="password_confirmation" type="password"
         class="{{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
         wire:model="state.password_confirmation" autocomplete="new-password" />
       <x-input-error for="password_confirmation" />
     </div>
+  </div>
   </x-slot>
 
 

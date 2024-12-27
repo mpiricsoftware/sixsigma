@@ -55,7 +55,7 @@
           "role":["Admin"]
         },
         {
-          "url":"question",
+          "url":"define/{sectionId}",
           "name":"Question",
           "slug": "question",
           "role":["Admin"]
@@ -65,7 +65,21 @@
           "name":"Answer",
           "slug":"answer",
           "role":["Admin"]
+        },
+        {
+          "url":"user-management",
+          "name":"User-management",
+          "slug":"user-management",
+          "role":["Admin"]
+        },
+        {
+          "url": "app/ecommerce/customer/details/overview",
+          "name": "Overview",
+          "slug": "app-ecommerce-customer-details-overview",
+          "role": ["Admin"]
+
         }
+
       ]
     },
     {
@@ -186,25 +200,25 @@
       "name": "User Management",
       "icon": "menu-icon tf-icons ri-database-2-line",
       "slug": "user-management",
-      "role": ["Super Admin","Admin"],
+      "role": [],
       "submenu": [
         {
           "url": "admin",
           "name": "Admin",
           "slug": "admin",
-          "role" : ["Super Admin"]
+          "role" : []
         },
         {
           "url": "user-management",
           "name": "User Management",
           "slug": "laravel-example-user-management",
-          "role" : ["Super Admin","Admin","Company"]
+          "role" : []
         },
         {
           "url": "company",
           "name": "Company",
           "slug": "CompanyManage",
-          "role" : ["Super Admin","Admin"]
+          "role" : []
         }
       ]
     },
@@ -212,19 +226,19 @@
       "name": "Company Management",
       "icon": "menu-icon tf-icons ri-shopping-bag-3-line",
       "slug": "comapny-management",
-      "role": ["Super Admin","Admin","Company"],
+      "role": [],
       "submenu": [
         {
           "url": "site",
           "name": "Sites",
           "slug": "siteManage",
-          "role" : ["Super Admin","Admin","Company"]
+          "role" : []
         },
         {
           "url": "department",
           "name": "Departments",
           "slug": "departmentManage",
-          "role" : ["Super Admin","Admin","Company"]
+          "role" : []
         }
       ]
     },
@@ -232,19 +246,19 @@
       "name": "Subscription",
       "icon": "menu-icon tf-icons ri-layout-right-line",
       "slug": "subscription",
-      "role": ["Super Admin","Admin"],
+      "role": [],
       "submenu":[
         {
           "url": "subscription/group",
           "name": "Subscription Group",
           "slug":"subscription-Group",
-          "role": ["Super Admin","Admin"]
+          "role": []
         },
         {
           "url": "subscription/plan",
           "name": "Subscription Plan",
           "slug": "subscription-plan",
-          "role": ["Super Admin", "Admin"]
+          "role": []
         }
       ]
 
@@ -352,48 +366,48 @@
         {
           "name": "Customer",
           "slug": "app-ecommerce-customer",
-          "role": [],
+          "role": ["Admin","Super Admin"],
 
           "submenu": [
             {
               "url": "app/ecommerce/customer/all",
               "name": "All Customers",
               "slug": "app-ecommerce-customer-all",
-              "role": []
+              "role": ["Admin"]
 
             },
             {
               "name": "Customer Details",
               "slug": "app-ecommerce-customer-details",
-              "role": [],
+              "role": ["Admin"],
 
               "submenu": [
                 {
                   "url": "app/ecommerce/customer/details/overview",
                   "name": "Overview",
                   "slug": "app-ecommerce-customer-details-overview",
-                  "role": []
+                  "role": ["Admin"]
 
                 },
                 {
                   "url": "app/ecommerce/customer/details/security",
                   "name": "Security",
                   "slug": "app-ecommerce-customer-details-security",
-                  "role": []
+                  "role": ["Admin"]
 
                 },
                 {
                   "url": "app/ecommerce/customer/details/billing",
                   "name": "Address & Billing",
                   "slug": "app-ecommerce-customer-details-billing",
-                  "role": []
+                  "role": ["Admin"]
 
                 },
                 {
                   "url": "app/ecommerce/customer/details/notifications",
                   "name": "Notifications",
                   "slug": "app-ecommerce-customer-details-notifications",
-                  "role": []
+                  "role": ["Admin"]
 
                 }
               ]
@@ -876,7 +890,7 @@
         {
           "name": "Reset Password",
           "slug": "auth-reset-password",
-          "role": [],
+          "role": ["Super Admin"],
 
           "submenu": [
             {
@@ -884,7 +898,7 @@
               "name": "Basic",
               "slug": "auth-reset-password-basic",
               "target": "_blank",
-              "role": []
+              "role": ["Super Admin"]
 
             },
             {
@@ -892,11 +906,12 @@
               "name": "Cover",
               "slug": "auth-reset-password-cover",
               "target": "_blank",
-              "role": []
+              "role": ["Super Admin"]
 
             }
           ]
         },
+
         {
           "name": "Forgot Password",
           "slug": "auth-forgot-password",

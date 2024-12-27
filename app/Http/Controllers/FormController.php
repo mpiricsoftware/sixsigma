@@ -15,16 +15,16 @@ class FormController extends Controller
     public function index(Request $request)
     {
       if ($request->ajax()) {
-        // Retrieve AJAX request data
+
         $search = $request->input('search.value');
         $start = (int) $request->input('start', 0);
         $length = (int) $request->input('length', 10);
         $draw = (int) $request->input('draw', 1);
 
-        // Query builder for fetching inputs
+
         $query = form::query();
 
-        // Apply search filters if search term exists
+
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('id', 'LIKE', "%{$search}%")
@@ -32,7 +32,7 @@ class FormController extends Controller
             });
         }
 
-        // Get total data count without any filters
+
         $totalData = form::count();
 
         // Get the count of filtered data based on search
@@ -70,8 +70,8 @@ class FormController extends Controller
      */
     public function create()
     {
-        $form = form::all();
-        return view('panel.form.create',compact('form'));
+
+
     }
 
     /**
@@ -104,7 +104,8 @@ class FormController extends Controller
      */
     public function show(string $id)
     {
-        //
+      $form = form::where('id',$id)->get();
+      return view('panel.form.show',compact('form'));
     }
 
     /**

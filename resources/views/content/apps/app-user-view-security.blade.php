@@ -78,11 +78,11 @@
           <ul class="list-unstyled mb-6">
             <li class="mb-2">
               <span class="fw-medium text-heading me-2">Username:</span>
-              <span>violet.dev</span>
+              <span>{{$user->name}}</span>
             </li>
             <li class="mb-2">
               <span class="fw-medium text-heading me-2">Email:</span>
-              <span>vafgot@vultukir.org</span>
+              <span>{{$user->email}}</span>
             </li>
             <li class="mb-2">
               <span class="fw-medium text-heading me-2">Status:</span>
@@ -90,23 +90,23 @@
             </li>
             <li class="mb-2">
               <span class="fw-medium text-heading me-2">Role:</span>
-              <span>Author</span>
+              <span>{{ $user->roles->first()?->name ?? 'N/A' }}</span>
             </li>
-            <li class="mb-2">
+            {{-- <li class="mb-2">
               <span class="fw-medium text-heading me-2">Tax id:</span>
               <span>Tax-8965</span>
-            </li>
+            </li> --}}
             <li class="mb-2">
               <span class="fw-medium text-heading me-2">Contact:</span>
-              <span>(123) 456-7890</span>
+              <span>{{ $user->mobileno }}</span>
             </li>
             <li class="mb-2">
-              <span class="fw-medium text-heading me-2">Languages:</span>
-              <span>French</span>
+              <span class="fw-medium text-heading me-2">Address:</span>
+              <span>{{$user->address}}</span>
             </li>
             <li class="mb-2">
               <span class="fw-medium text-heading me-2">Country:</span>
-              <span>England</span>
+              <span>{{ $countryName }}</span>
             </li>
           </ul>
           <div class="d-flex justify-content-center">
@@ -118,7 +118,7 @@
     </div>
     <!-- /User Card -->
     <!-- Plan Card -->
-    <div class="card mb-6 border border-2 border-primary">
+    {{-- <div class="card mb-6 border border-2 border-primary">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
           <span class="badge bg-label-primary rounded-pill">Standard</span>
@@ -145,7 +145,7 @@
           <button class="btn btn-primary" data-bs-target="#upgradePlanModal" data-bs-toggle="modal">Upgrade Plan</button>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!-- /Plan Card -->
   </div>
   <!--/ User Sidebar -->
@@ -156,11 +156,11 @@
     <!-- User Tabs -->
     <div class="nav-align-top">
       <ul class="nav nav-pills flex-column flex-md-row mb-6 row-gap-2">
-        <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/account')}}"><i class="ri-group-line me-2"></i>Account</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('app-user-view-account', ['id' => $user->id]) }}"><i class="ri-group-line me-2"></i>Account</a></li>
         <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ri-lock-2-line me-2"></i>Security</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/billing')}}"><i class="ri-bookmark-line me-2"></i>Billing & Plans</a></li>
+        {{-- <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/billing')}}"><i class="ri-bookmark-line me-2"></i>Billing & Plans</a></li>
         <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/notifications')}}"><i class="ri-notification-4-line me-2"></i>Notifications</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/connections')}}"><i class="ri-link-m me-2"></i>Connections</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/connections')}}"><i class="ri-link-m me-2"></i>Connections</a></li> --}}
       </ul>
     </div>
     <!--/ User Tabs -->
@@ -170,6 +170,8 @@
       <h5 class="card-header">Change Password</h5>
       <div class="card-body">
         <form id="formChangePassword" method="POST" onsubmit="return false">
+          @csrf
+          @method('PUT')
           <div class="alert alert-warning alert-dismissible" role="alert">
             <h5 class="alert-heading mb-1">Ensure that these requirements are met</h5>
             <span>Minimum 8 characters long, uppercase & symbol</span>
@@ -196,7 +198,7 @@
               </div>
             </div>
             <div>
-              <button type="submit" class="btn btn-primary me-2">Change Password</button>
+              <button type="submit" class="btn btn-primary me-2" id="submitBtn">Change Password</button>
             </div>
           </div>
         </form>
@@ -205,7 +207,7 @@
     <!--/ Change Password -->
 
     <!-- Two-steps verification -->
-    <div class="card mb-6">
+    {{-- <div class="card mb-6">
       <div class="card-header">
         <h5 class="mb-0">Two-steps verification</h5>
         <span class="card-subtitle">Keep your account secure with authentication step.</span>
@@ -223,7 +225,7 @@
           <a href="javascript:void(0);" class="text-primary">Learn more.</a>
         </p>
       </div>
-    </div>
+    </div> --}}
     <!--/ Two-steps verification -->
 
     <!-- Recent Devices -->

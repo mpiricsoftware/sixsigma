@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\answer;
+use App\Models\section;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
@@ -11,7 +15,10 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        return view('panel.answer.index');
+        $section = Section::all();
+        $question = Question::all();
+        // dd($question);
+        return view('panel.answer.index',compact('section','question'));
     }
 
     /**
@@ -27,7 +34,46 @@ class AnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $answers = $request->input('answers');
+        foreach ($answers as $sectionId => $questions) {
+
+            $sectionHasAnswers = false;
+            foreach ($questions as $answer) {
+                if (!empty($answer)) {
+                    $sectionHasAnswers = true;
+                    break;
+                }
+            }
+            if (!$sectionHasAnswers) {
+                continue;
+            }
+            foreach ($questions as $questionIndex => $answer) {
+                $question = Question::where('section_id', $sectionId)
+                    // ->skip($questionIndex)
+                    ->first();
+                if (!$question) {
+                    continue;
+                }
+                if (is_array($answer)) {
+                  $answer = json_encode($answer);
+              }
+
+
+              if (empty($answer)) {
+                  $answer = null;
+              }
+
+                Answer::create([
+                    'section_id' => $sectionId,
+                    'question_id' => $question->id,
+                    'user_id' => auth()->id(),
+                    'answer' => $answer,
+                ]);
+            }
+        }
+
+// dd($request->all());
+       return view("panel.question.view");
     }
 
     /**
@@ -35,7 +81,7 @@ class AnswerController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -61,4 +107,14 @@ class AnswerController extends Controller
     {
         //
     }
+    // QuestionController.php
+public function getQuestions($sectionId)
+{
+    // Fetch questions for the selected section
+    $questions = Question::where('section_id', $sectionId)->get();
+
+    // Return the questions as JSON
+    return response()->json(['questions' => $questions]);
+}
+
 }

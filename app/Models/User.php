@@ -12,6 +12,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 class User extends Authenticatable implements MustVerifyEmail
 
 {
@@ -40,7 +41,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'department_id',
         'status',
         'mobileno',
-        'company'
+        'company',
+        'address',
+        'country',
+        'state',
+        'city',
+        'office_no',
+        'lastname',
+        'username',
+        'google_id'
 
 
 
@@ -108,5 +117,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function SubPlan()
     {
       return $this->belongsTo(SubPlan::class, 'subplan_id','id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country','id');
+    }
+
+    public function role()
+    {
+      return $this->belongsTo(Role::class, 'id');
     }
 }

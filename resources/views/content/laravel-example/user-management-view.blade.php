@@ -41,7 +41,7 @@
   @vite([
     'resources/assets/js/modal-edit-user.js',
     'resources/assets/js/app-user-view.js',
-    'resources/assets/js/app-user-view-account.js'
+    'resources/assets/js/app-user-view-account.js',
   ])
 @endsection
 
@@ -49,6 +49,7 @@
   <div class="row gy-6 gy-md-0">
     <!-- User Sidebar -->
     <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+
       <!-- User Card -->
       <div class="card mb-6">
         <div class="card-body pt-12">
@@ -56,35 +57,35 @@
             <div class=" d-flex align-items-center flex-column">
               <img class="img-fluid rounded-3 mb-4" src="{{asset('assets/img/avatars/1.png')}}" height="120" width="120" alt="User avatar" />
               <div class="user-info text-center">
-                <h5>{{$user->name}}</h5>
-                <span class="badge bg-label-danger rounded-pill">Subscriber</span>
+                <h5>{{$user->company}}</h5>
+                {{-- <span class="badge bg-label-danger rounded-pill">Subscriber</span> --}}
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-around flex-wrap my-6 gap-0 gap-md-3 gap-lg-4">
-            <div class="d-flex align-items-center me-5 gap-4">
-              <div class="avatar">
-                <div class="avatar-initial bg-label-primary rounded-3">
+          {{-- <div class="d-flex justify-content-around flex-wrap my-6 gap-0 gap-md-3 gap-lg-4">
+            <div class="d-flex align-items-center me-5 gap-4"> --}}
+              {{-- <div class="avatar">
+                {{-- <div class="avatar-initial bg-label-primary rounded-3">
                   <i class='ri-check-line ri-24px'></i>
-                </div>
-              </div>
-              <div>
+                </div> --}}
+              {{-- </div> --}}
+              {{-- <div>
                 <h5 class="mb-0">1.23k</h5>
                 <span>Task Done</span>
-              </div>
-            </div>
-            <div class="d-flex align-items-center gap-4">
-              <div class="avatar">
+              </div> --}}
+            {{-- </div> --}}
+            {{-- <div class="d-flex align-items-center gap-4"> --}}
+              {{-- <div class="avatar">
                 <div class="avatar-initial bg-label-primary rounded-3">
                   <i class='ri-briefcase-line ri-24px'></i>
                 </div>
-              </div>
-              <div>
+              </div> --}}
+              {{-- <div>
                 <h5 class="mb-0">568</h5>
                 <span>Project Done</span>
-              </div>
-            </div>
-          </div>
+              </div> --}}
+            {{-- </div>
+          </div> --}}
           <h5 class="pb-4 border-bottom mb-4">Details</h5>
           <div class="info-container">
             <ul class="list-unstyled mb-6">
@@ -102,28 +103,28 @@
               </li>
               <li class="mb-2">
                 <span class="fw-medium text-heading me-2">Role:</span>
-                <span>{{$user->roles[0]->name}}</span>
+                <span>{{ $user->roles->first()?->name ?? 'N/A' }}</span>
               </li>
-              <li class="mb-2">
+              {{-- <li class="mb-2">
                 <span class="fw-medium text-heading me-2">Tax id:</span>
                 <span>Tax-8965</span>
-              </li>
+              </li> --}}
               <li class="mb-2">
                 <span class="fw-medium text-heading me-2">Contact:</span>
-                <span>(123) 456-7890</span>
+                <span>{{ $user->mobileno }}</span>
               </li>
               <li class="mb-2">
-                <span class="fw-medium text-heading me-2">Languages:</span>
-                <span>French</span>
+                <span class="fw-medium text-heading me-2">Address:</span>
+                <span>{{$user->address}}</span>
               </li>
               <li class="mb-2">
                 <span class="fw-medium text-heading me-2">Country:</span>
-                <span>England</span>
+                <span>{{ $countryName }}</span>
               </li>
             </ul>
             <div class="d-flex justify-content-center">
-              <a href="javascript:;" class="btn btn-primary me-4" data-bs-target="#editUser" data-bs-toggle="modal">Edit</a>
-              <a href="javascript:;" class="btn btn-outline-danger suspend-user">Suspend</a>
+              <a href="javascript:;" class="btn btn-dark rounded-0 me-4" data-bs-target="#editUser" data-bs-toggle="modal">Edit</a>
+              <a href="javascript:;" class="btn btn-white rounded-0 suspend-user">Suspend</a>
             </div>
           </div>
         </div>
@@ -168,11 +169,11 @@
       <!-- User Tabs -->
       <div class="nav-align-top">
         <ul class="nav nav-pills flex-column flex-md-row mb-6 row-gap-2">
-          <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/account')}}"><i class="ri-group-line me-2"></i>Account</a></li>
+          <li class="nav-item"><a class="nav-link"  href="{{ route('app-user-view-account', ['id' => $user->id]) }}"><i class="ri-group-line me-2"></i>Account</a></li>
           <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ri-lock-2-line me-2"></i>Security</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/billing')}}"><i class="ri-bookmark-line me-2"></i>Billing & Plans</a></li>
+          {{-- <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/billing')}}"><i class="ri-bookmark-line me-2"></i>Billing & Plans</a></li>
           <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/notifications')}}"><i class="ri-notification-4-line me-2"></i>Notifications</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/connections')}}"><i class="ri-link-m me-2"></i>Connections</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/connections')}}"><i class="ri-link-m me-2"></i>Connections</a></li> --}}
         </ul>
       </div>
       <!--/ User Tabs -->
@@ -181,43 +182,48 @@
       <div class="card mb-6">
         <h5 class="card-header">Change Password</h5>
         <div class="card-body">
-          <form id="formChangePassword" method="POST" onsubmit="return false">
+          <form id="formChangePassword" method="POST" >
+            @csrf
+            <!-- Your form content here -->
             <div class="alert alert-warning alert-dismissible" role="alert">
-              <h5 class="alert-heading mb-1">Ensure that these requirements are met</h5>
-              <span>Minimum 8 characters long, uppercase & symbol</span>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <h5 class="alert-heading mb-1">Ensure that these requirements are met</h5>
+                <span>Minimum 8 characters long, uppercase & symbol</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="row gx-5">
-              <div class="mb-3 col-12 col-sm-6 form-password-toggle">
-                <div class="input-group input-group-merge">
-                  <div class="form-floating form-floating-outline">
-                    <input class="form-control" type="password" id="newPassword" name="newPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                    <label for="newPassword">New Password</label>
-                  </div>
-                  <span class="input-group-text cursor-pointer text-heading"><i class="ri-eye-off-line"></i></span>
-                </div>
-              </div>
 
-              <div class="mb-3 col-12 col-sm-6 form-password-toggle">
-                <div class="input-group input-group-merge">
-                  <div class="form-floating form-floating-outline">
+            <!-- Password fields -->
+            <div class="row gx-5">
+                <div class="mb-3 col-12 col-sm-6 form-password-toggle">
+                    <div class="input-group input-group-merge">
+                        <div class="form-floating form-floating-outline">
+                    <input class="form-control" type="password" id="newPassword" name="newPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                            <label for="newPassword">New Password</label>
+                        </div>
+                  <span class="input-group-text cursor-pointer text-heading"><i class="ri-eye-off-line"></i></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 col-12 col-sm-6 form-password-toggle">
+                    <div class="input-group input-group-merge">
+                        <div class="form-floating form-floating-outline">
                     <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                    <label for="confirmPassword">Confirm New Password</label>
-                  </div>
+                            <label for="confirmPassword">Confirm New Password</label>
+                        </div>
                   <span class="input-group-text cursor-pointer text-heading"><i class="ri-eye-off-line"></i></span>
                 </div>
-              </div>
-              <div>
-                <button type="submit" class="btn btn-primary me-2">Change Password</button>
-              </div>
+
+                <div class="text-end" style="padding-top:3%">
+                    <button type="submit" class="btn btn-dark rounded-0" id="submitBtn">Change Password</button>
+                </div>
             </div>
-          </form>
+        </form>
+
         </div>
       </div>
       <!--/ Change Password -->
 
       <!-- Two-steps verification -->
-      <div class="card mb-6">
+      {{-- <div class="card mb-6">
         <div class="card-header">
           <h5 class="mb-0">Two-steps verification</h5>
           <span class="card-subtitle">Keep your account secure with authentication step.</span>
@@ -235,9 +241,9 @@
             <a href="javascript:void(0);" class="text-primary">Learn more.</a>
           </p>
         </div>
-      </div>
+      </div> --}}
       <!--/ Two-steps verification -->
-
+    </div>
       <!-- Recent Devices -->
       <div class="card mb-6">
         <h5 class="card-header">Recent Devices</h5>
@@ -281,13 +287,15 @@
         </div>
       </div>
       <!--/ Recent Devices -->
-    </div>
+
+
     <!--/ User Content -->
   </div>
-
+</div>
   <!-- Modal -->
   @include('_partials/_modals/modal-edit-user')
   @include('_partials/_modals/modal-enable-otp')
   @include('_partials/_modals/modal-upgrade-plan')
   <!-- /Modal -->
 @endsection
+

@@ -6,6 +6,7 @@
 
 // Datatable (jquery)
 $(function () {
+  // alert('rwr');
     // Variable declaration for table
     var dt_user_table = $('.datatables-users'),
       select2 = $('.select2'),
@@ -32,19 +33,25 @@ $(function () {
 
     // Users datatable
     if (dt_user_table.length) {
+      var ajexUrl = baseUrl + 'user-list';
+      // alert(ajexUrl);
       var dt_user = dt_user_table.DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-          url: baseUrl + 'user-list'
+          url: ajexUrl
         },
         columns: [
           // columns according to JSON
           { data: '' },
-          { data: 'id' },
-          { data: 'name' },
-          { data: 'email' },
-          { data: 'role' },
+          // { data: 'id' },
+          {data: 'name'},
+          {data: 'lastname'},
+          {data: 'company' },
+          {data: 'state' },
+          {data: 'city'},
+          {data: 'mobileno'},
+          {data: 'status'},
           { data: 'email_verified_at' },
           { data: 'action' }
         ],
@@ -60,21 +67,22 @@ $(function () {
               return '';
             }
           },
-          {
-            searchable: false,
-            orderable: false,
-            targets: 1,
-            render: function (data, type, full, meta) {
-              return `<span>${full.fake_id}</span>`;
-            }
-          },
+          // {
+          //   searchable: false,
+          //   orderable: false,
+          //   targets: 1,
+          //   render: function (data, type, full, meta) {
+          //     return `<span>${full.fake_id}</span>`;
+          //   }
+          // },
           {
             // User full name
-            targets: 2,
+            targets: 1,
+            orderable: false,
             responsivePriority: 4,
             render: function (data, type, full, meta) {
               var $name = full['name'];
-
+              var $email = full['email'];
               // For Avatar badge
               var stateNum = Math.floor(Math.random() * 6);
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
@@ -99,30 +107,84 @@ $(function () {
                 '" class="text-truncate text-heading"><span class="fw-medium">' +
                 $name +
                 '</span></a>' +
+                '<span class="user-email text-muted">' + $email + '</span>' +
                 '</div>' +
                 '</div>';
               return $row_output;
             }
           },
           {
-            // User email
-            targets: 3,
+            // Company
+            targets: 2,
+            orderable: false,
             render: function (data, type, full, meta) {
-              var $email = full['email'];
-              return '<span class="user-email">' + $email + '</span>';
+              var $lastname = full.lastname;
+              return '<span class="text-nowrap">' + $lastname + '</span>';
             }
           },
           {
-            // User company
-            targets: 4,
+            // Company
+            targets: 3,
+            orderable: false,
             render: function (data, type, full, meta) {
               var $company = full.company;
-              return '<span class="user-role">' + $company + '</span>';
+              return '<span class="text-nowrap">' + $company + '</span>';
+            }
+          },
+          {
+            // Country
+            targets: 4,
+            orderable: false,
+            render: function (data, type, full, meta) {
+                var $state = full.state ;
+                return '<span class="text-nowrap">' + $state  + '</span>';
+            }
+          },
+          {
+            // Country
+            targets: 5,
+            orderable: false,
+            render: function (data, type, full, meta) {
+                var $city = full.city ;
+                return '<span class="text-nowrap">' + $city  + '</span>';
+            }
+          },
+          {
+             target: 6,
+             orderable: false,
+             render: function (data, type, full, meta)
+             {
+              var $mobileno = full.mobileno;
+              return '<span class="text-nowrap">' + $mobileno + '</span>';
+             }
+          },
+          {
+            targets: 7,
+            orderable: false,
+            render: function (data, type, full, meta) {
+              var status = full.status;
+              var icon = '';
+
+              switch (status) {
+                case '0':
+                    icon = '<span class="badge bg-label-success rounded-pill">Active</span>';
+                    break;
+                case '1':
+                    icon = '<span class="badge bg-label-warning rounded-pill">Inactive</span>';
+                    break;
+                default:
+                    icon = '<span class="badge bg-label-secondary rounded-pill">Unknown</span>';
+                    break;
+            }
+
+
+              return '<span class="text-nowrap">' + icon + '</span>';
             }
           },
           {
             // email verify
-            targets: 5,
+            targets: 8,
+            orderable: false,
             className: 'text-center',
             render: function (data, type, full, meta) {
               var $verified = full['email_verified_at'];
@@ -145,14 +207,6 @@ $(function () {
                 '<div class="d-flex align-items-center gap-50">' +
                 '<a href="' + userView.replace(':id', full['id']) + '" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Preview"><i class="ri-eye-line ri-20px"></i></a>' +
                 `<button class="btn btn-sm btn-icon edit-record btn-text-secondary rounded-pill waves-effect" data-id="${full['id']}" data-bs-toggle="modal" data-bs-target="#modalAddUser"><i class="ri-edit-box-line ri-20px"></i></button>` +
-                `<button class="btn btn-sm btn-icon delete-record btn-text-secondary rounded-pill waves-effect" data-id="${full['id']}"><i class="ri-delete-bin-7-line ri-20px"></i></button>` +
-                // '<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line ri-20px"></i></button>' +
-                // '<div class="dropdown-menu dropdown-menu-end m-0">' +
-                // '<a href="' +
-                // userView.replace(':id', full['id']) +
-                // '" class="dropdown-item">View</a>' +
-                // '<a href="javascript:;" class="dropdown-item">Suspend</a>' +
-                // '</div>' +
                 '</div>'
               );
             }
@@ -328,7 +382,7 @@ $(function () {
           },
           {
             text: '<i class="ri-add-line ri-16px me-0 me-sm-2 align-baseline"></i><span class="d-none d-sm-inline-block">Add New User</span>',
-            className: 'add-new btn btn-primary waves-effect waves-light',
+            className: 'add-new btn btn-dark custom-rounded-0 waves-effect waves-light',
             attr: {
               'data-bs-toggle': 'modal',
               'data-bs-target': '#modalAddUser'
@@ -447,19 +501,31 @@ $(function () {
         $('#user_id').val(data.id);
         $('#add-user-fullname').val(data.name);
         $('#add-user-email').val(data.email);
-        $('#add-user-company').val(data.company_id).trigger('change');
-        $('#add-user-site').val(data.site_id).trigger('change');
-        $('#add-user-department').val(data.department_id).trigger('change');
-      });
+        $('#add-user-company').val(data.company);
+        $('#username').val(data.username);
+        $('#add-user-lastname').val(data.lastname);
+        $('#address').val(data.address);
+        $('#country').val(data.country).trigger('change');
+        setTimeout(function () {
+            $('#state').val(data.state).trigger('change');
+        }, 500);
+        setTimeout(function () {
+            $('#city').val(data.city).trigger('change');
+        }, 1000);
+        $('#office_no').val(data.office_no);
+        $('#mobileno').val(data.mobileno);
+        $('#usertype').val(data.usertype).trigger('change');
+        console.log(data.usertype);
+
+    });
+
     });
 
     // changing the title
     $('.add-new').on('click', function () {
       $('#user_id').val(''); //reseting input field
       $('#addNewUserForm')[0].reset();
-      $('#add-user-company').val(null).trigger('change');
-      $('#add-user-site').val(null).trigger('change');
-      $('#add-user-department').val(null).trigger('change');
+      $('#usertype').val(null).trigger('select2.change');
       $('#modalAddUserLabel').html('Add New User');
     });
 
@@ -559,4 +625,51 @@ $(function () {
     //     });
     //   });
     // }
+});
+// Handle country change
+$('.country').on('change', function() {
+  var countryId = $(this).val();
+  var currentModal = $(this).closest('.modal'); // Get the current modal
+  var stateSelect = currentModal.find('.state'); // Select the state dropdown
+
+  $.ajax({
+    url: 'getstate', // Correct route for fetching states
+      method: "GET",
+      data: {country_id: countryId},
+      dataType: 'json',
+      success: function(response) {
+          stateSelect.empty(); // Clear previous options
+          stateSelect.append('<option value="">Select state</option>');
+          $.each(response.state, function(index, state) { // Correct the property to 'state'
+              stateSelect.append('<option value="' + state.id + '">' + state.name + '</option>');
+          });
+      },
+      error: function(xhr, status, error) {
+          console.error(error);
+      }
+  });
+});
+
+// Handle state change
+$('.state').on('change', function() {
+  var stateId = $(this).val();
+  var currentModal = $(this).closest('.modal'); // Get the current modal
+  var citySelect = currentModal.find('.city'); // Select the city dropdown
+
+  $.ajax({
+    url: 'getcity', // Correct route for fetching cities
+      method: "GET",
+      data: {state_id: stateId},
+      dataType: 'json',
+      success: function(response) {
+          citySelect.empty(); // Clear previous options
+          citySelect.append('<option value="">Select city</option>');
+          $.each(response.city, function(index, city) { // Correct the property to 'city'
+              citySelect.append('<option value="' + city.id + '">' + city.name + '</option>');
+          });
+      },
+      error: function(xhr, status, error) {
+          console.error(error);
+      }
+  });
 });
