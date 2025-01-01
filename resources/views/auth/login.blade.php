@@ -17,15 +17,18 @@ $customizerHidden = 'customizer-hide';
 <div class="authentication-wrapper authentication-cover">
   <!-- Logo -->
   <a href="{{url('/')}}" class="auth-cover-brand d-flex align-items-center gap-2">
-    <span class="app-brand-logo demo">@include('_partials.macros',["width"=>25,"withbg"=>'var(--bs-primary)'])</span>
-    <span class="app-brand-text demo text-heading fw-semibold">{{config('variables.templateName')}}</span>
+    {{-- <span class="app-brand-logo demo">@include('_partials.macros',["width"=>25,"withbg"=>'var(--bs-primary)'])</span> --}}
+    {{-- <span class="app-brand-logo demo">
+      <img src="{{ asset('assets/img/logo/logo.jpeg') }}" alt="Logo" width="120" style="background-color: var(--bs-primary);">
+  </span> --}}
+    {{-- <span class="app-brand-text demo text-heading fw-semibold">Six-Sigma</span> --}}
   </a>
   <!-- /Logo -->
   <div class="authentication-inner row m-0">
     <!-- /Left Section -->
     <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-12 pb-2">
-      <img src="{{asset('assets/img/illustrations/auth-login-illustration-'.$configData['style'].'.png') }}" class="auth-cover-illustration w-100" alt="auth-illustration" data-app-light-img="illustrations/auth-login-illustration-light.png" data-app-dark-img="illustrations/auth-login-illustration-dark.png" />
-      <img src="{{asset('assets/img/illustrations/auth-cover-login-mask-'.$configData['style'].'.png') }}" class="authentication-image" alt="mask" data-app-light-img="illustrations/auth-cover-login-mask-light.png" data-app-dark-img="illustrations/auth-cover-login-mask-dark.png" />
+      <img src="{{asset('assets/img/logo/Bg-selfas.png') }}" width="120%" height="100%" alt="auth-illustration" data-app-light-img="logo/Bg-selfas.png" data-app-dark-img="logo/Bg-selfas.png" />
+      {{-- <img src="{{asset(''') }}" class="authentication-image" alt="mask" data-app-light-img="illustrations/auth-cover-login-mask-light.png" data-app-dark-img="illustrations/auth-cover-login-mask-dark.png" /> --}}
     </div>
     <!-- /Left Section -->
 
@@ -81,11 +84,11 @@ $customizerHidden = 'customizer-hide';
             </div>
             @if (Route::has('password.request'))
               <a href="{{ route('password.request') }}" class="float-end mb-1 mt-2">
-                <span>Forgot Password?</span>
+                <span style="color: #2129bd">Forgot Password?</span>
               </a>
             @endif
           </div>
-          <button class="btn btn-primary d-grid w-100">
+          <button class="btn btn-primary rounded-0 d-grid w-100" style="background-color: #2129bd">
             Sign in
           </button>
         </form>
@@ -94,7 +97,7 @@ $customizerHidden = 'customizer-hide';
           <span>New on our platform?</span>
           @if (Route::has('register'))
             <a href="{{ route('register') }}">
-              <span>Create an account</span>
+              <span style="color: #2129bd">Create an account</span>
             </a>
           @endif
         </p>

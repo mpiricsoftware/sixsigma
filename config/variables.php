@@ -1,10 +1,10 @@
 <?php
 // Variables
 return [
-  "creatorName" => "Project AI",
+  "creatorName" => "Business Excellence",
   "creatorUrl" => "https://pixinvent.com",
-  "templateName" => "Project AI",
-  "templateSuffix" => "Project AI",
+  "templateName" => "Concept",
+  "templateSuffix" => "Business Excellence",
   "templateVersion" => "2.0.1",
   "templateFree" => false,
   "templateDescription" => "Materialize – is the most developer friendly & highly customizable Admin Dashboard Template.",
