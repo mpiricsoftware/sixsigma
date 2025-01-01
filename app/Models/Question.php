@@ -23,5 +23,9 @@ class Question extends Model
     {
       return $this->belongsTo(section::class,'id');
     }
+    public function answer()
+    {
+      return $this->belongsTo(answer::class, 'id');
+    }
 
 }

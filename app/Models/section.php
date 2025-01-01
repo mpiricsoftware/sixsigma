@@ -16,4 +16,6 @@ class section extends Model
     {
       return $this->belongsTo(form::class, 'form_id');
     }
+
+
 }

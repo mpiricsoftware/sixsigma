@@ -84,7 +84,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <button type="button" class="btn btn-primary" id="addSection">+ Add Option</button>
+                <button type="button" class="btn btn-dark rounded-0" id="addSection" style="background-color: 00a6d5">+ Add Option</button>
                 <div id="dynamicFields">&nbsp;</div>
               </div>
             </div>
@@ -92,7 +92,7 @@
         </div>
 <br>
         <div class="col-12 text-end">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-dark rounded-0">Submit</button>
         </div>
 
       </div>
@@ -161,7 +161,7 @@ $(document).ready(function() {
 
                   <div class="row mt-3">
                   <div class="col-md-12 text-end">
-                    <button type="button" class="btn btn-primary" onclick="removeSection(${fieldCount})">Remove Section</button>
+                    <button type="button" class="btn btn-dark rounded-0" onclick="removeSection(${fieldCount})" style="background-color:#00a6d5">Remove</button>
                   </div>
                 </div>
 
@@ -187,11 +187,11 @@ function addChoiceField(sectionId) {
             </div>
             <div class="col-md-12 mt-2">
                 <div class="btn-group" role="group" aria-label="Choice Type">
-                    <button type="button" class="btn btn-white" onclick="showChoiceOptions(${sectionId}, 'radio', this)">Radio Button</button>
-                    <button type="button" class="btn btn-primary" onclick="showChoiceOptions(${sectionId}, 'checkbox', this)">Checkbox</button>
+                    <button type="button" class="btn btn-whiterounded-0" onclick="showChoiceOptions(${sectionId}, 'radio', this)">Radio Button</button>
+                    <button type="button" class="btn btn-dark rounded-0" onclick="showChoiceOptions(${sectionId}, 'checkbox', this)">Checkbox</button>
                 </div>
                 <div class="choice-options mt-4"></div>
-                <button type="button" class="btn btn-primary mt-2" onclick="addChoiceOption(${sectionId})">+</button>
+                <button type="button" class="btn btn-dark rounded-0 mt-2" onclick="addChoiceOption(${sectionId})" style="background-color:#00a6d5">+</button>
                 <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
                     <i class="ri-delete-bin-7-line ri-20px"></i>
                 </button>
@@ -204,7 +204,7 @@ function addChoiceField(sectionId) {
 
 function showChoiceOptions(sectionId, type, button) {
     const choiceContainer = $(`#dynamicFields_${sectionId} .choice-options`);
-    choiceContainer.empty(); 
+    choiceContainer.empty();
 
     $(button).siblings().removeClass('btn-primary').addClass('btn-outline-primary');
     $(button).removeClass('btn-outline-primary').addClass('btn-primary');
@@ -476,7 +476,7 @@ function addsection() {
                 <div id="dynamicFields_${fieldCount}_inner" class="mt-3"></div>
                 <div class="row mt-3">
                     <div class="col-md-12 text-end">
-                        <button type="button" class="btn btn-primary" onclick="removeSection(${fieldCount})">Remove Section</button>
+                        <button type="button" class="btn btn-primary rounded-0" onclick="removeSection(${fieldCount})"  style="background-color:#00a6d5">Remove</button>
                     </div>
                 </div>
             </div>

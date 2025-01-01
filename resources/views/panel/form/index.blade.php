@@ -96,7 +96,7 @@
                      </div>
                    </div>
                    <div class="col-12 text-end">
-                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <button type="submit" class="btn btn-dark rounded-0">Submit</button>
                    </div>
 
                  </form>
@@ -107,6 +107,7 @@
 
 <script>
      var showUrl = @json(route('form-list.show', ':id'));
+
   </script>
 
 @endsection

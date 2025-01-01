@@ -43,12 +43,12 @@ $navbarDetached = ($navbarDetached ?? '');
         @if(!isset($menuHorizontal))
         <!-- Search -->
         <div class="navbar-nav align-items-center">
-          <div class="nav-item navbar-search-wrapper mb-0">
+          {{-- <div class="nav-item navbar-search-wrapper mb-0">
             <a class="nav-item nav-link search-toggler fw-normal px-0" href="javascript:void(0);">
               <i class="ri-search-line ri-22px scaleX-n1-rtl me-3"></i>
               <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
             </a>
-          </div>
+          </div> --}}
         </div>
         <!-- /Search -->
         @endif
@@ -205,10 +205,10 @@ $navbarDetached = ($navbarDetached ?? '');
 
           <!-- Notification -->
           <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-4 me-xl-1">
-            <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            {{-- <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
               <i class="ri-notification-2-line ri-22px"></i>
               <span class="position-absolute top-0 start-50 translate-middle-y badge badge-dot bg-danger mt-2 border"></span>
-            </a>
+            </a> --}}
             <ul class="dropdown-menu dropdown-menu-end py-0">
               <li class="dropdown-menu-header border-bottom py-50">
                 <div class="dropdown-header d-flex align-items-center py-2">

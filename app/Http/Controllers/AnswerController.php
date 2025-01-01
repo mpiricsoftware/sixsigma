@@ -10,111 +10,119 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $section = Section::all();
-        $question = Question::all();
-        // dd($question);
-        return view('panel.answer.index',compact('section','question'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $answers = $request->input('answers');
-        foreach ($answers as $sectionId => $questions) {
-
-            $sectionHasAnswers = false;
-            foreach ($questions as $answer) {
-                if (!empty($answer)) {
                     $sectionHasAnswers = true;
-                    break;
-                }
-            }
-            if (!$sectionHasAnswers) {
-                continue;
-            }
-            foreach ($questions as $questionIndex => $answer) {
-                $question = Question::where('section_id', $sectionId)
-                    // ->skip($questionIndex)
-                    ->first();
-                if (!$question) {
-                    continue;
-                }
-                if (is_array($answer)) {
-                  $answer = json_encode($answer);
-              }
+  /**
+   * Display a listing of the resource.
+   */
+  public function index()
+  {
+    $section = Section::all();
+    $question = Question::all();
+    // dd($question);
+    return view('panel.answer.index', compact('section', 'question'));
+  }
 
+  /**
+   * Show the form for creating a new resource.
+   */
+  public function create()
+  {
+    //
+  }
 
-              if (empty($answer)) {
-                  $answer = null;
-              }
+  /**
+   * Store a newly created resource in storage.
+   */
+  public function store(Request $request)
+  {
+    $answers = $request->input('answers');
+    $questionIds = $request->input('question_ids');
 
-                Answer::create([
-                    'section_id' => $sectionId,
-                    'question_id' => $question->id,
-                    'user_id' => auth()->id(),
-                    'answer' => $answer,
-                ]);
-            }
+    foreach ($answers as $sectionId => $questions) {
+      $sectionHasAnswers = false;
+      foreach ($questions as $answer) {
+        if (!empty($answer)) {
+          $sectionHasAnswers = true;
+          break;
+        }
+      }
+      if (!$sectionHasAnswers) {
+        continue;
+      }
+      foreach ($questions as $index => $answer) {
+        $questionId = $questionIds[$sectionId][$index] ?? null;
+
+        if (!$questionId) {
+          continue;
+        }
+        $question = Question::where('id', $questionId)
+          ->where('section_id', $sectionId)
+          ->first();
+
+        if (!$question) {
+          continue;
+        }
+        if (is_array($answer)) {
+          $answer = json_encode($answer);
         }
 
-// dd($request->all());
-       return view("panel.question.view");
+        if (empty($answer)) {
+          $answer = null;
+        }
+
+        // Save the answer
+        Answer::updateOrCreate(
+          [
+            'section_id' => $sectionId,
+            'question_id' => $questionId,
+            'user_id' => auth()->id(),
+          ],
+          [
+            'answer' => $answer,
+          ]
+        );
+      }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
+    return view("panel.question.view");
+  }
 
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   */
+  public function show(string $id) {}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   */
+  public function edit(string $id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-    // QuestionController.php
-public function getQuestions($sectionId)
-{
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update(Request $request, string $id)
+  {
+    //
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   */
+  public function destroy(string $id)
+  {
+    //
+  }
+  // QuestionController.php
+  public function getQuestions($sectionId)
+  {
     // Fetch questions for the selected section
     $questions = Question::where('section_id', $sectionId)->get();
 
     // Return the questions as JSON
     return response()->json(['questions' => $questions]);
-}
-
+  }
 }

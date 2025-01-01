@@ -90,11 +90,12 @@ $.ajaxSetup({
 // });
 
 // document.getElementById('submitBtn').addEventListener('click', function(event) {
-//   event.preventDefault();
+//   event.preventDefault();  // Prevent form submission
 
-//   // Get the password and confirm password values
-//   const newPassword = document.getElementById('newPassword').value;
-//   const confirmPassword = document.getElementById('confirmPassword').value;
+//   // Get the password and confirm password values from the form
+//   const form = document.getElementById('formChangePassword');
+//   const newPassword = form.querySelector('#newPassword').value;
+//   const confirmPassword = form.querySelector('#confirmPassword').value;
 
 //   // Check if passwords match
 //   if (newPassword !== confirmPassword) {
@@ -105,46 +106,112 @@ $.ajaxSetup({
 //   // Validate password strength (e.g., minimum length, uppercase & symbol)
 //   const passwordStrengthRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 //   if (!passwordStrengthRegex.test(newPassword)) {
-//       alert('Password must be at least 8 characters long, contain an uppercase letter and a special character.');
+//       alert('Password must be at least 8 characters long, contain an uppercase letter, and a special character.');
 //       return;
 //   }
 
-//   // Create the form dynamically if you want to handle form submission via JavaScript
-//   const form = document.createElement('form');
+//   // Prepare the form data
+//   const formData = new FormData();
+//   formData.append('_token', '{{ csrf_token() }}');  // Add CSRF token
 
-//   // Add CSRF token to the form
-//   const csrfToken = document.createElement('input');
-//   csrfToken.setAttribute('type', 'hidden');
-//   csrfToken.setAttribute('name', '_token');
-//   csrfToken.setAttribute('value', '{{ csrf_token() }}');
-//   form.appendChild(csrfToken);
+//   // Get the user ID from the hidden input field within the form
+//   const userId = form.querySelector('#user_id').value;
 
-//   // Append the new password and confirm password values to the form
-//   const newPasswordField = document.createElement('input');
-//   newPasswordField.setAttribute('type', 'hidden');
-//   newPasswordField.setAttribute('name', 'newPassword');
-//   newPasswordField.setAttribute('value', newPassword);
-//   form.appendChild(newPasswordField);
+//   if (!userId) {
+//       alert("User  ID is missing or invalid.");
+//       return;  // Exit if user ID is not found or is empty
+//   }
 
-//   const confirmPasswordField = document.createElement('input');
-//   confirmPasswordField.setAttribute('type', 'hidden');
-//   confirmPasswordField.setAttribute('name', 'confirmPassword');
-//   confirmPasswordField.setAttribute('value', confirmPassword);
-//   form.appendChild(confirmPasswordField);
+//   formData.append('id', userId);  // Append the user ID to the form data
+//   formData.append('newPassword', newPassword);  // Add the new password to form data
 
-//   // Submit the form
-//   document.body.appendChild(form);
-//   form.submit();
-
-//   // Show success message after form submission
-//   Swal.fire({
-//       icon: 'success',
-//       title: 'Password Successfully Updated!',
-//       text: 'Your password has been updated successfully.',
-//       customClass: {
-//           confirmButton: 'btn btn-success'
+//   // Send the form data to the backend via AJAX (PUT request for updating)
+//   fetch(`/user-list/${userId}`, {
+//       method: 'PUT',  // Use PUT request for updating
+//       body: formData  // Include form data with the request
+//   })
+//   .then(response => {
+//       // Check if the response is OK (status in the range 200-299)
+//       if (!response.ok) {
+//           throw new Error('Network response was not ok');
 //       }
+//       return response.json();  // Parse JSON response
+//   })
+//   .then(data => {
+//       if (data === 'Updated') {
+//           Swal.fire({
+//               icon: 'success',
+//               title: 'Password Successfully Updated!',
+//               text: 'Your password has been updated successfully.',
+//               customClass: {
+//                   confirmButton: 'btn btn-success'
+//               }
+//           });
+//       } else {
+//           Swal.fire({
+//               icon: 'error',
+//               title: 'Error!',
+//               text: 'Something went wrong. Please try again.',
+//               customClass: {
+//                   confirmButton: 'btn btn-danger'
+//               }
+//           });
+//       }
+//   })
+//   .catch(error => {
+//       Swal.fire({
+//           icon: 'error',
+//           title: 'Error!',
+//           text: 'There was an error while submitting the form. Please try again.',
+//           customClass: {
+//               confirmButton: 'btn btn-danger'
+//           }
+//       });
+//       console.error('Error:', error);  // Log the error for debugging
 //   });
 // });
+
+
+document.getElementById('submitBtn').addEventListener('click', function(event) {
+  event.preventDefault();
+
+  const form = document.getElementById('formChangePassword');
+  const userId = form.querySelector('input[name="id"]').value;
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  if (newPassword !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+  }
+
+  // const url = `/user-list/${userId}`;
+  $.ajax({
+      url: `/user-list/reserpass`,
+      type: 'POST',
+      data: {
+          _token: $('meta[name="csrf-token"]').attr('content'),
+          id: userId,
+          newPassword: newPassword,
+          newPassword_confirmation: confirmPassword,
+      },
+      success: function(response) {
+
+        $('#message-container').html(response.message || 'Password updated successfully!');
+        $('.alert-success').css('display', 'block');
+        setTimeout(function(){
+          $('.alert-success').hide();
+        },1000);
+
+    },
+      error: function(xhr, status, error) {
+
+          const errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Failed to update password.';
+          alert(errorMessage);
+      }
+  });
+
+});
+
+
 
 

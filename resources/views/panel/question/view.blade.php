@@ -39,6 +39,7 @@
                   <p class="card-text">Your answers have been successfully submitted. We appreciate your time and participation.</p><br>
 
                   <a href="{{ route('home')}}" class="btn btn-dark rounded-0">Go to Home</a>
+                  <a href="{{ route('print')}}" class="btn btn-white rounded-0" id="print-btn">Print</a>
 
               </div>
           </div>

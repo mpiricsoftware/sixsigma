@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\answer;
 use App\Models\section;
 use App\Models\Question;
 
@@ -30,7 +31,8 @@ class QuestionController extends Controller
   public function define($sectionId)
 {
     $sections = Section::all();
-    $questions = Question::all(); // or a filtered query depending on your need
+    $questions = Question::all();
+     // or a filtered query depending on your need
     // $questions = Question::where('section_id', $sectionId)->get();
     // $nextSection = Section::where('id', '>', $sectionId)->first();
 
@@ -89,4 +91,18 @@ class QuestionController extends Controller
     $questions = Question::all();
     return view('panel.question.show',compact('questions','sections'));
   }
+
+  public function print()
+{
+    $userID =  auth()->user()->id;
+    $sections = Section::all();
+    $questions = Question::all();
+    $answers = Answer::whereIn('question_id', $questions->pluck('id'))
+    ->where('user_id', $userID)
+    ->get();
+// dd($answers);
+
+    return view('panel.question.print', compact('sections', 'questions', 'answers','userID'));
+}
+
 }

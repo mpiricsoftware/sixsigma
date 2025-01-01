@@ -304,10 +304,12 @@
 
     <script>
         var userViewUrl = "{{ route('user-list.show', ':id') }}";
+
         $(document).ready(function() {
             $('.select2').select2({
                 dropdownParent: $('.modal')
             });
         });
     </script>
+
 @endsection

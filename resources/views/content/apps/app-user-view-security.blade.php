@@ -44,12 +44,12 @@
           <div class=" d-flex align-items-center flex-column">
             <img class="img-fluid rounded mb-4" src="{{asset('assets/img/avatars/1.png')}}" height="120" width="120" alt="User avatar" />
             <div class="user-info text-center">
-              <h5>Violet Mendoza</h5>
+              <h5>{{$user->company}}</h5>
               <span class="badge bg-label-danger rounded-pill">Subscriber</span>
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-around flex-wrap my-6 gap-0 gap-md-3 gap-lg-4">
+        {{-- <div class="d-flex justify-content-around flex-wrap my-6 gap-0 gap-md-3 gap-lg-4">
           <div class="d-flex align-items-center me-5 gap-4">
             <div class="avatar">
               <div class="avatar-initial bg-label-primary rounded-3">
@@ -72,7 +72,7 @@
               <span>Project Done</span>
             </div>
           </div>
-        </div>
+        </div> --}}
         <h5 class="pb-4 border-bottom mb-4">Details</h5>
         <div class="info-container">
           <ul class="list-unstyled mb-6">
@@ -169,12 +169,14 @@
     <div class="card mb-6">
       <h5 class="card-header">Change Password</h5>
       <div class="card-body">
-        <form id="formChangePassword" method="POST" onsubmit="return false">
+        <form id="formChangePassword" method="POST" action="{{route('user-list.store',$user->id)}}">
           @csrf
           @method('PUT')
+          <input type="hidden" name="id" id="user_id" value="{{$user->id}}">
           <div class="alert alert-warning alert-dismissible" role="alert">
             <h5 class="alert-heading mb-1">Ensure that these requirements are met</h5>
             <span>Minimum 8 characters long, uppercase & symbol</span>
+            <div id="message-container"></div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           <div class="row gx-5">

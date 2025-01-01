@@ -42,6 +42,7 @@
     'resources/assets/js/modal-edit-user.js',
     'resources/assets/js/app-user-view.js',
     'resources/assets/js/app-user-view-account.js',
+    'resources/assets/js/app-user-view-security.js'
   ])
 @endsection
 
@@ -170,7 +171,7 @@
       <div class="nav-align-top">
         <ul class="nav nav-pills flex-column flex-md-row mb-6 row-gap-2">
           <li class="nav-item"><a class="nav-link"  href="{{ route('app-user-view-account', ['id' => $user->id]) }}"><i class="ri-group-line me-2"></i>Account</a></li>
-          <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ri-lock-2-line me-2"></i>Security</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{{ route('app-user-view-security', ['id' => $user->id]) }}"><i class="ri-lock-2-line me-2"></i>Security</a></li>
           {{-- <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/billing')}}"><i class="ri-bookmark-line me-2"></i>Billing & Plans</a></li>
           <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/notifications')}}"><i class="ri-notification-4-line me-2"></i>Notifications</a></li>
           <li class="nav-item"><a class="nav-link" href="{{url('app/user/view/connections')}}"><i class="ri-link-m me-2"></i>Connections</a></li> --}}
@@ -182,14 +183,23 @@
       <div class="card mb-6">
         <h5 class="card-header">Change Password</h5>
         <div class="card-body">
-          <form id="formChangePassword" method="POST" >
+          <form id="formChangePassword" method="POST" action="{{route('user-list.store' , $user->id)}}">
             @csrf
-            <!-- Your form content here -->
+            @method('PUT')
+            <input type="hidden" name="id" id="user_id" value="{{ $user->id }}">
+
+            <!-- Password Requirements Alert -->
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <h5 class="alert-heading mb-1">Ensure that these requirements are met</h5>
                 <span>Minimum 8 characters long, uppercase & symbol</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+
+            <!-- Success Message Container (Initially Hidden) -->
+            <div class="alert alert-success alert-hide" role="alert" style="display: none">
+              <div id="message-container"></div>
+          </div>
+
 
             <!-- Password fields -->
             <div class="row gx-5">

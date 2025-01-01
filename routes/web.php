@@ -230,6 +230,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::resource('answer-list',AnswerController::class);
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
     Route::get('/home',[QuestionController::class,'home'])->name('home');
+    Route::get('/print',[QuestionController::class,'print'])->name('print');
     Route::resource('section-list',SectionController::class);
     Route::get('section',[SectionController::class,'index']);
 
@@ -432,7 +433,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
 
     // laravel example
     Route::get('/user-management', [UserManagement::class, 'UserManagement'])->name('laravel-example-user-management');
+    Route::post('/user-list/reserpass', [UserManagement::class, 'resetPass']);
     Route::resource('/user-list', UserManagement::class);
+
     Route::get('getstate',[UserManagement::class, 'getstate'])->name('getstate');
     Route::get('getcity',[UserManagement::class, 'getcity'])->name('getcity');
 
