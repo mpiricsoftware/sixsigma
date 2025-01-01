@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
-                    $sectionHasAnswers = true;
   /**
    * Display a listing of the resource.
    */
