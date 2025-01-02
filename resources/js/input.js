@@ -1,7 +1,6 @@
 /**
  * Page input list (jquery)
  */
-
 'use strict';
 
 $(function () {
