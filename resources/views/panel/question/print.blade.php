@@ -100,31 +100,65 @@
 
 
 <script>
- function printPage() {
+function printPage() {
     var originalContent = document.body.innerHTML;
     var printContent = document.querySelector('.card-body').innerHTML;
-
-
     var headerImage = `
-        <div style="margin-bottom: 20px; page-break-after: always;">
+        <div style="page-break-after: always; width: 100%; height: 100%; margin-bottom: 20px;">
             <img src="/assets/img/print/six-sigma-report.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         </div>
     `;
+    var titleAndContent = `
+        <div style="page-break-before: always;">
+            <div class="card-body">${printContent}</div>
 
-    var printWindow = window.open('', '', 'height=800,width=1000');
+        </div>
+    `;
 
-
+    var printWindow = window.open('', '', 'height=1000,width=1200');
     printWindow.document.write('<html><head><title>Six-Sigma</title>');
+    printWindow.document.write(`
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            /* Image page styles */
+            .image-page {
+                width: 100%;
+                height: 100%;
+                page-break-after: always;
+            }
+
+            /* Card body content styles */
+            .card-body {
+                padding: 20px;
+                line-height: 1.4;
+                font-size: 12pt;
+                color: #333;
+                background-color: #f9f9f9;
+                margin-top: 20px;
+
+
+            }
+
+        </style>
+    `);
     printWindow.document.write('</head><body>');
-
+    printWindow.document.write('<div class="image-page">');
     printWindow.document.write(headerImage);
-    printWindow.document.write('<div style="page-break-before: always;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>');
-
-    printWindow.document.write('<div class="card-body">' + printContent + '</div>');
-
+    printWindow.document.write('</div>');
+    printWindow.document.write(titleAndContent);
     printWindow.document.write('</body></html>');
     printWindow.document.close();
-
     printWindow.onload = function () {
         printWindow.print();
         printWindow.close();
@@ -132,7 +166,6 @@
 
     document.body.innerHTML = originalContent;
 }
-
 
 
 </script>
