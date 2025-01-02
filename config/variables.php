@@ -3,7 +3,7 @@
 return [
   "creatorName" => "Business Excellence",
   "creatorUrl" => "https://pixinvent.com",
-  "templateName" => "Concept",
+  "templateName" => "",
   "templateSuffix" => "Business Excellence",
   "templateVersion" => "2.0.1",
   "templateFree" => false,
