@@ -115,9 +115,17 @@
         <div class="card-body text-center">
             <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
             <p class="card-text">You have completed the quiz. Well done!</p>
-           <a href="{{ route('home')}}" class="btn btn-dark rounded-0">Restart Quiz</a>
+            <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Save your response</button>
         </div>
     </div>
+    
+    {{-- <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
+        <div class="card-body text-center">
+            <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
+            <p class="card-text">You have completed the quiz. Well done!</p>
+           <a href="{{ route('home')}}" class="btn btn-dark rounded-0">Restart Quiz</a>
+        </div>
+    </div> --}}
 
 
 
