@@ -165,98 +165,92 @@ class UserManagement extends Controller
 
 
 
-    public function store(Request $request)
-    {
-      // dd('ee');
+  public function store(Request $request)
+  {
+      // Default role in case no role is provided
+      $defaultRole = 'user';  // Or any default role you want
 
-        $userID = $request->id;
-        $roleName = Role::find($request->usertype)?->name ?? 'N/A';
-        $role = Role::findOrFail($request->usertype);
-        $status = 1;
-        if ($userID) {
+      $userID = $request->id;
+      $status = 1;
+
+      // Check if updating an existing user
+      if ($userID) {
           $existingUser = User::find($userID);
-          if ($existingUser->email_verified_at) {
-              $status = 0;
-          }
-          else
-          {
-            $status = 1;
+
+          if ($existingUser) {
+              $status = $existingUser->email_verified_at ? 1 : 0;
           }
 
-      }
-      if ($request->filled('newPassword')) {
-        $request->validate([
-            'newPassword' => 'required|string|min:8|confirmed',
-        ]);
-
-
-    }
-
-    $password = $request->filled('newPassword') ? Hash::make($request->newPassword) : null;
-    $user = User::findOrFail($userID);
-
-            if ($userID) {
-            $users= User::updateOrCreate(
-              ['id' => $userID],
-              [
-                'name' => $request->name,
-                'email' => $request->email,
-                'username' => $request->username,
-                'lastname' => $request->lastname,
-                'company' => $request->company,
-                'address' => $request->address,
-                'country' => $request->country,
-                'state' => $request->state,
-                'city' => $request->city,
-                'office_no' => $request->office_no,
-                'mobileno' => $request->mobileno,
-                'usertype' => $roleName,
-                'status' => $status,
-                'password' => $password ?? $user->password,
-            ]);
-            // $users->syncRoles([$role]);
-            return response()->json('Updated');
-        } else {
-
-            $userEmail = User::where('email', $request->email)->first();
-            $role = Role::findOrFail($request->usertype);
-            $password = null;
+          // Handle password update if new password is filled
           if ($request->filled('newPassword')) {
-
               $request->validate([
                   'newPassword' => 'required|string|min:8|confirmed',
               ]);
-              $password = Hash::make($request->newPassword);
           }
+      }
 
-            if (empty($userEmail)) {
-               $users = User::updateOrCreate(
-                ['id' => $userID],
-                [
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'username' => $request->username,
-                    'lastname' => $request->lastname,
-                    'company' => $request->company,
-                    'address' => $request->address,
-                    'country' => $request->country,
-                    'state' => $request->state,
-                    'city' => $request->city,
-                    'office_no' => $request->office_no,
-                    'mobileno' => $request->mobileno,
-                    'usertype' => $roleName,
-                    'password' => $password ?? $user->password,
-                    'status' => $status
-                ]);
+      // Get password or assign default password if not provided
+      $password = $request->filled('newPassword') ? Hash::make($request->newPassword) : null;
 
+      // Check if user exists, else create
+      if ($userID) {
+          $users = User::updateOrCreate(
+              ['id' => $userID],
+              [
+                  'name' => $request->name,
+                  'email' => $request->email,
+                  'username' => $request->username,
+                  'lastname' => $request->lastname,
+                  'company' => $request->company,
+                  'address' => $request->address,
+                  'country' => $request->country,
+                  'state' => $request->state,
+                  'city' => $request->city,
+                  'office_no' => $request->office_no,
+                  'mobileno' => $request->mobileno,
+                  'usertype' => $request->usertype,
+                  'status' => $status,
+                  'password' => $password ?? ($existingUser->password ?? Hash::make('12345678')),
+              ]
+          );
 
-                 // Ensure role exists
-                // $users->syncRoles([$role]);
-                return response()->json('Created');
-            }
+          // Assign the user role (use provided or default role)
+          $role = $request->usertype ?: $defaultRole;  // Assign provided role or default
+          $users->syncRoles([$role]);
+
+          return response()->json('User updated successfully');
+      } else {
+          // Handle case where user is being created (not updating)
+
+          $userEmail = User::where('email', $request->email)->first();
+
+          if (empty($userEmail)) {
+              $users = User::create([
+                  'name' => $request->name,
+                  'email' => $request->email,
+                  'username' => $request->username,
+                  'lastname' => $request->lastname,
+                  'company' => $request->company,
+                  'address' => $request->address,
+                  'country' => $request->country,
+                  'state' => $request->state,
+                  'city' => $request->city,
+                  'office_no' => $request->office_no,
+                  'mobileno' => $request->mobileno,
+                  'usertype' => $request->usertype ?: $defaultRole,  // Use provided role or default
+                  'password' => $password ?? Hash::make('12345678'),
+                  'status' => $status,
+              ]);
+
+              // Assign the user role (use provided or default role)
+              $role = $request->usertype ?: $defaultRole;
+              $users->assignRole($role); // Assign the role
+
+              return response()->json('User created successfully');
           }
-          // dd($request->all());
-    }
+      }
+  }
+
 
 
     public function show($id)
@@ -272,7 +266,7 @@ class UserManagement extends Controller
     public function edit($id): JsonResponse
 {
     $user = User::findOrFail($id);
-    $role = $user->roles->first()?->id ?? 'N/A';
+
 
     return response()->json([
         'id' => $user->id,
@@ -287,7 +281,7 @@ class UserManagement extends Controller
         'city' => $user->city,
         'office_no' => $user->office_no,
         'mobileno' => $user->mobileno,
-        'usertype' => $role,
+        'usertype' => $user->usertype,
     ]);
 }
 

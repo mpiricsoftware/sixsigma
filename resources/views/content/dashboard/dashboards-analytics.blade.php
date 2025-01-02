@@ -4,28 +4,30 @@
 @section('title', 'Dashboard-Business Excellence')
 @section('content')
 
-  <div class="card">
-      <div class="d-flex flex-column align-items-center">
-          <img src="{{ asset('assets/img/logo/1.png') }}" class="img-fluid mb-2">
-          <br>
-      </div>
-    </div>
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-lg-8">
+          <div class="card mb-8" style="border-radius: 10px;">
+              <div class="d-flex flex-column align-items-center">
+                  <img src="{{ asset('assets/img/logo/1.png') }}" class="img-fluid mb-2" alt="Image 1">
+              </div>
+          </div>
 
-    <br><br>
-    <div class="card">
-      <div class="d-flex flex-column align-items-center">
-          <img src="{{ asset('assets/img/logo/2.png')}}" alt="Image 2" class="img-fluid mb-2">
-      </div>
-    </div>
-    <br>
-    <br>
-    <div class="card">
-      <div class="d-flex flex-column align-items-center">
-          <img src="{{ asset('assets/img/logo/3.png')}}" alt="Image 3" class="img-fluid mb-2">
+          <div class="card mb-8" style="border-radius: 10px;">
+              <div class="d-flex flex-column align-items-center">
+                  <img src="{{ asset('assets/img/logo/2.png') }}" class="img-fluid mb-2" alt="Image 2">
+              </div>
+          </div>
+
+          <div class="card mb-8" style="border-radius: 10px;">
+              <div class="d-flex flex-column align-items-center">
+                  <img src="{{ asset('assets/img/logo/3.png') }}" class="img-fluid mb-2" alt="Image 3">
+              </div>
+          </div>
       </div>
   </div>
-<br>
-<br>
+</div>
+
 
 
 @endsection

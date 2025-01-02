@@ -25,8 +25,7 @@ $customizerHidden = 'customizer-hide';
 
     <!-- /Left Text -->
     <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-12 pb-2">
-      <img src="{{asset('assets/img/illustrations/auth-register-illustration-'.$configData['style'].'.png') }}" class="auth-cover-illustration w-100" alt="auth-illustration" data-app-light-img="illustrations/auth-register-illustration-light.png" data-app-dark-img="illustrations/auth-register-illustration-dark.png" />
-      <img src="{{asset('assets/img/illustrations/auth-cover-register-mask-'.$configData['style'].'.png') }}" class="authentication-image" alt="mask" data-app-light-img="illustrations/auth-cover-register-mask-light.png" data-app-dark-img="illustrations/auth-cover-register-mask-dark.png" />
+      <img src="{{asset('assets/img/logo/Bg-selfas.png') }}" width="120%" height="100%" alt="auth-illustration" data-app-light-img="logo/Bg-selfas.png" data-app-dark-img="logo/Bg-selfas.png" />
     </div>
     <!-- /Left Text -->
 
@@ -102,10 +101,10 @@ $customizerHidden = 'customizer-hide';
           <div class="mb-5">
             <div class="form-check mt-2 @error('terms') is-invalid @enderror">
                 <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox" id="terms" name="terms" />
-              <label class="form-check-label" for="terms">
+              <label class="form-check-label" for="terms" style="color:#2129bd">
                 I agree to
-                <a href="{{ route('policy.show') }}" target="_blank">privacy policy</a> &
-                <a href="{{ route('terms.show') }}" target="_blank">terms</a>
+                <a href="{{ route('policy.show') }}" target="_blank" style="color: #2129bd">privacy policy</a> &
+                <a href="{{ route('terms.show') }}" target="_blank" style="color: #2129bd">terms</a>
               </label>
             </div>
             @error('terms')
@@ -115,14 +114,14 @@ $customizerHidden = 'customizer-hide';
             @enderror
           </div>
           @endif
-          <button type="submit" class="btn btn-primary d-grid w-100">Sign up</button>
+          <button type="submit" class="btn btn-primary d-grid w-100" style="background-color: #2129bd">Sign up</button>
         </form>
 
         <p class="text-center">
           <span>Already have an account?</span>
           @if (Route::has('login'))
             <a href="{{ route('login') }}">
-              <span>Sign in instead</span>
+              <span style="color: #2129bd">Sign in instead</span>
             </a>
           @endif
         </p>

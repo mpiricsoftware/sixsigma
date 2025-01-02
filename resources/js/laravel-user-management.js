@@ -166,10 +166,10 @@ $(function () {
               var icon = '';
 
               switch (status) {
-                case '0':
+                case '1':
                     icon = '<span class="badge bg-label-success rounded-pill">Active</span>';
                     break;
-                case '1':
+                case '0':
                     icon = '<span class="badge bg-label-warning rounded-pill">Inactive</span>';
                     break;
                 default:

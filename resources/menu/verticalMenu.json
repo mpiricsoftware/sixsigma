@@ -20,14 +20,14 @@
         },
         {
           "url": "/",
-          "name": "Analytics",
+          "name": "Dashboards",
           "slug": "dashboard-analytics",
-          "role": ["Super Admin"]
+          "role": ["Super Admin","Admin"]
         },
         {
-          "url": "app/logistics/dashboard",
-          "name": "Logistics",
-          "slug": "app-logistics-dashboard",
+          "url": "/",
+          "name": "Analytics",
+          "slug": "dashboard-analytics",
           "role": ["Super Admin"]
         },
         {
@@ -52,7 +52,7 @@
           "url":"stages",
           "name":"Stages Master",
           "slug": "stages",
-          "role":["Admin"]
+          "role":[""]
         },
         {
           "url":"define/{sectionId}",
@@ -64,7 +64,7 @@
           "url":"answer",
           "name":"Answer",
           "slug":"answer",
-          "role":["Admin"]
+          "role":[""]
         },
         {
           "url":"user-management",

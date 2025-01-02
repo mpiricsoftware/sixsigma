@@ -284,7 +284,7 @@
                            <select name="usertype" id="usertype" class="select2 form-select usertype" data-placeholder="Select Role" data-allow-clear="true">
                               <option>Select Role</option>
                               @foreach ($roles as $r)
-                              <option value="{{ $r->id }}" {{ old('usertype') == $r->id ? 'selected' : '' }}>
+                              <option value="{{ $r->name }}" {{ old('usertype') == $r->name ? 'selected' : '' }}>
                                 {{ $r->name }}
                             </option>
                               @endforeach
