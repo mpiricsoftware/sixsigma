@@ -35,7 +35,7 @@
     ])
 @endsection
 @section('page-script')
-    @vite('resources\js\input.js')
+    @vite('resources/js/input.js')
 @endsection
 @section('content')
 
