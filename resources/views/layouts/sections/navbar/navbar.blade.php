@@ -21,7 +21,7 @@ $navbarDetached = ($navbarDetached ?? '');
             <span class="app-brand-logo demo">
               <img src="{{ asset('assets/img/logo/logo.jpeg') }}" alt="Logo" width="120" style="background-color: var(--bs-primary);">
           </span>
-            <span class="app-brand-text demo menu-text fw-semibold">{{config('variables.templateName')}}</span>
+            {{-- <span class="app-brand-text demo menu-text fw-semibold">{{config('variables.templateName')}}</span> --}}
           </a>
           @if(isset($menuHorizontal))
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
