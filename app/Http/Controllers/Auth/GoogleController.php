@@ -11,45 +11,87 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
-  public function redirectToGoogle()
-  {
-      // dd('hii');
-      return Socialite::driver('google')->redirect();
-  }
+    public function redirectToGoogle()
+    {
+        // dd('hii');
+        return Socialite::driver('google')->redirect();
+    }
 
-  public function handleGoogleCallback()
-  {
-    try {
+    public function handleGoogleCallback()
+    {
+        try {
 
-      $user = Socialite::driver('google')->user();
-      $finduser = User::where('google_id', $user->id)->first();
+            $user = Socialite::driver('google')->user();
+            $finduser = User::where('google_id', $user->id)->first();
 
-      if ($finduser) {
-          Auth::login($finduser);
-          if ($finduser->email_verified_at === null) {
-              $finduser->email_verified_at = now();
-              $finduser->save();
-          }
+            if ($finduser) {
+                Auth::login($finduser);
+                if ($finduser->email_verified_at === null) {
+                    $finduser->email_verified_at = now();
+                    $finduser->save();
+                }
 
-          return redirect()->intended('dashboard');
-      } else {
+                return redirect()->intended('dashboard');
+            } else {
 
-          $newUser = User::create([
-              'name' => $user->name,
-              'email' => $user->email,
-              'google_id' => $user->id,
-              'password' => Hash::make('12345678'),
-              'usertype' => 'User',
-              'email_verified_at' => now(),
-          ]);
-          $newUser->assignRole('User');
-          Auth::login($newUser);
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'google_id' => $user->id,
+                    'password' => Hash::make('12345678'),
+                    'usertype' => 'User',
+                    'email_verified_at' => now(),
+                ]);
+                $newUser->assignRole('User');
+                Auth::login($newUser);
 
-          return redirect()->intended('dashboard');
-      }
-  } catch (\Exception $e) {
-      dd($e->getMessage());
-  }
-}
+                return redirect()->intended('dashboard');
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
+    public function redirectToTwitter()
+    {
+        // dd('hii');
+        return Socialite::driver('x')->redirect();
+    }
+
+    public function handleTwitterCallback()
+    {
+        try {
+
+            $user = Socialite::driver('x')->user();
+            // dd($user);
+            $finduser = User::where('google_id', $user->id)->first();
+
+            if ($finduser) {
+                Auth::login($finduser);
+                if ($finduser->email_verified_at === null) {
+                    $finduser->email_verified_at = now();
+                    $finduser->save();
+                }
+
+                return redirect()->intended('dashboard');
+            } else {
+
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'google_id' => $user->id,
+                    'password' => Hash::make('12345678'),
+                    'usertype' => 'User',
+                    'email_verified_at' => now(),
+                ]);
+                $newUser->assignRole('User');
+                Auth::login($newUser);
+
+                return redirect()->intended('dashboard');
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
 
 }

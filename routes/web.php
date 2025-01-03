@@ -180,7 +180,10 @@ use App\Models\City;
 // Main Page Route
 
 Route::get('login/google', [GoogleController::class, 'redirectToGoogle'])->name('login.google');
-    Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::get('login/twitter', [GoogleController::class, 'redirectToTwitter'])->name('login.twitter');
+Route::get('login/twitter/callback', [GoogleController::class, 'handleTwitterCallback']);
 Route::group(['middleware' => ['auth','verified']], function ($request)
 {
     Route::group(['middleware' => ['role:Super Admin']], function () {
