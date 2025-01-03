@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+Use App\Models\User;
+use App\Models\inquiry;
 
-class SubScriptionController extends Controller
+class InquiryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +19,12 @@ class SubScriptionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+      $userID =  auth()->user()->id;
+      $user = User::find($userID);
+      // dd($user);
+      return view('panel.question.details',compact('user'));
     }
 
     /**
@@ -27,7 +32,16 @@ class SubScriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $userID = auth()->user()->id;
+
+        $inquiry = Inquiry::create([
+            'user_id' => $userID,
+            'email' => $request->email,
+            'Phone_no' => $request->Phone_no,
+            'date_time' => $request->date_time,
+        ]);
+
+        return view('panel.question.message');
     }
 
     /**
@@ -35,7 +49,7 @@ class SubScriptionController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -60,5 +74,9 @@ class SubScriptionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function message(Request $request)
+    {
+       return view('panel.question.message');
     }
 }

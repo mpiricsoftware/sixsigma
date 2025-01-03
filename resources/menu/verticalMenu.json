@@ -9,14 +9,12 @@
         {
           "url": "app/ecommerce/dashboard",
           "name": "eCommerce",
-          "slug": "app-ecommerce-dashboard",
-          "role": ["Super Admin"]
+          "slug": "app-ecommerce-dashboard"
         },
         {
           "url": "dashboard/crm",
           "name": "CRM",
-          "slug": "dashboard-crm",
-          "role": ["Super Admin"]
+          "slug": "dashboard-crm"
         },
         {
           "url": "/",
@@ -27,26 +25,24 @@
         {
           "url": "/",
           "name": "Analytics",
-          "slug": "dashboard-analytics",
-          "role": ["Super Admin"]
+          "slug": "dashboard-analytics"
         },
         {
           "url": "app/academy/dashboard",
           "name": "Academy",
-          "slug": "app-academy-dashboard",
-          "role": ["Super Admin"]
+          "slug": "app-academy-dashboard"
         },
         {
           "url": "input",
           "name":"Input Master",
-          "slug": "input",
-          "role": ["Admin"]
+          "slug": "dashboard-input",
+          "role": ["Super Admin","Admin"]
         },
         {
           "url": "form",
           "name":"Form Master",
-          "slug": "form",
-          "role":["Admin"]
+          "slug": "dashboard-form",
+          "role":["Super Admin","Admin"]
         },
         {
           "url":"stages",
@@ -57,8 +53,8 @@
         {
           "url":"define/{sectionId}",
           "name":"Question",
-          "slug": "question",
-          "role":["Admin"]
+          "slug": "dashboard-define",
+          "role":["Super Admin","Admin"]
         },
         {
           "url":"answer",
@@ -69,14 +65,14 @@
         {
           "url":"user-management",
           "name":"User-management",
-          "slug":"user-management",
-          "role":["Admin"]
+          "slug":"dashboard-user-management",
+          "role":["Super Admin","Admin"]
         },
         {
           "url": "app/ecommerce/customer/details/overview",
           "name": "Overview",
           "slug": "app-ecommerce-customer-details-overview",
-          "role": ["Admin"]
+          "role": [""]
 
         }
 
@@ -86,7 +82,6 @@
       "name": "Layouts",
       "icon": "menu-icon tf-icons ri-layout-2-line",
       "slug": "layouts",
-      "role": ["Super Admin"],
       "submenu": [
         {
           "url": "layouts/collapsed-menu",
@@ -150,7 +145,6 @@
       "name": "Front Pages",
       "icon": "menu-icon tf-icons ri-file-copy-line",
       "slug": "front-pages",
-      "role" : ["Super Admin"],
       "submenu": [
         {
           "url": "front-pages/landing",
@@ -190,13 +184,6 @@
       ]
     },
     {
-      "url": "video-stream",
-      "name": "Video Stream",
-      "icon": "menu-icon tf-icons ri-video-on-line",
-      "slug": "video-stream",
-      "role": ["Super Admin", "Company"]
-    },
-    {
       "name": "User Management",
       "icon": "menu-icon tf-icons ri-database-2-line",
       "slug": "user-management",
@@ -221,47 +208,6 @@
           "role" : []
         }
       ]
-    },
-    {
-      "name": "Company Management",
-      "icon": "menu-icon tf-icons ri-shopping-bag-3-line",
-      "slug": "comapny-management",
-      "role": [],
-      "submenu": [
-        {
-          "url": "site",
-          "name": "Sites",
-          "slug": "siteManage",
-          "role" : []
-        },
-        {
-          "url": "department",
-          "name": "Departments",
-          "slug": "departmentManage",
-          "role" : []
-        }
-      ]
-    },
-    {
-      "name": "Subscription",
-      "icon": "menu-icon tf-icons ri-layout-right-line",
-      "slug": "subscription",
-      "role": [],
-      "submenu":[
-        {
-          "url": "subscription/group",
-          "name": "Subscription Group",
-          "slug":"subscription-Group",
-          "role": []
-        },
-        {
-          "url": "subscription/plan",
-          "name": "Subscription Plan",
-          "slug": "subscription-plan",
-          "role": []
-        }
-      ]
-
     },
 
     {

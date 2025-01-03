@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+
+
+
     const questions = questionsContainer.querySelectorAll('.question');
     console.log(`Found questions for Section ID ${sectionId}:`, questions);
 
@@ -94,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         questions[currentQuestionIndex].style.display = 'block';
     }
 
+
     toggleButtons(sectionId, currentQuestionIndex, questions.length);
   }
 
@@ -104,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextBtn = document.getElementById(`next-btn${sectionId}`);
     prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
     if (currentQuestionIndex === totalQuestions - 1) {
-      nextBtn.textContent = 'Finish Section';
+      nextBtn.textContent = 'Next';
       nextBtn.onclick = function() {
         finishSection(sectionId);
       };

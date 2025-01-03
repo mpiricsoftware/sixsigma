@@ -166,14 +166,14 @@ $(function () {
               var icon = '';
 
               switch (status) {
-                case '1':
+                case 'approved':
                     icon = '<span class="badge bg-label-success rounded-pill">Active</span>';
                     break;
-                case '0':
+                case 'pending':
                     icon = '<span class="badge bg-label-warning rounded-pill">Inactive</span>';
                     break;
                 default:
-                    icon = '<span class="badge bg-label-secondary rounded-pill">Unknown</span>';
+                    icon = '<span class="badge bg-label-secondary rounded-pill"></span>';
                     break;
             }
 

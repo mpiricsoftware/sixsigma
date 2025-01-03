@@ -4,8 +4,6 @@ namespace App\Http\Controllers\laravel_example;
 
 use App\Http\Controllers\Controller;
 use App\Models\company;
-use App\Models\Department;
-use App\Models\Site;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -36,16 +34,13 @@ class UserManagement extends Controller
         $roles = role::get();
         $country = Country::all();
         // dd($roles);
-        $sites = Site::where('comp_id',Auth::user()->company_id)->get();
-        $departments = Department::where('comp_id',Auth::user()->company_id)->get();
+
         return view('content.laravel-example.user-management', [
             'totalUser' => $userCount,
             'verified' => $verified,
             'notVerified' => $notVerified,
             'userDuplicates' => $userDuplicates,
             'companies' => $companies,
-            'sites' => $sites,
-            'departments' => $departments,
             'roles' => $roles,
             'country' => $country,
             'percentage' => $percentage,
@@ -171,14 +166,14 @@ class UserManagement extends Controller
       $defaultRole = 'user';  // Or any default role you want
 
       $userID = $request->id;
-      $status = 1;
+      $status = 'approved';
 
       // Check if updating an existing user
       if ($userID) {
           $existingUser = User::find($userID);
 
           if ($existingUser) {
-              $status = $existingUser->email_verified_at ? 1 : 0;
+              $status = $existingUser->email_verified_at ? 'approved' : 'pending';
           }
 
           // Handle password update if new password is filled
@@ -237,14 +232,14 @@ class UserManagement extends Controller
                   'city' => $request->city,
                   'office_no' => $request->office_no,
                   'mobileno' => $request->mobileno,
-                  'usertype' => $request->usertype ?: $defaultRole,  // Use provided role or default
+                  'usertype' => $request->usertype ?: $defaultRole,
                   'password' => $password ?? Hash::make('12345678'),
                   'status' => $status,
               ]);
 
-              // Assign the user role (use provided or default role)
+
               $role = $request->usertype ?: $defaultRole;
-              $users->assignRole($role); // Assign the role
+              $users->assignRole($role);
 
               return response()->json('User created successfully');
           }
