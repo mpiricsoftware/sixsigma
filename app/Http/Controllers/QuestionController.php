@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\answer;
 use App\Models\section;
 use App\Models\Question;
-
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -104,5 +104,6 @@ class QuestionController extends Controller
 
     return view('panel.question.print', compact('sections', 'questions', 'answers','userID'));
 }
+
 
 }

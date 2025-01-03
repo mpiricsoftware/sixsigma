@@ -171,6 +171,8 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\InquiryController;
+
 use App\Models\State;
 use App\Models\City;
 
@@ -231,6 +233,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
     Route::get('/home',[QuestionController::class,'home'])->name('home');
     Route::get('/print',[QuestionController::class,'print'])->name('print');
+    Route::get('index',[InquiryController::class,'index']);
+    Route::resource('inquiry-list',InquiryController::class);
+    Route::get('message',[InquiryController::class,'message'])->name('message');
     Route::resource('section-list',SectionController::class);
     Route::get('section',[SectionController::class,'index']);
 

@@ -171,14 +171,14 @@ class UserManagement extends Controller
       $defaultRole = 'user';  // Or any default role you want
 
       $userID = $request->id;
-      $status = 1;
+      $status = 'approved';
 
       // Check if updating an existing user
       if ($userID) {
           $existingUser = User::find($userID);
 
           if ($existingUser) {
-              $status = $existingUser->email_verified_at ? 1 : 0;
+              $status = $existingUser->email_verified_at ? 'approved' : 'pending';
           }
 
           // Handle password update if new password is filled
@@ -237,14 +237,14 @@ class UserManagement extends Controller
                   'city' => $request->city,
                   'office_no' => $request->office_no,
                   'mobileno' => $request->mobileno,
-                  'usertype' => $request->usertype ?: $defaultRole,  // Use provided role or default
+                  'usertype' => $request->usertype ?: $defaultRole,
                   'password' => $password ?? Hash::make('12345678'),
                   'status' => $status,
               ]);
 
-              // Assign the user role (use provided or default role)
+
               $role = $request->usertype ?: $defaultRole;
-              $users->assignRole($role); // Assign the role
+              $users->assignRole($role);
 
               return response()->json('User created successfully');
           }

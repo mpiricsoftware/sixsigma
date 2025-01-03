@@ -36,7 +36,7 @@
 <div class="container mt-5">
 
 
-  <form class="add-new-vendor pt-9" method="POST" action="{{ route('answer-list.store') }}">
+  <form class="add-new-vendor pt-9" method="POST" action="{{ route('answer-list.store') }}" id="formid">
       @csrf
       @foreach ($sections as $index => $section)
           <div class="card mb-4" id="section-card-{{ $section->id }}" style="display: {{ $index == 0 ? 'block' : 'none' }};">
@@ -44,7 +44,7 @@
                   <h5 class="card-title" style="padding-top: 1%; color:#00a6d5;">{{ $section->section_name }}</h5>
                   <p class="card-text me-1">{{ $section->section_description }}</p>
                   <div class="card-body text-end" style="padding-top: 8%; padding-bottom:0%;">
-                      <a href="javascript:void(0);" class="btn btn-dark rounded-0" onclick="startQuiz({{ $section->id }})">Start Quiz</a>
+                      <a href="javascript:void(0);" class="btn btn-dark rounded-0" onclick="startQuiz({{ $section->id }})">Assessment</a>
                   </div>
               </div>
           </div>
@@ -106,7 +106,7 @@
                 <div class="text-end" style="padding-top:7%; padding-bottom:0%;">
                     <button type="button" class="btn btn-dark rounded-0" id="prev-btn{{ $section->id }}" onclick="showQuestion('{{ $section->id }}', 'prev')">Previous</button>
                     <button type="button" class="btn rounded-0" style="background-color: #00a6d5" id="next-btn{{ $section->id }}" onclick="showQuestion('{{ $section->id }}', 'next')">Next</button>
-                    <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Submit</button>
+                    {{-- <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Submit</button> --}}
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
             <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Save your response</button>
         </div>
     </div>
-    
+
     {{-- <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
         <div class="card-body text-center">
             <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
