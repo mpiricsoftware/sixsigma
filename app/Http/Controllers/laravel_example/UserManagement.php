@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\laravel_example;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
 use App\Models\company;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -304,4 +305,9 @@ class UserManagement extends Controller
        return response()->json(['city' => $city]);
     }
 
+    public function migrate()
+    {
+        Artisan::call('migrate');
+        return response()->json(['message' => 'Migration Run successfully'], 200);
+    }
 }
