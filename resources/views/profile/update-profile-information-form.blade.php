@@ -71,10 +71,10 @@
     <div class="row">
       <div class="col-md-4 mb-5">
         <x-label class="form-label" for="Country" value="{{ __('Country') }}" />
-        <select id="country" class="form-select" onchange="updateStates()"  wire:model="state.Country">
+        <select id="country" class="form-select" onchange="updateStates()"  wire:model="state.country">
           <option value="">Select Country</option>
           @foreach($countries as $country)
-            <option value="{{ $country->id }}">{{ $country->name }}</option>
+            <option value="{{ $country->id }}" @if($country->id == $state['country']) selected @endif>{{ $country->name }}</option>
           @endforeach
         </select>
         <x-input-error for="country" />
@@ -84,6 +84,11 @@
         <x-label class="form-label" for="state" value="{{ __('State') }}" />
         <select id="state" class="form-select" name="state" onchange="updateCities()"  wire:model="state.state">
           <option value="">Select State</option>
+          @if(isset($state) && $state['state'] != '')
+            @foreach($states as $s)
+              <option value="{{ $s->id }}" @if($s->id == $state['state']) selected @endif>{{ $s->name }}</option>
+            @endforeach
+          @endif
         </select>
         <x-input-error for="state" />
       </div>
@@ -92,6 +97,11 @@
         <x-label class="form-label" for="city" value="{{ __('City') }}" />
         <select id="city" class="form-select" name="city"   wire:model="state.city">
           <option value="">Select City</option>
+          @if(isset($state) && $state['city'] != '')
+            @foreach($cities as $c)
+              <option value="{{ $c->id }}" @if($c->id == $state['city']) selected @endif>{{ $c->name }}</option>
+            @endforeach
+          @endif
         </select>
         <x-input-error for="city" />
       </div>

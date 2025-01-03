@@ -4,8 +4,6 @@ namespace App\Http\Controllers\laravel_example;
 
 use App\Http\Controllers\Controller;
 use App\Models\company;
-use App\Models\Department;
-use App\Models\Site;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -36,16 +34,13 @@ class UserManagement extends Controller
         $roles = role::get();
         $country = Country::all();
         // dd($roles);
-        $sites = Site::where('comp_id',Auth::user()->company_id)->get();
-        $departments = Department::where('comp_id',Auth::user()->company_id)->get();
+
         return view('content.laravel-example.user-management', [
             'totalUser' => $userCount,
             'verified' => $verified,
             'notVerified' => $notVerified,
             'userDuplicates' => $userDuplicates,
             'companies' => $companies,
-            'sites' => $sites,
-            'departments' => $departments,
             'roles' => $roles,
             'country' => $country,
             'percentage' => $percentage,

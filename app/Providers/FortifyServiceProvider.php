@@ -6,12 +6,15 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\City;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use App\Models\Country;
+use App\Models\State;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Laravel\Fortify\Fortify;
 
@@ -48,7 +51,9 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance('path.public', base_path('public'));
         View::composer('profile.update-profile-information-form', function ($view) {
             $countries = Country::all();
-            $view->with('countries', $countries);
+            $states = State::where('country_id',Auth::user()->country)->get();
+            $cities = City::where('state_id',Auth::user()->state)->get();
+            $view->with(['countries'=>$countries,'states'=>$states,'cities'=>$cities]);
         });
     }
 }
