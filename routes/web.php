@@ -159,11 +159,6 @@ use App\Http\Controllers\charts\ApexCharts;
 use App\Http\Controllers\charts\ChartJs;
 use App\Http\Controllers\maps\Leaflet;
 use App\Http\Controllers\companyController;
-use App\Http\Controllers\SiteController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\subgroupController;
-use App\Http\Controllers\SubPlanController;
-use App\Http\Controllers\VideoStreamController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\StagesController;
@@ -196,14 +191,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
         Route::resource('/admin-list', adminController::class);
     });
 
-
-    Route::get('/video-stream', [VideoStreamController::class, 'videoStreamManage'])->name('video-stream');
-    Route::resource('/video-stream-list', VideoStreamController::class);
-
-    Route::get('/site', [SiteController::class, 'siteManage'])->name('siteManage');
-    Route::resource('/site-list', SiteController::class);
-    Route::get('/department', [DepartmentController::class, 'departmentManage'])->name('departmentManage');
-    Route::resource('/department-list', DepartmentController::class);
+    Route::group(['middleware' => ['role:Admin']], function () {
+        Route::get('/migrate',[UserManagement::class, 'migrate']);
+    });
 
     Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
     Route::get('/dashboard/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
@@ -216,25 +206,20 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
 
     Route::get('/lang/{locale}', [LanguageController::class, 'swap']);
 
-    Route::get('subscription/group',[subgroupController::class, 'index'])->name('subscriptiongroup.index');
-    Route::resource('/subgroup-list',subgroupController::class);
-    Route::get('subscription/plan',[SubPlanController::class, 'index'])->name('subscription.index');
-    Route::resource('/subplan-list',SubPlanController::class);
-
-    Route::get('input',[InputController::class, 'index']);
+    Route::get('input',[InputController::class, 'index'])->name('dashboard-input');
     Route::resource('input-list',InputController::class);
-    Route::get('form',[FormController::class,'index']);
+    Route::get('form',[FormController::class,'index'])->name('dashboard-form');
     Route::resource('form-list',FormController::class);
     Route::get('getInputFields',[FormController::class,'getInputFields'])->name('getInputFields');
     Route::get('stages',[StagesController::class,'index']);
     Route::resource('stages-list',StagesController::class);
-    Route::get('define/{sectionId}',[QuestionController::class,'define'])->name('define');
+    Route::get('define/{sectionId}',[QuestionController::class,'define'])->name('dashboard-define');
     Route::resource('question-list',QuestionController::class);
     // Route::get('define/{sectionId}', [QuestionController::class, 'define'])->name('define');
     Route::get('answer',[AnswerController::class,'index']);
     Route::resource('answer-list',AnswerController::class);
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
-    Route::get('/home',[QuestionController::class,'home'])->name('home');
+    Route::get('/home',[QuestionController::class,'home'])->name('dashboard-analytics');
     Route::get('/print',[QuestionController::class,'print'])->name('print');
     Route::get('index',[InquiryController::class,'index']);
     Route::resource('inquiry-list',InquiryController::class);
@@ -440,7 +425,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('/maps/leaflet', [Leaflet::class, 'index'])->name('maps-leaflet');
 
     // laravel example
-    Route::get('/user-management', [UserManagement::class, 'UserManagement'])->name('laravel-example-user-management');
+    Route::get('/user-management', [UserManagement::class, 'UserManagement'])->name('dashboard-user-management');
     Route::post('/user-list/reserpass', [UserManagement::class, 'resetPass']);
     Route::resource('/user-list', UserManagement::class);
 

@@ -237,17 +237,6 @@
                         </div>
                         {{-- <div class="col-12 col-md-6">
                             <div class="form-floating form-floating-outline">
-                                <select name="site_id" id="add-user-site" class="select2 form-select" data-placeholder="Select site" data-allow-clear="true">
-                                    <option></option>
-                                    @foreach ($sites as $site)
-                                        <option value="{{$site->id}}">{{ $site->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="add-user-company">Site</label>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="col-12 col-md-6">
-                            <div class="form-floating form-floating-outline">
                                 <select name="role" id="add-user-department" class="select2 form-select" data-placeholder="Select Role" data-allow-clear="true">
                                     <option value="role">User</option>
                                     <option value="role">Admin</option>
