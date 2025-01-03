@@ -141,7 +141,7 @@ class SectionController extends Controller
           $i++;
 
         }
-        dd($request->all());
+        // dd($request->all());
     }
 
 
