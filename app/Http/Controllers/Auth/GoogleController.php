@@ -41,6 +41,7 @@ class GoogleController extends Controller
               'password' => Hash::make('12345678'),
               'email_verified_at' => now(),
           ]);
+          $newUser->assignRole('User');
           Auth::login($newUser);
 
           return redirect()->intended('dashboard');
