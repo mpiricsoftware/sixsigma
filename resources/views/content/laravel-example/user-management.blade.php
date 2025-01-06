@@ -253,11 +253,11 @@
                         </div>
                         <div class="col-12 col-md-6">
                           <div class="form-floating form-floating-outline">
-                           <select name="status" id="status" class="select2 form-select">
-                            <option value="Select">Select Status</option>
-                            <option value="approved">approved</option>
-                            <option value="pending">pending</option>
-                            <option value="rejected">rejected</option>
+                           <select name="status" id="status" class="select2 form-select userStatus" data-placeholder="Select Status" data-allow-clear="true">
+                            <option value=""></option>
+                            <option value="approved">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
                            </select>
                           </div>
                         </div>

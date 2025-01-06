@@ -216,14 +216,12 @@ class UserManagement extends Controller
           $role = $request->usertype ?: $defaultRole;  // Assign provided role or default
           $users->syncRoles([$role]);
           if ($users->status == 'approved') {
-            $data = ['name' => $users->name, 'email' => $users->email];
-            Mail::send('mail.invite', ['data' => $data], function ($message) use ($users) {
-                $message->to($users->email)->subject('Invite to join Swft');
-            });
-        }
+              $data = ['name' => $users->name, 'email' => $users->email];
+              Mail::send('mail.invite', ['data' => $data], function ($message) use ($users) {
+                  $message->to($users->email)->subject('Invite to join Concept');
+              });
+          }
           return response()->json('User updated successfully');
-
-
 
       } else {
           // Handle case where user is being created (not updating)
