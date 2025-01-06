@@ -11,7 +11,8 @@ class inquiry extends Model
       'user_id',
       'date_time',
       'email',
-      'Phone_no'
+      'Phone_no',
+      'type'
     ];
 
     public function user()

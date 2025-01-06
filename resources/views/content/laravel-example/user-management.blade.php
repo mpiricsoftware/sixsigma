@@ -245,10 +245,20 @@
                                 <label for="add-user-company">Roles</label>
                             </div>
                         </div> --}}
-                        <div class="col-12">
+                        <div class="col-12 col-md-6">
                           <div class="form-floating form-floating-outline">
                             <input type="number" id="office_no" class="form-control" name="office_no" placeholder="Enter Your OfficeNo">
                             <label for="office_no">Office No</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="form-floating form-floating-outline">
+                           <select name="status" id="status" class="select2 form-select">
+                            <option value="Select">Select Status</option>
+                            <option value="approved">approved</option>
+                            <option value="pending">pending</option>
+                            <option value="rejected">rejected</option>
+                           </select>
                           </div>
                         </div>
                         <div class="col-12 col-md-6">

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+
 
 class UserManagement extends Controller
 {
@@ -205,7 +207,7 @@ class UserManagement extends Controller
                   'office_no' => $request->office_no,
                   'mobileno' => $request->mobileno,
                   'usertype' => $request->usertype,
-                  'status' => $status,
+                  'status' => $request->status,
                   'password' => $password ?? ($existingUser->password ?? Hash::make('12345678')),
               ]
           );
@@ -213,8 +215,16 @@ class UserManagement extends Controller
           // Assign the user role (use provided or default role)
           $role = $request->usertype ?: $defaultRole;  // Assign provided role or default
           $users->syncRoles([$role]);
-
+          if ($users->status == 'approved') {
+            $data = ['name' => $users->name, 'email' => $users->email];
+            Mail::send('mail.invite', ['data' => $data], function ($message) use ($users) {
+                $message->to($users->email)->subject('Invite to join Swft');
+            });
+        }
           return response()->json('User updated successfully');
+
+
+
       } else {
           // Handle case where user is being created (not updating)
 

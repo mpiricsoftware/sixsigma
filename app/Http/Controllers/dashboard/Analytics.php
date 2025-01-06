@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\dashboard;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\form;
+use App\Models\inquiry;
 use Illuminate\Http\Request;
 
 class Analytics extends Controller
 {
   public function index()
 {
+  $forms = form::all();
+  $inquiry = inquiry::all();
     // Get the currently authenticated user
     $user = auth()->user();
 
@@ -18,8 +22,17 @@ class Analytics extends Controller
         return view('content.dashboard.not-approved');
     }
 
-    // If the status is 'approved', show the normal dashboard page
-    return view('content.dashboard.dashboards-analytics');
+
+    // dd($forms);
+    return view('content.dashboard.dashboards-crm',compact('forms','inquiry'));
+}
+
+public function display(Request $request)
+{
+    $userID = $request->user()->id;
+    $inquiry = Inquiry::where('user_id', $userID)->get();
+    // dd($inquiry);
+    return view('content.dashboard.dashboards-analytics', compact('inquiry'));
 }
 
 }

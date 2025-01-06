@@ -89,6 +89,7 @@ class QuestionController extends Controller
   {
     $sections = Section::all();
     $questions = Question::all();
+
     return view('panel.question.show',compact('questions','sections'));
   }
 

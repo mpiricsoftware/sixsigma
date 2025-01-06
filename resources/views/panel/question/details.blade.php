@@ -40,7 +40,7 @@
           <div class="col-md-3 mb-5">
             <div class="form-floating form-floating-outline">
               <input type="datetime-local" class="form-control" name="date_time" id="date_time">
-              <label for="date_time">Follow-Up Date & Time</label>
+              <label for="date_time">PreFor Date & Time</label>
             </div>
           </div>
 
@@ -67,8 +67,26 @@
           </div>
 
         </div>
+<div class="row mb-5">
+  <div class="col-md-6">
+    <div class="form-floating form-floating-outline">
+      <input type="text" class="form-control" name="designation" id="designation" value="{{$user->designation}}">
+      <label for="designation">Designation</label>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-floating form-floating-outline">
+        <select name="type" id="type" class="select2 form-control" aria-label="Assessment Type">
+            <option value="" disabled selected>Select Type</option>
+            <option value="online">Online</option>
+            <option value="In-Person">In-Person</option>
+        </select>
+        <label for="Assessment">Assessment Type</label>
+    </div>
+</div>
+</div>
 
-        <div class="text-center">
+        <div class="text-center mb-5">
           <button type="submit" class="btn btn-dark rounded-0" id="submit">Submit</button>
         </div>
       </div>

@@ -167,13 +167,13 @@ $(function () {
 
               switch (status) {
                 case 'approved':
-                    icon = '<span class="badge bg-label-success rounded-pill">Active</span>';
+                    icon = '<span class="badge bg-label-success rounded-pill">Approved</span>';
                     break;
                 case 'pending':
-                    icon = '<span class="badge bg-label-warning rounded-pill">Inactive</span>';
+                    icon = '<span class="badge bg-label-warning rounded-pill">Pending</span>';
                     break;
                 default:
-                    icon = '<span class="badge bg-label-secondary rounded-pill"></span>';
+                    icon = '<span class="badge bg-label-secondary rounded-pill">Rejected</span>';
                     break;
             }
 
@@ -515,6 +515,7 @@ $(function () {
         $('#office_no').val(data.office_no);
         $('#mobileno').val(data.mobileno);
         $('#usertype').val(data.usertype).trigger('change');
+        $('#status').val(data.status).trigger('change');
         console.log(data.usertype);
 
     });
@@ -588,7 +589,7 @@ $(function () {
           // sweetalert
           Swal.fire({
             icon: 'success',
-            title: `Successfully ${status}!`,
+            title: `Successfully`,
             text: `User ${status} Successfully.`,
             customClass: {
               confirmButton: 'btn btn-success'

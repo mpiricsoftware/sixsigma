@@ -31,18 +31,25 @@ class InquiryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-      $userID = auth()->user()->id;
+{
 
-        $inquiry = Inquiry::create([
-            'user_id' => $userID,
+    $userID = auth()->user()->id;
+
+
+    $inquiry = Inquiry::updateOrCreate(
+        ['user_id' => $userID],
+        [
             'email' => $request->email,
             'Phone_no' => $request->Phone_no,
             'date_time' => $request->date_time,
-        ]);
+            'type' => $request->type,
+        ]
+    );
 
-        return view('panel.question.message');
-    }
+    // Return the appropriate view
+    return view('panel.question.message');
+}
+
 
     /**
      * Display the specified resource.

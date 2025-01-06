@@ -196,6 +196,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     });
 
     Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+    Route::get('/display',[Analytics::class,'display']);
     Route::get('/dashboard/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
     Route::get('/dashboard/crm', [Crm::class, 'index'])->name('dashboard-crm');
 
