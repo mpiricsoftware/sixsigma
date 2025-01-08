@@ -6,6 +6,7 @@ use App\Models\answer;
 use App\Models\section;
 use App\Models\Question;
 use App\Models\User;
+use App\Models\form;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -85,19 +86,26 @@ class QuestionController extends Controller
   {
     //
   }
-  public function home()
+  public function home(Request $request,$id)
   {
-    $sections = Section::all();
-    $questions = Question::all();
+// dd('hi');
+    $form = Form::findOrFail($id);
+    // dd($form);
+    $sections = Section::where('form_id',$id)->get();
+    // dd($sections);
+    $questions = Question::where('form_id',$id)->get();
+    // dd($questions);
 
-    return view('panel.question.show',compact('questions','sections'));
+    return view('panel.question.show',compact('questions','sections','form'));
   }
 
-  public function print()
+  public function print($id)
 {
+
     $userID =  auth()->user()->id;
-    $sections = Section::all();
-    $questions = Question::all();
+    $form = Form::findOrFail($id);
+    $sections = Section::where('form_id',$id)->get();
+    $questions = Question::where('form_id',$id)->get();
     $answers = Answer::whereIn('question_id', $questions->pluck('id'))
     ->where('user_id', $userID)
     ->get();

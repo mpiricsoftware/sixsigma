@@ -9,6 +9,9 @@ class inquiry extends Model
     protected $table = 'inquiry';
     protected $fillable  = [
       'user_id',
+      'name',
+      'company',
+      'designation',
       'date_time',
       'email',
       'Phone_no',

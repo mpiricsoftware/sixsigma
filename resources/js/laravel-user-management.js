@@ -589,7 +589,7 @@ $(function () {
           Swal.fire({
             icon: 'success',
             title: `Successfully`,
-            text: `User ${status} Successfully.`,
+            text: `${status} .`,
             customClass: {
               confirmButton: 'btn btn-success'
             }

@@ -111,7 +111,6 @@ function printPage() {
     var titleAndContent = `
         <div style="page-break-before: always;">
             <div class="card-body">${printContent}</div>
-
         </div>
     `;
 

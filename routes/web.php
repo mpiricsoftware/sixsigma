@@ -196,7 +196,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     });
 
     Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
-    Route::get('/display',[Analytics::class,'display']);
+    Route::get('/display/{id}',[Analytics::class,'display']);
     Route::get('/dashboard/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
     Route::get('/dashboard/crm', [Crm::class, 'index'])->name('dashboard-crm');
 
@@ -220,9 +220,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('answer',[AnswerController::class,'index']);
     Route::resource('answer-list',AnswerController::class);
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
-    Route::get('/home',[QuestionController::class,'home'])->name('dashboard-analytics');
-    Route::get('/print',[QuestionController::class,'print'])->name('print');
-    Route::get('index',[InquiryController::class,'index']);
+    Route::get('/home/{id}',[QuestionController::class,'home'])->name('dashboard-analytics');
+    Route::get('/print/{id}',[QuestionController::class,'print'])->name('print');
+    Route::get('inquiry',[InquiryController::class,'index']);
     Route::resource('inquiry-list',InquiryController::class);
     Route::get('message',[InquiryController::class,'message'])->name('message');
     Route::resource('section-list',SectionController::class);

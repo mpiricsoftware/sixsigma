@@ -33,10 +33,11 @@
 <div class="container my-4">
   <div class="row">
       @foreach ($forms as $form)
+      <input type="hidden" name="id" value="{{$form->id}}">
           <div class="col-md-4 mb-3">
               <div class="card h-100">
                   <div class="card-body text-center">
-                    <a href="{{ url('/display') }}">
+                    <a href="{{ url('/display', ['id' => $form->id]) }}">
                       <h5 class="card-title">{{ $form->name }}</h5>
                   </a>
 

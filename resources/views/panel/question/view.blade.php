@@ -30,16 +30,17 @@
 @section('content')
 
 <div class="container">
-  <!-- Thank You Message -->
   <form method="GET">
       <div class="text-center mt-5">
+        <input type="hidden" id="id" name="id" value="{{ $form }}">
           <div class="card" style="margin: 5%; padding-top: 5%; padding-bottom: 5%">
               <div class="card-body">
                   <h5 class="card-title" style="color: #00a6d5;">Thank You for Your Submission!!</h5>
                   <p class="card-text">Your answers have been successfully submitted. We appreciate your time and participation.</p><br>
 
-                  <a href="{{ route('home')}}" class="btn btn-dark rounded-0">Go to Home</a>
-                  <a href="{{ route('print')}}" class="btn btn-white rounded-0" id="print-btn">Print</a>
+                  <a href="/" class="btn btn-dark rounded-0">Go to Home</a>
+
+                  <a href="{{ route('print',['id'=> $form ])}}" class="btn btn-white rounded-0" id="print-btn">Print</a>
 
               </div>
           </div>

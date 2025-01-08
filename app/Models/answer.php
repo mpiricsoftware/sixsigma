@@ -11,7 +11,8 @@ class answer extends Model
       'user_id',
       'question_id',
       'section_id',
-      'answer'
+      'answer',
+      'form_id'
     ];
     public function user()
     {
@@ -24,5 +25,9 @@ class answer extends Model
     public function section()
     {
       return $this->belongsTo(section::class, 'id');
+    }
+    public function form()
+    {
+      return $this->belongsTo(Form::class, 'id');
     }
 }

@@ -70,7 +70,7 @@
 <div class="row mb-5">
   <div class="col-md-6">
     <div class="form-floating form-floating-outline">
-      <input type="text" class="form-control" name="designation" id="designation" value="{{$user->designation}}">
+      <input type="text" class="form-control" name="designation" id="designation" value="{{$user->designation}}" placeholder="Designation">
       <label for="designation">Designation</label>
     </div>
   </div>
@@ -78,8 +78,8 @@
     <div class="form-floating form-floating-outline">
         <select name="type" id="type" class="select2 form-control" aria-label="Assessment Type">
             <option value="" disabled selected>Select Type</option>
-            <option value="online">Online</option>
-            <option value="In-Person">In-Person</option>
+            <option value="online">Online Assisted</option>
+            <option value="In-Person">On Premise Assisted</option>
         </select>
         <label for="Assessment">Assessment Type</label>
     </div>

@@ -126,10 +126,12 @@
                     <tr>
                         <td style="width: 596px; vertical-align: top; padding-left: 30px; padding-right: 30px; padding-top: 30px; padding-bottom: 40px;" width="596">
                             <h1 style="font-size:14px; line-height: 24px; font-family: Releway, sans-serif; font-weight: 600; text-decoration: none; color: #4d467c;">
-                                Hello, {{ $data['name'] }}
+                                Hello!
                             </h1>
                             <p style="font-size: 15px; line-height: 24px; font-family: Releway, sans-serif; font-weight: 400; text-decoration: none; color: #000000;text-align: justify;">
-                              You have been invited to join Concept. Please check your email for further details.
+                              Congratulations! Your account has been successfully approved.
+
+                              You are now eligible to begin your assessment.
                             </p>
                         </td>
                     </tr>

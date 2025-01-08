@@ -51,7 +51,7 @@
         <div class="row g-6 ms-3 me-3">
           <div class="col-md-12">
             @foreach ($form as $form)
-            <input type="hidden" name="id" id="id">
+            <input type="hidden" name="id" id="id" value="{{$form->id}}">
 
 
             <div class="card shadow-sm rounded">

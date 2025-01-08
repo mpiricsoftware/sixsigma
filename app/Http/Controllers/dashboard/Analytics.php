@@ -11,7 +11,9 @@ class Analytics extends Controller
 {
   public function index()
 {
+
   $forms = form::all();
+
   $inquiry = inquiry::all();
     // Get the currently authenticated user
     $user = auth()->user();
@@ -27,12 +29,15 @@ class Analytics extends Controller
     return view('content.dashboard.dashboards-crm',compact('forms','inquiry'));
 }
 
-public function display(Request $request)
+public function display(Request $request,$id)
 {
+
     $userID = $request->user()->id;
+    $forms = Form::findOrFail($id);
+    // dd($forms);
     $inquiry = Inquiry::where('user_id', $userID)->get();
     // dd($inquiry);
-    return view('content.dashboard.dashboards-analytics', compact('inquiry'));
+    return view('content.dashboard.dashboards-analytics', compact('inquiry','forms'));
 }
 
 }
