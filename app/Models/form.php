@@ -12,7 +12,8 @@ class form extends Model
        'user_id',
        'input_id',
        'name',
-       'description'
+       'description',
+       'slug'
     ];
     public function user()
     {

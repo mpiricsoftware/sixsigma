@@ -85,6 +85,7 @@ class FormController extends Controller
       $form = Form::create([
         'name' => $request->name,
         'description' =>$request->description,
+        'slug' => $request->slug,
         'user_id' => $user_id,
     ]);
 

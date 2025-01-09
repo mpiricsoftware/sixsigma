@@ -165,7 +165,7 @@ class UserManagement extends Controller
 
   public function store(Request $request)
   {
-      // Default role in case no role is provided
+
       $defaultRole = 'user';  // Or any default role you want
 
       $userID = $request->id;
@@ -286,6 +286,7 @@ class UserManagement extends Controller
         'office_no' => $user->office_no,
         'mobileno' => $user->mobileno,
         'usertype' => $user->usertype,
+        'status' => $user->status,
     ]);
 }
 

@@ -29,11 +29,11 @@ class Analytics extends Controller
     return view('content.dashboard.dashboards-crm',compact('forms','inquiry'));
 }
 
-public function display(Request $request,$id)
+public function display(Request $request,$slug)
 {
 
     $userID = $request->user()->id;
-    $forms = Form::findOrFail($id);
+    $forms = Form::where('slug', $slug)->firstOrFail();
     // dd($forms);
     $inquiry = Inquiry::where('user_id', $userID)->get();
     // dd($inquiry);

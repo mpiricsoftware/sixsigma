@@ -86,14 +86,14 @@ class QuestionController extends Controller
   {
     //
   }
-  public function home(Request $request,$id)
+  public function home(Request $request,$slug)
   {
 // dd('hi');
-    $form = Form::findOrFail($id);
+     $form = Form::where('slug', $slug)->firstOrFail();
     // dd($form);
-    $sections = Section::where('form_id',$id)->get();
+    $sections = Section::where('form_id',$form->id)->get();
     // dd($sections);
-    $questions = Question::where('form_id',$id)->get();
+    $questions = Question::where('form_id',$form->id)->get();
     // dd($questions);
 
     return view('panel.question.show',compact('questions','sections','form'));

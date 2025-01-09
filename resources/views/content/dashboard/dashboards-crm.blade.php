@@ -37,7 +37,7 @@
           <div class="col-md-4 mb-3">
               <div class="card h-100">
                   <div class="card-body text-center">
-                    <a href="{{ url('/display', ['id' => $form->id]) }}">
+                    <a href="{{ url('/display', ['slug' => $form->slug]) }}">
                       <h5 class="card-title">{{ $form->name }}</h5>
                   </a>
 
