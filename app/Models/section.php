@@ -16,6 +16,9 @@ class section extends Model
     {
       return $this->belongsTo(form::class, 'id');
     }
-
+    public function question()
+    {
+        return $this->hasMany(Question::class, 'section_id');
+    }
 
 }
