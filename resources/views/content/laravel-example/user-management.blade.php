@@ -245,15 +245,25 @@
                                 <label for="add-user-company">Roles</label>
                             </div>
                         </div> --}}
-                        <div class="col-12">
+                        <div class="col-12 col-md-6">
                           <div class="form-floating form-floating-outline">
-                            <input type="number" id="office_no" class="form-control" name="office_no" placeholder="Enter Your OfficeNo">
+                            <input type="number" id="office_no" class="form-control @error('office_no') is-invalid @enderror" name="office_no" placeholder="Enter Your OfficeNo">
                             <label for="office_no">Office No</label>
                           </div>
                         </div>
                         <div class="col-12 col-md-6">
                           <div class="form-floating form-floating-outline">
-                            <input type="number" class="form-control" name="mobileno" id="mobileno" placeholder="Enter Your PhoneNo" data-allow-clear="true">
+                           <select name="status" id="status" class="select2 form-select userStatus" data-placeholder="Select Status" data-allow-clear="true">
+                            <option value=""></option>
+                            <option value="approved">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
+                           </select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input type="number" class="form-control @error('mobileno') is-invalid @enderror" name="mobileno" id="mobileno" placeholder="Enter Your PhoneNo" data-allow-clear="true">
                             <label for="PhoneNo">PhoneNo</label>
                           </div>
                         </div>

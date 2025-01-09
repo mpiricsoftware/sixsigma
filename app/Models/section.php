@@ -14,7 +14,7 @@ class section extends Model
     ];
     public function form()
     {
-      return $this->belongsTo(form::class, 'form_id');
+      return $this->belongsTo(form::class, 'id');
     }
 
 

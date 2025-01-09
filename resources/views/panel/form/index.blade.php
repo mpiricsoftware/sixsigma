@@ -83,11 +83,17 @@
               <form id="addformForm" class="row g-4" method="POST">
                 @csrf
                    <!-- Form Name Input -->
-                   <div class="col-12">
+                   <div class="col-12 col-md-6">
                      <div class="form-floating form-floating-outline">
                        <input type="text" class="form-control" id="name" placeholder="Form Name" name="name" required />
                        <label for="name">Form Name</label>
                      </div>
+                   </div>
+                   <div class="col-12 col-md-6">
+                    <div class="form-floating form-floating-outline">
+                      <input type="text" class="form-control" id="slug" name="slug" placeholder="Enter Slug">
+                      <label for="slug">Slug</label>
+                    </div>
                    </div>
                    <div class="col-12">
                      <div class="form-floating form-floating-outline">
@@ -95,6 +101,7 @@
                        <label for="description">Description</label>
                      </div>
                    </div>
+
                    <div class="col-12 text-end">
                      <button type="submit" class="btn btn-dark rounded-0">Submit</button>
                    </div>

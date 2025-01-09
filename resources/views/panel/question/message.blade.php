@@ -13,8 +13,6 @@
                   <h5 class="card-title" style="color: #00a6d5;">Thank you for submitting your Details!!</h5>
                   <p class="card-text">"Your information has been successfully received, and we are delighted to have you on board. Thank you for your trust and confidence in us!"</p><br>
                   <a href="/" class="btn btn-dark rounded-0">Go to Home</a>
-
-
               </div>
           </div>
       </div>

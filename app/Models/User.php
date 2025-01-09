@@ -96,35 +96,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(company::class, 'company_id', 'id');
     }
 
-    public function site()
-    {
-        return $this->belongsTo(Site::class, 'site_id', 'id');
-    }
-
-    public function department()
-    {
-        return $this->belongsTo(Department::class, 'department_id', 'id');
-    }
-
-    public function subscription()
-    {
-      return $this->belongsTo(subscription::class, 'subscription_id');
-    }
-
-    public function subgroup()
-    {
-      return $this->belongsTo(subgroup::class , 'subgroup_id','id');
-    }
-
-    public function SubPlan()
-    {
-      return $this->belongsTo(SubPlan::class, 'subplan_id','id');
-    }
-
     public function country()
     {
         return $this->belongsTo(Country::class,'id');
     }
+
+
+    // public function save(array $options = [])
+    // {
+    //     if ($this->isDirty('status')) {
+    //         parent::save($options);
+    //         Mail::to($this->email)->send(new UserApproved($this));
+    //     } else {
+    //         parent::save($options); // Just save without sending email
+    //     }
+    // }
 
 
 }

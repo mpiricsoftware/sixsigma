@@ -78,7 +78,7 @@ $(function () {
           {
             // User full name
             targets: 1,
-            orderable: false,
+            orderable: true,
             responsivePriority: 4,
             render: function (data, type, full, meta) {
               var $name = full['name'];
@@ -118,7 +118,7 @@ $(function () {
             targets: 2,
             orderable: false,
             render: function (data, type, full, meta) {
-              var $lastname = full.lastname;
+              var $lastname = full.lastname ? full.lastname : '-';
               return '<span class="text-nowrap">' + $lastname + '</span>';
             }
           },
@@ -127,7 +127,7 @@ $(function () {
             targets: 3,
             orderable: false,
             render: function (data, type, full, meta) {
-              var $company = full.company;
+              var $company = full.company ? full.company : '-';
               return '<span class="text-nowrap">' + $company + '</span>';
             }
           },
@@ -136,7 +136,7 @@ $(function () {
             targets: 4,
             orderable: false,
             render: function (data, type, full, meta) {
-                var $state = full.state ;
+                var $state = full.state ? full.state : '-';
                 return '<span class="text-nowrap">' + $state  + '</span>';
             }
           },
@@ -145,7 +145,7 @@ $(function () {
             targets: 5,
             orderable: false,
             render: function (data, type, full, meta) {
-                var $city = full.city ;
+                var $city = full.city ? full.city : '-';
                 return '<span class="text-nowrap">' + $city  + '</span>';
             }
           },
@@ -154,7 +154,7 @@ $(function () {
              orderable: false,
              render: function (data, type, full, meta)
              {
-              var $mobileno = full.mobileno;
+              var $mobileno = full.mobileno ? full.mobileno : '-';
               return '<span class="text-nowrap">' + $mobileno + '</span>';
              }
           },
@@ -167,13 +167,13 @@ $(function () {
 
               switch (status) {
                 case 'approved':
-                    icon = '<span class="badge bg-label-success rounded-pill">Active</span>';
+                    icon = '<span class="badge bg-label-success rounded-pill">Approved</span>';
                     break;
                 case 'pending':
-                    icon = '<span class="badge bg-label-warning rounded-pill">Inactive</span>';
+                    icon = '<span class="badge bg-label-warning rounded-pill">Pending</span>';
                     break;
                 default:
-                    icon = '<span class="badge bg-label-secondary rounded-pill"></span>';
+                    icon = '<span class="badge bg-label-secondary rounded-pill">Rejected</span>';
                     break;
             }
 
@@ -212,7 +212,7 @@ $(function () {
             }
           }
         ],
-        order: [[2, 'desc']],
+        order: [[1, 'desc']],
         dom:
           '<"card-header d-flex rounded-0 flex-wrap pb-md-0 pt-0"' +
           '<"me-5 ms-n2"f>' +
@@ -515,8 +515,8 @@ $(function () {
         $('#office_no').val(data.office_no);
         $('#mobileno').val(data.mobileno);
         $('#usertype').val(data.usertype).trigger('change');
-        console.log(data.usertype);
-
+        $('#status').val(data.status).trigger('change');
+        // console.log(data.usertype);
     });
 
     });
@@ -588,8 +588,8 @@ $(function () {
           // sweetalert
           Swal.fire({
             icon: 'success',
-            title: `Successfully ${status}!`,
-            text: `User ${status} Successfully.`,
+            title: `Successfully`,
+            text: `${status}`,
             customClass: {
               confirmButton: 'btn btn-success'
             }

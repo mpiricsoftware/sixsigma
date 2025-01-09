@@ -33,12 +33,6 @@
           "slug": "app-academy-dashboard"
         },
         {
-          "url": "input",
-          "name":"Input Master",
-          "slug": "dashboard-input",
-          "role": ["Super Admin","Admin"]
-        },
-        {
           "url": "form",
           "name":"Form Master",
           "slug": "dashboard-form",
@@ -69,10 +63,10 @@
           "role":["Super Admin","Admin"]
         },
         {
-          "url": "app/ecommerce/customer/details/overview",
-          "name": "Overview",
-          "slug": "app-ecommerce-customer-details-overview",
-          "role": [""]
+          "url": "inquiry",
+          "name": "Inquiry",
+          "slug": "inquiry",
+          "role": ["Admin"]
 
         }
 

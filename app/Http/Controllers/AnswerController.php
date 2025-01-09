@@ -6,6 +6,7 @@ use App\Models\answer;
 use App\Models\section;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Models\form;
 use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
@@ -68,13 +69,15 @@ class AnswerController extends Controller
         if (empty($answer)) {
           $answer = null;
         }
-
+        $form = $question->form_id;
+        // dd($formId);
         // Save the answer
         Answer::updateOrCreate(
           [
             'section_id' => $sectionId,
             'question_id' => $questionId,
             'user_id' => auth()->id(),
+            'form_id' => $form
           ],
           [
             'answer' => $answer,
@@ -83,14 +86,18 @@ class AnswerController extends Controller
       }
     }
 
-    return view("panel.question.view");
+
+
+    return view("panel.question.view",compact('form'));
   }
 
 
   /**
    * Display the specified resource.
    */
-  public function show(string $id) {}
+  public function show(string $id) {
+
+  }
 
   /**
    * Show the form for editing the specified resource.
