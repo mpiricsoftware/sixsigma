@@ -44,8 +44,10 @@
                 <th></th>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Email</th>
+                <th>Phone_no</th>
                 <th>Company</th>
-                <th>Date & Time </th>
+                <th>PreFor Date & Time </th>
                 <th>Designation</th>
                 <th>Type</th>
               </tr>

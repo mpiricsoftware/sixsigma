@@ -57,6 +57,8 @@ class InquiryController extends Controller
         foreach ($inquiry as $i) {
             $nestedData['id'] = $i->id;
             $nestedData['name'] = $i->name;
+            $nestedData['email'] = $i->email;
+            $nestedData['Phone_no'] = $i->Phone_no;
             $nestedData['company'] = $i->company;
             $nestedData['date_time'] = $i->date_time;
             $nestedData['designation'] = $i->designation;

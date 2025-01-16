@@ -109,6 +109,11 @@ class FormController extends Controller
         $query->where('form_id', $id);
     }])
     ->get();
+    foreach ($sections as $section) {
+      foreach ($section->question as $question) {
+          $question->options = $question->options ? json_decode($question->options, true) : [];
+      }
+  }
 
 // dd($sections);
       return view('panel.form.show',compact('form','sections'));

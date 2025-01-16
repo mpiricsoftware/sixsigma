@@ -15,6 +15,8 @@ $(function ()
         { data: '' },
         { data: 'id' },
         { data: 'name' },
+        { data: 'email' },
+        { data: 'designation' },
         { data: 'company'},
         { data: 'date_time'},
         { data: 'designation'},
@@ -51,23 +53,35 @@ $(function ()
         {
           targets: 3,
           render: function (data, type, full, meta) {
-            return `<span>${full.company}</span>`;
+            return `<span>${full.email}</span>`;
           }
         },
         {
           targets: 4,
           render: function (data, type, full, meta) {
-            return `<span>${full.date_time}</span>`;
+            return `<span>${full.Phone_no}</span>`;
           }
         },
         {
           targets: 5,
           render: function (data, type, full, meta) {
-            return `<span>${full.designation}</span>`;
+            return `<span>${full.company}</span>`;
           }
         },
         {
           targets: 6,
+          render: function (data, type, full, meta) {
+            return `<span>${full.date_time}</span>`;
+          }
+        },
+        {
+          targets: 7,
+          render: function (data, type, full, meta) {
+            return `<span>${full.designation}</span>`;
+          }
+        },
+        {
+          targets: 8,
           render: function (data, type, full, meta) {
             return `<span>${full.type}</span>`;
           }
