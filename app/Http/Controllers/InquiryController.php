@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 Use App\Models\User;
 use App\Models\inquiry;
-
+use App\Models\Form;
 class InquiryController extends Controller
 {
     /**
@@ -55,14 +55,16 @@ class InquiryController extends Controller
         // Prepare the data for the response
         $data = [];
         foreach ($inquiry as $i) {
-            $nestedData['id'] = $i->id;
+            $nestedData['form_id'] = $i->form_id;
             $nestedData['name'] = $i->name;
             $nestedData['email'] = $i->email;
             $nestedData['Phone_no'] = $i->Phone_no;
             $nestedData['company'] = $i->company;
+            $nestedData['form_name'] = $i->form_name;
             $nestedData['date_time'] = $i->date_time;
             $nestedData['designation'] = $i->designation;
             $nestedData['type'] = $i->type;
+
             $data[] = $nestedData;
         }
         // dd($data);
@@ -73,6 +75,7 @@ class InquiryController extends Controller
             'data' => $data,
         ]);
     }
+
         return view('panel.question.index');
     }
 
@@ -81,10 +84,10 @@ class InquiryController extends Controller
      */
     public function create(Request $request)
     {
-      $userID =  auth()->user()->id;
-      $user = User::find($userID);
-      // dd($user);
-      return view('panel.question.details',compact('user'));
+      // $userID =  auth()->user()->id;
+      // $user = User::find($userID);
+      // $form = Form::all();
+      // return view('panel.question.details',compact('user','form'));
     }
 
     /**
@@ -106,9 +109,11 @@ class InquiryController extends Controller
             'Phone_no' => $request->Phone_no,
             'date_time' => $request->date_time,
             'type' => $request->type,
+            'form_name' => $request->form_name,
+            'form_id' => $request->id
         ]
     );
-
+// dd($request->all());
     // Return the appropriate view
     return view('panel.question.message');
 }
@@ -148,5 +153,13 @@ class InquiryController extends Controller
     public function message(Request $request)
     {
        return view('panel.question.message');
+    }
+    public function details(Request $request,$slug)
+    {
+      $userID =  auth()->user()->id;
+      $user = User::find($userID);
+      $form = Form::where('slug',$slug)->firstOrFail();
+      // dd($form);
+      return view('panel.question.details',compact('user','form'));
     }
 }

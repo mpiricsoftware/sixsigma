@@ -65,7 +65,7 @@
                               </div>
                               @if($q->type == 'text')
                                   <input type="text" name="answers[{{ $section->id }}][{{ $qIndex }}]" class="form-control" placeholder="Enter your answer" value="{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}">
-                              @elseif($q->type == 'choice')
+                              @elseif($q->type == 'radio')
                                   <div>
                                       @foreach(json_decode($q->options) as $option)
                                           <label>

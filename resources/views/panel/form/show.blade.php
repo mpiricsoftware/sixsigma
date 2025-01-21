@@ -209,19 +209,20 @@
 
 @endsection
 <script>
-    $(document).ready(function() {
-        let fieldCount = 0;
-        let isUpdate = false;
-        $('[id^="addSection"]').on('click', function() {
-            let sectionId = $(this).attr('id');
-            let dynamicSectionId = '';
-            if (sectionId.includes('_')) {
-                dynamicSectionId = sectionId.split('_')[1];
-                isUpdate = true;
-            }
-            if (!isUpdate) {
-                fieldCount++;
-                const newSection = `
+  $(document).ready(function() {
+    let fieldCount = 0;
+    let isUpdate = false;
+    $('[id^="addSection"]').on('click', function() {
+        let sectionId = $(this).attr('id');
+        let dynamicSectionId = '';
+        if (sectionId.includes('_')) {
+            dynamicSectionId = sectionId.split('_')[1];
+            isUpdate = true;
+        }
+
+        if (!isUpdate) {
+            fieldCount++;
+            const newSection = `
             <div class="section-box form-control mt-3" id="section_${fieldCount}">
                 <!-- Dynamic fields container -->
                 <div id="dynamicFields_${fieldCount}"></div>
@@ -276,15 +277,14 @@
                 </div>
             </div>`;
 
-                // For new section, append based on dynamicSectionId or default container
-                if (dynamicSectionId) {
-                    $('#dynamicFields_' + dynamicSectionId).append(newSection);
-                } else {
-                    $('#dynamicFields').append(newSection);
-                }
+            // For new section, append based on dynamicSectionId or default container
+            if (dynamicSectionId) {
+                $('#dynamicFields_' + dynamicSectionId).append(newSection);
             } else {
-                // alert('hii');
-                const newSection = `
+                $('#dynamicFields').append(newSection);
+            }
+        } else {
+            const newSection = `
             <div class="section-box form-control mt-3" id="section_${dynamicSectionId}">
                 <!-- Dynamic fields container -->
                 <div id="dynamicFields_${dynamicSectionId}"></div>
@@ -342,72 +342,73 @@
                 </div>
             </div>`;
 
-                // Append the new section into the existing section's container
-                $('#dynamicFields_' + dynamicSectionId).append(newSection);
-            }
-        });
+            // Append the new section into the existing section's container
+            $('#dynamicFields_' + dynamicSectionId).append(newSection);
+        }
     });
+});
 
-
-
-   function addChoiceField(sectionId) {
-    const container = $(`#dynamicFields_${sectionId}`);
+// Update `addChoiceField` to store questionId based on the section index
+function addChoiceField(sectionId) {
+  alert('hi');
+   const container = $(`#dynamicFields_${sectionId}`);
+    const questionId = `question_${sectionId}_${new Date().getTime()}`; // Unique question ID
 
     const choiceField = `
-    <div class="row mt-5 choice-field">
+    <div class="row mt-5 choice-field" id="${questionId}">
         <div class="col-md-12">
-            <input type="text" class="form-control" placeholder="Enter your question" name="question_text[${sectionId}][]">
+            <input type="text" class="form-control" placeholder="Enter your question" name="question_text[${sectionId}][${questionId}]">
         </div>
         <div class="col-md-12 mt-2">
-            <input type="text" class="form-control" placeholder="Enter your Description" name="question_description[${sectionId}][]">
+            <input type="text" class="form-control" placeholder="Enter your Description" name="question_description[${sectionId}][${questionId}]">
         </div>
         <div class="col-md-12 mt-2">
             <div class="btn-group" role="group" aria-label="Choice Type">
-                <button type="button" class="btn btn-whiterounded-0" onclick="showChoiceOptions(${sectionId}, 'radio', this)">Radio Button</button>
-                <button type="button" class="btn btn-dark rounded-0" onclick="showChoiceOptions(${sectionId}, 'checkbox', this)">Checkbox</button>
+                <button type="button" class="btn btn-whiterounded-0" onclick="showChoiceOptions(${sectionId}, 'radio', this, '${questionId}')">Radio Button</button>
+                <button type="button" class="btn btn-dark rounded-0" onclick="showChoiceOptions(${sectionId}, 'checkbox', this, '${questionId}')">Checkbox</button>
             </div>
             <div class="choice-options mt-4"></div>
-            <button type="button" class="btn btn-dark rounded-0 mt-2" onclick="addChoiceOption(${sectionId})" style="background-color:#00a6d5">+</button>
+            <button type="button" class="btn btn-dark rounded-0 mt-2" onclick="addChoiceOption(${sectionId}, '${questionId}')" style="background-color:#00a6d5">+</button>
             <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
                 <i class="ri-delete-bin-7-line ri-20px"></i>
             </button>
         </div>
-        <input type="hidden" name="type[${sectionId}][]" class="choice-type-hidden" value="">
+        <input type="hidden" name="type[${sectionId}][${questionId}]" class="choice-type-hidden" value="">
     </div>
     `;
     container.append(choiceField);
 }
 
-function showChoiceOptions(sectionId, type, button) {
-    const choiceContainer = $(`#dynamicFields_${sectionId} .choice-options`);
+function showChoiceOptions(sectionId, type, button, questionId) {
+  alert('hello');
+    const choiceContainer = $(`#${questionId} .choice-options`);
     choiceContainer.empty();
 
     $(button).siblings().removeClass('btn-primary').addClass('btn-outline-primary');
     $(button).removeClass('btn-outline-primary').addClass('btn-primary');
 
-    const typeField = $(`#dynamicFields_${sectionId} .choice-type-hidden`);
+    const typeField = $(`#${questionId} .choice-type-hidden`);
     typeField.val(type);
 
     const initialOption = `
     <div class="d-flex align-items-center mb-2 choice-option">
-        <input type="${type}" name="choice_${sectionId}${type === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
+        <input type="${type}" name="choice_${sectionId}_${questionId}${type === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
         <input type="text" class="form-control me-2" placeholder="Option 1" onchange="updateOptionValue(${sectionId}, 0, this)">
     </div>
     `;
     choiceContainer.append(initialOption);
-
-    // Add hidden input for first option
     const hiddenOptionsField = `
-    <input type="hidden" name="options[choice_${sectionId}][]" class="option-value" data-option-index="0" value="">
+    <input type="hidden" name="options[choice_${sectionId}_${questionId}][]" class="option-value" data-option-index="0" value="">
     `;
     choiceContainer.append(hiddenOptionsField);
 }
 
-function addChoiceOption(sectionId) {
-    const container = $(`#dynamicFields_${sectionId} .choice-options`);
+function addChoiceOption(sectionId, questionId) {
+  alert('choice');
+    const container = $(`#${questionId} .choice-options`);
     const newIndex = container.find('.choice-option').length;
 
-    const choiceType = $(`#dynamicFields_${sectionId} .choice-type-hidden`).val();
+    const choiceType = $(`#${questionId} .choice-type-hidden`).val();
 
     if (!choiceType) {
         alert("Please select Radio or Checkbox type first.");
@@ -416,7 +417,7 @@ function addChoiceOption(sectionId) {
 
     const choiceOption = `
     <div class="d-flex align-items-center mt-2 choice-option">
-        <input type="${choiceType}" name="choice_${sectionId}${choiceType === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
+        <input type="${choiceType}" name="choice_${sectionId}_${questionId}${choiceType === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
         <input type="text" class="form-control me-2" placeholder="Option ${newIndex + 1}" onchange="updateOptionValue(${sectionId}, ${newIndex}, this)">
         <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeOption(this)">
             <i class="ri-delete-bin-7-line ri-20px"></i>
@@ -424,22 +425,20 @@ function addChoiceOption(sectionId) {
     </div>
     `;
     container.append(choiceOption);
-
-    // Add hidden input for new option
     const hiddenOptionsField = `
-    <input type="hidden" name="options[choice_${sectionId}][]" class="option-value" data-option-index="${newIndex}" value="">
+    <input type="hidden" name="options[choice_${sectionId}_${questionId}][]" class="option-value" data-option-index="${newIndex}" value="">
     `;
     container.append(hiddenOptionsField);
 }
 
 function updateOptionValue(sectionId, index, element) {
+
     const optionValue = element.value;
     const hiddenOptionField = $(`#dynamicFields_${sectionId} input.option-value[data-option-index="${index}"]`);
     hiddenOptionField.val(optionValue);
 }
-
-
     function updateSelectedValue(sectionId, element) {
+
         const selectedValue = $(element).siblings("input[type='text']").val();
         $(`#selectedValue_${sectionId}`).val(selectedValue);
     }
