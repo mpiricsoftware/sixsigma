@@ -23,7 +23,7 @@
 
                 <div class="card mb-8">
                     <div class="d-flex flex-column align-items-center">
-                        <a href="{{route('inquiry-list.create')}}">
+                      <a href="{{url('/details',['slug' => $forms->slug])}}">
                             <img src="{{ asset('assets/img/logo/3.png') }}" class="img-fluid mb-2" alt="Image 3" style="border-radius: 10px">
                         </a>
                     </div>
@@ -54,7 +54,7 @@
 
                 <div class="card mb-8">
                     <div class="d-flex flex-column align-items-center">
-                        <a href="{{route('inquiry-list.create')}}">
+                        <a href="{{url('/details',['slug' => $forms->slug])}}">
                             <img src="{{ asset('assets/img/logo/3.png') }}" class="img-fluid mb-2" alt="Image 3" style="border-radius: 10px">
                         </a>
                     </div>

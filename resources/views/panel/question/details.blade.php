@@ -10,6 +10,7 @@
       <div class="card-header">
         <h5>Concept Details</h5>
       </div>
+      <input type="hidden" id="id" name="id" value="{{$form->id}}">
       <div class="card-body pt-1">
         <div class="row">
           <div class="col-md-6 mb-5">
@@ -68,13 +69,21 @@
 
         </div>
 <div class="row mb-5">
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="form-floating form-floating-outline">
       <input type="text" class="form-control" name="designation" id="designation" value="{{$user->designation}}" placeholder="Designation">
       <label for="designation">Designation</label>
     </div>
   </div>
-  <div class="col-md-6">
+
+  <div class="col-md-2">
+    <div class="form-floating form-floating-outline">
+      <input type="text" class="form-control" id="form_name" name="form_name" value="{{$form->name}}" placeholder="Form Name">
+  <label for="form_name">Form Name</label>
+    </div>
+  </div>
+
+  <div class="col-md-5">
     <div class="form-floating form-floating-outline">
         <select name="type" id="type" class="select2 form-control" aria-label="Assessment Type">
             <option value="" disabled selected>Select Type</option>
@@ -84,6 +93,7 @@
         <label for="Assessment">Assessment Type</label>
     </div>
 </div>
+
 </div>
 
         <div class="text-center mb-5">

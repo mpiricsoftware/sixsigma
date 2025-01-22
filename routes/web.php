@@ -225,7 +225,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('inquiry',[InquiryController::class,'index']);
     Route::resource('inquiry-list',InquiryController::class);
     Route::get('message',[InquiryController::class,'message'])->name('message');
+    Route::get('/details/{slug}',[InquiryController::class,'details'])->name('details');
     Route::resource('section-list',SectionController::class);
+    Route::post('section-list/updateNew',[SectionController::class,'updateNew'])->name('section-list.updateNew');
     Route::get('section',[SectionController::class,'index']);
 
    Route::get('/states/{countryId}', function ($countryId) {

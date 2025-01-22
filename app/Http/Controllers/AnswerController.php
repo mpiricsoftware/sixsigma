@@ -70,7 +70,7 @@ class AnswerController extends Controller
           $answer = null;
         }
         $form = $question->form_id;
-        // dd($formId);
+        // dd($form);
         // Save the answer
         Answer::updateOrCreate(
           [

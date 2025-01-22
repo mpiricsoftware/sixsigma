@@ -48,7 +48,7 @@
           "url":"define/{sectionId}",
           "name":"Question",
           "slug": "dashboard-define",
-          "role":["Super Admin","Admin"]
+          "role":[""]
         },
         {
           "url":"answer",

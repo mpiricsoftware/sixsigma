@@ -32,11 +32,11 @@
 @endsection
 
 @section('content')
+
 <div class="card">
   <div class="card-header pb-0">
       <h5 class="card-title mb-0">Inquiry</h5>
   </div>
-
   <div class="card-datatable table-responsive">
       <table class="datatables-Inquiry table">
           <thead>
@@ -44,14 +44,20 @@
                 <th></th>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Email</th>
+                <th>Phone_no</th>
                 <th>Company</th>
-                <th>Date & Time </th>
+                <th>Form Name</th>
+                <th>PreFor Date & Time </th>
                 <th>Designation</th>
                 <th>Type</th>
+                <th>Action</th>
               </tr>
           </thead>
       </table>
   </div>
 </div>
 @endsection
-
+<script>
+  var printRoute = "{{ route('print', ':id') }}"; // Pass route with placeholder to JavaScript
+</script>
