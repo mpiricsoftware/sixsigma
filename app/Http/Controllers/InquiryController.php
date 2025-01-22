@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 Use App\Models\User;
 use App\Models\inquiry;
-use App\Models\Form;
+use App\Models\form;
 class InquiryController extends Controller
 {
     /**

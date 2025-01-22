@@ -67,6 +67,16 @@
                                                     </td>
                                                 @endforeach
                                             @endif
+
+                                            @if ($q->type == 'checkbox')
+                                                @foreach (json_decode($q->options) as $option)
+                                                    <td style="text-align: center;"
+                                                        name="answers[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ $option }}">
+                                                        {{ $option }}
+                                                    </td>
+                                                @endforeach
+                                            @endif
                                         </tr>
 
                                         @foreach ($userAnswers as $userAnswer)
@@ -82,15 +92,54 @@
                                                             <span
                                                                 style="color: #555;">{{ $userAnswer->answer ?? 'No Answer' }}</span>
                                                         </p>
-                                                    @elseif ($q->type === 'checkbox')
+                                                        @elseif ($q->type === 'checkbox')
+                                                        {{-- @php
+                                                            $totalOptions = 5; // Total number of checkbox options
+                                                            $selectedValues = json_decode($userAnswer->answer); // User's selected answers (e.g., [1, 4])
+
+                                                            // Ensure selected values are numeric and convert to zero-based index
+                                                            $selectedIndexes = array_map(function($value) use ($totalOptions) {
+                                                                return is_numeric($value) ? intval($value) - 1 : null; // Convert to zero-based index
+                                                            }, $selectedValues);
+
+                                                            // Filter out any null values (non-numeric)
+                                                            $selectedIndexes = array_filter($selectedIndexes);
+                                                        @endphp
+
+                                                        <div class="progress-bar-container" style="position: relative; width: 100%; height: 30px; background-color: #ddd; border: 1px solid #ccc;">
+                                                            @for ($i = 0; $i < $totalOptions; $i++)
+                                                                <div class="progress-segment" style="
+                                                                    position: absolute;
+                                                                    width: calc(100% / {{ $totalOptions }});
+                                                                    height: 100%;
+                                                                    left: calc({{ $i }} * (100% / {{ $totalOptions }}));
+                                                                    background-color: {{ in_array($i, $selectedIndexes) ? '#4caf50' : '#ddd' }};
+                                                                    border-right: 1px solid #fff;
+                                                                    text-align: center;
+                                                                    line-height: 30px;
+                                                                    font-size: 12px;
+                                                                    color: {{ in_array($i, $selectedIndexes) ? '#fff' : '#000' }};
+                                                                ">
+                                                                    {{ in_array($i, $selectedIndexes) ? 'Selected ' . ($i + 1) : '' }}
+                                                                </div>
+                                                            @endfor
+                                                        </div> --}}
+
+                                                        <!-- Display Selected Values -->
+
+
+
+
                                                         <p>
-                                                            @foreach (json_decode($userAnswer->answer) as $checkboxAnswer)
-                                                                <span
-                                                                    style="font-size: 25px; color: #000708;">&#8594;</span>
-                                                                <span style="color: #555;">{{ $checkboxAnswer }}</span><br>
-                                                                <hr style="border: 1px solid #bbb; margin: 20px 0;">
-                                                            @endforeach
-                                                        </p>
+                                                          @foreach (json_decode($userAnswer->answer) as $checkboxAnswer)
+                                                              <span
+                                                                  style="font-size: 25px; color: #000708;">&#8594;</span>
+                                                              <span style="color: #555;">{{ $checkboxAnswer }}</span><br>
+                                                              <hr style="border: 1px solid #bbb; margin: 20px 0;">
+                                                          @endforeach
+                                                      </p>
+
+                                                        {{-- </p> --}}
                                                     @elseif ($q->type === 'radio')
                                                         <div class="progress-bar-container">
                                                             <div class="progress-bar">
