@@ -68,6 +68,13 @@
           "slug": "inquiry",
           "role": ["Admin"]
 
+        },
+        {
+          "url": "details",
+          "name": "Form Details",
+          "slug": "details",
+          "role": ["Admin"]
+
         }
 
       ]

@@ -55,7 +55,7 @@
                   <div id="questions-container-{{ $section->id }}" class="question">
                       @foreach($questions->where('section_id', $section->id) as $qIndex => $q)
                       <input type="hidden" name="question_ids[{{ $section->id }}][{{ $qIndex }}]" value="{{ $q->id }}">
-                          <div class="question" id="question_{{ $section->id }}_{{ $qIndex }}" style="display: {{ $qIndex == 0 ? 'block' : 'none' }}">
+                          <div class="question" id="question_{{ $section->id }}_{{ $qIndex }}" style="display: {{ $qIndex == -1 ? 'block' : 'none' }}">
                               <h6 class="font-weight-bold text-dark">{{ $q->question_text }}</h6>
                               <div>
                                   <a href="#guidance_{{ $section->id }}_{{ $qIndex }}" data-bs-toggle="collapse" class="text-primary" style="cursor: pointer;">&#9650; Click to see guidance</a>
