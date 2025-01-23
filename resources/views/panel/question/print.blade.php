@@ -92,7 +92,7 @@
                                                             <span
                                                                 style="color: #555;">{{ $userAnswer->answer ?? 'No Answer' }}</span>
                                                         </p>
-                                                        @elseif ($q->type === 'checkbox')
+                                                    @elseif ($q->type === 'checkbox')
                                                         {{-- @php
                                                             $totalOptions = 5; // Total number of checkbox options
                                                             $selectedValues = json_decode($userAnswer->answer); // User's selected answers (e.g., [1, 4])
@@ -131,13 +131,27 @@
 
 
                                                         <p>
-                                                          @foreach (json_decode($userAnswer->answer) as $checkboxAnswer)
-                                                              <span
-                                                                  style="font-size: 25px; color: #000708;">&#8594;</span>
-                                                              <span style="color: #555;">{{ $checkboxAnswer }}</span><br>
-                                                              <hr style="border: 1px solid #bbb; margin: 20px 0;">
-                                                          @endforeach
-                                                      </p>
+                                                        <div class="progress-bar-container">
+                                                            <div class="progress-bar-checkbox">
+                                                                @php
+                                                                    $options = json_decode($q->options);
+                                                                    $selectedOptions = json_decode($userAnswer->answer);
+                                                                @endphp
+
+                                                                @foreach ($options as $index => $option)
+                                                                    <div class="progress-value-checkbox"
+                                                                        style="left: calc(({{ $index }} / {{ count($options) - 1 }}) * 100%);">
+                                                                        @if (in_array($option, $selectedOptions))
+                                                                            {{ 'Our Overall Maturity Level' }}
+                                                                        @endif
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+
+                                                        </p>
+
+
 
                                                         {{-- </p> --}}
                                                     @elseif ($q->type === 'radio')
@@ -194,103 +208,133 @@
     </div>
 
     <style>
-      .card-body {
-          padding: 40px;
-          line-height: 1.6;
-          font-size: 14pt;
-          color: #333;
-          background-color: #f9f9f9;
-          margin-top: 30px;
-          text-align: center;
-      }
+        .card-body {
+            padding: 40px;
+            line-height: 1.6;
+            font-size: 14pt;
+            color: #333;
+            background-color: #f9f9f9;
+            margin-top: 30px;
+            text-align: center;
+        }
 
-      table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-bottom: 25px;
-      }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
 
-      th,
-      td {
-          padding: 10px;
-          font-size: 11pt;
-          text-align: center;
-          vertical-align: top;
-      }
+        th,
+        td {
+            padding: 10px;
+            font-size: 11pt;
+            text-align: center;
+            vertical-align: top;
+        }
 
-      th {
-          color: #00a6d5;
-          font-weight: bold;
-          font-size: 12pt;
-      }
+        th {
+            color: #00a6d5;
+            font-weight: bold;
+            font-size: 12pt;
+        }
 
-      .progress-bar-container {
-          position: relative;
-          width: 100%;
-          margin-bottom: 15px;
-      }
+        .progress-bar-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
 
-      .progress-bar {
-          width: 100%;
-          height: 20px;
-          background-color: #e0e0e0;
-          border-radius: 12px;
-          overflow: hidden;
-          position: relative;
-      }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
 
-      .progress-value {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 20px;
-          transform: translateX(20%);
-          background-color: #b63881;
-          border-radius: 12px;
-          text-align: center;
-          line-height: 20px;
-          color: white;
-          font-size: 14px;
-          white-space: nowrap;
-          padding: 0 5px;
-          transition: left 0.3s ease;
-      }
-
-      .section {
-          margin-bottom: 30px;
-      }
-
-      .section h5 {
-          color: #00a6d5;
-          background-color: #f1f1f1;
-          padding: 10px;
-          border-radius: 8px;
-          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
-          margin-bottom: 15px;
-      }
-
-      .section-table {
-          display: table;
-          width: 100%;
-          height: 100%;
-      }
-
-      .section-table td,
-      .section-table th {
-          vertical-align: top;
-      }
-
-      .section-table td {
-          padding: 12px;
-          width: 18%;
-          font-size: 12pt;
-      }
+        .progress-value {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            transform: translateX(20%);
+            background-color: #b63881;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 14px;
+            white-space: nowrap;
+            padding: 0 5px;
+            transition: left 0.3s ease;
+        }
 
 
-      .section-table td:last-child {
-          padding-right: 20px;
-      }
-  </style>
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h5 {
+            color: #00a6d5;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            page-break-after: always;
+        }
+
+        .section-table {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+
+        .section-table td,
+        .section-table th {
+            vertical-align: top;
+        }
+
+        .section-table td {
+            padding: 12px;
+            width: 18%;
+            font-size: 12pt;
+        }
+
+
+        .section-table td:last-child {
+            padding-right: 20px;
+        }
+
+        .progress-bar-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-checkbox {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-value-checkbox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 21px;
+            background-color: #b63881;
+            border-radius: 12px;
+            text-align: center;
+
+            /* Adjust this value to position the highlighted value vertically */
+        }
+    </style>
 
     <script>
         function printPage() {
@@ -410,6 +454,7 @@
                     border-radius: 5px;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     margin-bottom: 10px;
+                    page-break-before: always;
                 }
                      .section-table {
                     display: table;
@@ -431,6 +476,33 @@
                 .section-table td:last-child {
                     padding-right: 15px; /* Add extra space on the right side of the last column */
                 }
+            .progress-bar-container {
+                position: relative;
+                width: 100%;
+                margin-bottom: 15px;
+              }
+
+              .progress-bar-checkbox {
+                width: 100%;
+                height: 20px;
+                background-color: #e0e0e0;
+                border-radius: 12px;
+                overflow: hidden;
+                position: relative;
+              }
+
+              .progress-value-checkbox {
+                position: absolute;
+                  top: 0;
+                  left: 0;
+                  height: 21px;
+                  background-color: #b63881;
+                  border-radius: 12px;
+                  text-align: center;
+
+                  /* Adjust this value to position the highlighted value vertically */
+              }
+}
 
         </style>
     `);

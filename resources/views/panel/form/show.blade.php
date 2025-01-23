@@ -221,6 +221,7 @@
         }
 
         if (!isUpdate) {
+          // alert('hello');
             fieldCount++;
             const newSection = `
             <div class="section-box form-control mt-3" id="section_${fieldCount}">
@@ -284,6 +285,7 @@
                 $('#dynamicFields').append(newSection);
             }
         } else {
+          // alert('hi');
             const newSection = `
             <div class="section-box form-control mt-3" id="section_${dynamicSectionId}">
                 <!-- Dynamic fields container -->
@@ -348,10 +350,10 @@
     });
 });
 
-// Update `addChoiceField` to store questionId based on the section index
+const globalOptionIndex = {};
+
 function addChoiceField(sectionId) {
-  alert('hi');
-   const container = $(`#dynamicFields_${sectionId}`);
+    const container = $(`#dynamicFields_${sectionId}`);
     const questionId = `question_${sectionId}_${new Date().getTime()}`; // Unique question ID
 
     const choiceField = `
@@ -377,10 +379,17 @@ function addChoiceField(sectionId) {
     </div>
     `;
     container.append(choiceField);
+
+    if (!globalOptionIndex[sectionId]) {
+        globalOptionIndex[sectionId] = 0;
+    }
+
+    const existingOptionsCount = $(`#dynamicFields_${sectionId} .choice-option`).length;
+    globalOptionIndex[sectionId] = existingOptionsCount;
+
 }
 
 function showChoiceOptions(sectionId, type, button, questionId) {
-  alert('hello');
     const choiceContainer = $(`#${questionId} .choice-options`);
     choiceContainer.empty();
 
@@ -390,30 +399,21 @@ function showChoiceOptions(sectionId, type, button, questionId) {
     const typeField = $(`#${questionId} .choice-type-hidden`);
     typeField.val(type);
 
-    const initialOption = `
-    <div class="d-flex align-items-center mb-2 choice-option">
-        <input type="${type}" name="choice_${sectionId}_${questionId}${type === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
-        <input type="text" class="form-control me-2" placeholder="Option 1" onchange="updateOptionValue(${sectionId}, 0, this)">
-    </div>
-    `;
-    choiceContainer.append(initialOption);
-    const hiddenOptionsField = `
-    <input type="hidden" name="options[choice_${sectionId}_${questionId}][]" class="option-value" data-option-index="0" value="">
-    `;
-    choiceContainer.append(hiddenOptionsField);
+    // Add initial option when the choice type is selected
+    addChoiceOption(sectionId, questionId);
 }
 
 function addChoiceOption(sectionId, questionId) {
-  alert('choice');
     const container = $(`#${questionId} .choice-options`);
-    const newIndex = container.find('.choice-option').length;
-
     const choiceType = $(`#${questionId} .choice-type-hidden`).val();
 
     if (!choiceType) {
         alert("Please select Radio or Checkbox type first.");
         return;
     }
+
+    // Use and increment the global option index for this section
+    const newIndex = globalOptionIndex[sectionId]++;
 
     const choiceOption = `
     <div class="d-flex align-items-center mt-2 choice-option">
@@ -424,35 +424,31 @@ function addChoiceOption(sectionId, questionId) {
         </button>
     </div>
     `;
+
     container.append(choiceOption);
+
     const hiddenOptionsField = `
     <input type="hidden" name="options[choice_${sectionId}_${questionId}][]" class="option-value" data-option-index="${newIndex}" value="">
     `;
+
     container.append(hiddenOptionsField);
 }
 
 function updateOptionValue(sectionId, index, element) {
-
     const optionValue = element.value;
     const hiddenOptionField = $(`#dynamicFields_${sectionId} input.option-value[data-option-index="${index}"]`);
     hiddenOptionField.val(optionValue);
 }
-    function updateSelectedValue(sectionId, element) {
 
-        const selectedValue = $(element).siblings("input[type='text']").val();
-        $(`#selectedValue_${sectionId}`).val(selectedValue);
-    }
-
+function updateSelectedValue(sectionId, element) {
+    const selectedValue = $(element).siblings("input[type='text']").val();
+    $(`#selectedValue_${sectionId}`).val(selectedValue);
+}
 
     function removeOption(element) {
         $(element).closest('.choice-option').remove();
     }
 
-
-    function updateSelectedValue(sectionId, element) {
-        const selectedRadioValue = $(element).siblings("input[type='text']").val();
-        $(`#selectedValue_${sectionId}`).val(selectedRadioValue);
-    }
 
 
     function addRatingField(sectionId) {
