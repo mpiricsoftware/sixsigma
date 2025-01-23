@@ -228,9 +228,6 @@ class SectionController extends Controller
             }
         }
     }
-    Section::where('form_id', $formId)->whereNotIn('id', $processedSectionIds)->delete();
-    Question::where('form_id', $formId)->whereNotIn('id', $processedQuestionIds)->delete();
-
     return redirect()->route('form-list.index')->with('success', 'Sections and questions updated successfully!');
 }
 

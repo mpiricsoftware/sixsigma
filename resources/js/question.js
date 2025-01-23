@@ -72,9 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-
-
-
     const questions = questionsContainer.querySelectorAll('.question');
     console.log(`Found questions for Section ID ${sectionId}:`, questions);
 
@@ -85,21 +82,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentQuestionIndex = Array.from(questions).findIndex(q => q.style.display === 'block');
     if (currentQuestionIndex === -1) {
-      currentQuestionIndex = 0;
+        currentQuestionIndex = 0;
+    } else {
+        if (direction === 'next' && currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+        } else if (direction === 'prev' && currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+        }
     }
-    if (direction === 'next' && currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-    } else if (direction === 'prev' && currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-    }
+
     questions.forEach(q => q.style.display = 'none');
     if (currentQuestionIndex >= 0) {
         questions[currentQuestionIndex].style.display = 'block';
     }
 
-
     toggleButtons(sectionId, currentQuestionIndex, questions.length);
-  }
+}
+
 
   function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
     console.log(`Toggling buttons for Section: ${sectionId}, Current Question Index: ${currentQuestionIndex}`);

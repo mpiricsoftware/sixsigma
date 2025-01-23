@@ -167,6 +167,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\DetailsController;
 
 use App\Models\State;
 use App\Models\City;
@@ -216,6 +217,8 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::resource('stages-list',StagesController::class);
     Route::get('define/{sectionId}',[QuestionController::class,'define'])->name('dashboard-define');
     Route::resource('question-list',QuestionController::class);
+    Route::get('details',[DetailsController::class,'index']);
+    Route::resource('details-list',DetailsController::class);
     // Route::get('define/{sectionId}', [QuestionController::class, 'define'])->name('define');
     Route::get('answer',[AnswerController::class,'index']);
     Route::resource('answer-list',AnswerController::class);

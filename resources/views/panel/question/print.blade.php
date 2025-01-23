@@ -331,8 +331,6 @@
             background-color: #b63881;
             border-radius: 12px;
             text-align: center;
-
-            /* Adjust this value to position the highlighted value vertically */
         }
     </style>
 
