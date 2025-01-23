@@ -151,49 +151,51 @@ class SectionController extends Controller
    * Update the specified resource in storage.
    */
   public function updateNew(Request $request)
-  {
-    // dd($request->all());
-      $request->validate([
-          'section_id.*' => 'nullable|integer|exists:section,id',
-          'section_name.*' => 'required|string|max:255',
-          'section_description.*' => 'nullable|string|max:10000',
-          'question_text.*' => 'nullable|array',
-          'question_text.*.*' => 'nullable|string|max:255',
-          'question_description.*' => 'nullable|array',
-          'question_description.*.*' => 'nullable|string|max:5000',
-          'type.*' => 'nullable|array',
-          'type.*.*' => 'required|string',
-          'options.*' => 'nullable|array',
-      ]);
+{
+    $request->validate([
+        'section_id.*' => 'nullable|integer|exists:section,id',
+        'section_name.*' => 'required|string|max:255',
+        'section_description.*' => 'nullable|string|max:10000',
+        'question_text.*' => 'nullable|array',
+        'question_text.*.*' => 'nullable|string|max:255',
+        'question_description.*' => 'nullable|array',
+        'question_description.*.*' => 'nullable|string|max:5000',
+        'type.*' => 'nullable|array',
+        'type.*.*' => 'required|string',
+        'options.*' => 'nullable|array',
+    ]);
 
-      $formId = $request->id;
+    $formId = $request->id;
+    $processedSectionIds = [];
+    $processedQuestionIds = [];
 
-      foreach ($request->section_name as $index  => $sectionName) {
+    foreach ($request->section_name as $index => $sectionName) {
         $sectionId = $request->section_id[$index] ?? 0;
-          $sectionDescription = $request->section_description[$index] ?? null;
+        $sectionDescription = $request->section_description[$index] ?? null;
 
+        // Create or update section
+        $section = [
+            'form_id' => $formId,
+            'section_name' => $sectionName,
+            'section_description' => $sectionDescription,
+        ];
 
-          $section = [
-              'id' => $sectionId,
-              'form_id' => $formId,
-              'section_name' => $sectionName,
-              'section_description' => $sectionDescription,
-          ];
-
-          if ($sectionId) {
-              Section::updateOrCreate(['id' => $sectionId], $section);
-          } else {
-              Section::create($section);
-          }
-
-
-          if (isset($request->question_text[$sectionId]) && is_array($request->question_text[$sectionId])) {
-            foreach ($request->question_text[$sectionId] as $questionId => $questionText) {
-                $description = $request->question_description[$sectionId][$questionId] ?? null;
-                $type = $request->type[$sectionId][$questionId] ?? null;
-                $choiceOptions = $request->options["choice_{$sectionId}_{$questionId}"] ?? [];
+        if ($sectionId) {
+            Section::updateOrCreate(['id' => $sectionId], $section);
+            $processedSectionIds[] = $sectionId;
+        } else {
+            $newSection = Section::create($section);
+            $processedSectionIds[] = $newSection->id;
+            $sectionId = $newSection->id;
+        }
+        if (isset($request->question_text[$sectionId]) && is_array($request->question_text[$sectionId])) {
+            foreach ($request->question_text[$sectionId] as $questionIndex => $questionText) {
+                $questionId = isset($request->question_id[$sectionId][$questionIndex]) ? $request->question_id[$sectionId][$questionIndex] : null;
+                $description = $request->question_description[$sectionId][$questionIndex] ?? null;
+                $type = $request->type[$sectionId][$questionIndex] ?? null;
+                $choiceOptions = $request->options["choice_{$sectionId}_{$questionIndex}"] ?? [];
                 $ratingOptions = $request->options["rating_{$sectionId}"] ?? [];
-                // dd($choiceOptions);
+
                 // Determine the options to store
                 if ($type === 'radio' || $type === 'checkbox') {
                     $options = !empty($choiceOptions) ? json_encode($choiceOptions) : null;
@@ -216,17 +218,21 @@ class SectionController extends Controller
 
                     if ($questionId) {
                         Question::updateOrCreate(['id' => $questionId], $questionData);
+                        $processedQuestionIds[] = $questionId; // Track processed question IDs
                     } else {
-                        Question::create($questionData);
+                        // Create a new question and track its ID
+                        $newQuestion = Question::create($questionData);
+                        $processedQuestionIds[] = $newQuestion->id;
                     }
                 }
             }
         }
     }
+    Section::where('form_id', $formId)->whereNotIn('id', $processedSectionIds)->delete();
+    Question::where('form_id', $formId)->whereNotIn('id', $processedQuestionIds)->delete();
 
-      return redirect()->route('form-list.index')->with('success', 'Sections and questions updated successfully!');
-  }
-
+    return redirect()->route('form-list.index')->with('success', 'Sections and questions updated successfully!');
+}
 
 
 
