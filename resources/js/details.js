@@ -36,7 +36,7 @@ $(function ()
           orderable: false,
           targets: 1,
           render: function (data, type, full, meta) {
-            return `<span>${full.id}</span>`;
+            return `<span>${full.fack_id}</span>`;
           }
         },
         {
