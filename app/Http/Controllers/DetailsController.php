@@ -56,7 +56,8 @@ class DetailsController extends Controller
           $data = [];
           $fackid = 1;
           foreach ($details as $i) {
-              $nestedData['id'] = $fackid;
+              $nestedData['fack_id'] = $fackid;
+              $nestedData['id'] = $i->id;
               $nestedData['name'] = $i->name;
               $nestedData['description'] = $i->description;
               $data[] = $nestedData;
