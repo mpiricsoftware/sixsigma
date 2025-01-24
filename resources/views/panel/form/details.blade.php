@@ -27,7 +27,7 @@
 ])
 @endsection
 @section('page-script')
-    @vite(['resources\js\details.js'])
+    @vite(['resources/js/details.js'])
 @endsection
 @section('content')
 <div class="card">
