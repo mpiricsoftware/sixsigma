@@ -5,6 +5,7 @@ $.ajaxSetup({
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+
   let isTransitioning = false;
 
   function startQuiz(sectionId) {
@@ -67,8 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function showQuestion(sectionId, direction) {
     const questionsContainer = document.querySelector(`#questions-container-${sectionId}`);
-    if (!questionsContainer) {
-        console.error(`Questions container not found for Section ID: ${sectionId}`);
+    const sectionCard = document.querySelector(`#question-card-${sectionId}`);
+
+    if (!questionsContainer || !sectionCard) {
+        console.error(`Questions container or Section Card not found for Section ID: ${sectionId}`);
         return;
     }
 
@@ -80,45 +83,81 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    let currentQuestionIndex = Array.from(questions).findIndex(q => q.style.display === 'block');
-    if (currentQuestionIndex === -1) {
-        currentQuestionIndex = 0;
+    let currentQuestionIndex;
+
+    if (direction === 'last') {
+        currentQuestionIndex = questions.length - 1;
     } else {
-        if (direction === 'next' && currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-        } else if (direction === 'prev' && currentQuestionIndex > 0) {
-            currentQuestionIndex--;
+        currentQuestionIndex = Array.from(questions).findIndex(q => q.style.display === 'block');
+
+        if (currentQuestionIndex === -1) {
+            currentQuestionIndex = 0;
+        } else {
+            if (direction === 'next' && currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+            } else if (direction === 'prev' && currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+            }
         }
     }
 
+    // Hide all questions in the current section
     questions.forEach(q => q.style.display = 'none');
+
+    // Show the selected question
     if (currentQuestionIndex >= 0) {
         questions[currentQuestionIndex].style.display = 'block';
     }
+    document.querySelectorAll('.card[id^="question-card-"]').forEach(card => {
+        card.style.display = 'none'; // Hide all section cards
+    });
+
+    sectionCard.style.display = 'block'; // Show the current section card
 
     toggleButtons(sectionId, currentQuestionIndex, questions.length);
 }
 
 
-  function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
-    console.log(`Toggling buttons for Section: ${sectionId}, Current Question Index: ${currentQuestionIndex}`);
+function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
+  const prevBtn = document.getElementById(`prev-btn${sectionId}`);
+  const nextBtn = document.getElementById(`next-btn${sectionId}`);
 
-    const prevBtn = document.getElementById(`prev-btn${sectionId}`);
-    const nextBtn = document.getElementById(`next-btn${sectionId}`);
-    prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
-    if (currentQuestionIndex === totalQuestions - 1) {
+  // Show the previous button only when not on the first question
+  prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+// alert(currentQuestionIndex);
+  if (currentQuestionIndex === totalQuestions - 1) {
       nextBtn.textContent = 'Next';
       nextBtn.onclick = function() {
-        finishSection(sectionId);
+          finishSection(sectionId);
       };
-    } else {
+  } else {
       nextBtn.textContent = 'Next';
       nextBtn.onclick = function() {
-        showQuestion(sectionId, 'next');
+          showQuestion(sectionId, 'next');
       };
-      nextBtn.style.display = 'inline-block';
-    }
   }
+
+  // Handle prev button functionality
+  prevBtn.textContent = 'Prev';
+  prevBtn.onclick = function() {
+      if (currentQuestionIndex === 0) {
+          // If it's the first question, navigate to the last question of the previous section
+          const previousSectionIndex = Array.from(document.querySelectorAll('.card[id^="question-card-"]')).findIndex(card => card.id === `question-card-${sectionId}`) - 1;
+
+          if (previousSectionIndex >= 0) {
+              const previousSectionId = document.querySelectorAll('.card[id^="question-card-"]')[previousSectionIndex].id.split('-').pop();
+              const previousQuestionsContainer = document.querySelector(`#questions-container-${previousSectionId}`);
+              const previousQuestions = previousQuestionsContainer.querySelectorAll('.question');
+
+              // Ensure we're selecting the last question in the previous section
+              const lastQuestionIndex = previousQuestions.length - 1;
+              showQuestion(previousSectionId, 'last'); // Use a new direction for clarity
+          }
+      } else {
+          showQuestion(sectionId, 'prev');
+      }
+  };
+}
 
   function finishSection(sectionId) {
     console.log(`Finishing Section ID: ${sectionId}`);
@@ -187,7 +226,6 @@ function setRating(questionId, rating) {
     });
 }
 
-
   document.querySelectorAll('.star').forEach(star => {
     const questionId = star.parentElement.id.split('_')[1];
     star.addEventListener('mouseover', function() {
@@ -204,3 +242,5 @@ function setRating(questionId, rating) {
   window.finishSection = finishSection;
   window.showNextSection = showNextSection;
 });
+
+
