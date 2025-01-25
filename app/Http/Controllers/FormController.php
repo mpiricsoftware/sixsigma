@@ -46,14 +46,17 @@ class FormController extends Controller
         ->limit($length)
         ->get();
 
-      // Map the results into the desired format for DataTables
-      $data = $forms->map(function ($form) {
-        return [
-          'id' => $form->id,
-          'name' => $form->name,
 
-        ];
-      });
+        $fackId = 1; // Initialize before mapping
+
+        $data = $forms->map(function ($form) use (&$fackId) {
+            return [
+                'fack_id' => $fackId++, // Use and then increment
+                'id' => $form->id,
+                'name' => $form->name,
+            ];
+        });
+
 
       // Return the response in DataTable format
       return response()->json([

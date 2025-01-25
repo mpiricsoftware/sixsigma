@@ -52,9 +52,10 @@ class InquiryController extends Controller
         // Get the filtered users
         $inquiry = $query->get();
 
-        // Prepare the data for the response
+        $fackId = 1;
         $data = [];
         foreach ($inquiry as $i) {
+            $nestedData['fack_id'] = $fackId;
             $nestedData['form_id'] = $i->form_id;
             $nestedData['name'] = $i->name;
             $nestedData['email'] = $i->email;
@@ -66,6 +67,7 @@ class InquiryController extends Controller
             $nestedData['type'] = $i->type;
 
             $data[] = $nestedData;
+            $fackId++;
         }
         // dd($data);
         return response()->json([
