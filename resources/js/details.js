@@ -62,14 +62,18 @@ $(function ()
           render: function (data, type, full, meta) {
 
             var urls = printRoute.replace(':id', full.id);
-
+            var chartsd = chart.replace(':id',full.id);
             return (
               '<div class="d-flex align-items-center gap-50">' +
-             '<a href="' + urls + '" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Download">' +
-              '<i class="ri-download-line ri-20px"></i>' +
-              '</a>' +
+                '<a href="' + urls + '" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Download">' +
+                  '<i class="ri-download-line ri-20px"></i>' +
+                '</a>' +
+                '<a href="'+ chartsd  +'" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Download Chart">' +
+                  '<i class="ri-bar-chart-box-line ri-20px"></i>' + // Changed icon for chart download
+                '</a>' +
               '</div>'
             );
+
           }
         }
       ],

@@ -50,5 +50,6 @@
 </div>
 @endsection
 <script>
-  var printRoute = "{{ route('print', ':id') }}"; // Pass route with placeholder to JavaScript
+  var printRoute = "{{ route('print', ':id') }}";
+  var chart = "{{ route('avg', ':id')}}";
 </script>

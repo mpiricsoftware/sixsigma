@@ -168,6 +168,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\DetailsController;
+use App\Http\Controllers\ChartController;
 
 use App\Models\State;
 use App\Models\City;
@@ -232,6 +233,9 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::resource('section-list',SectionController::class);
     Route::post('section-list/updateNew',[SectionController::class,'updateNew'])->name('section-list.updateNew');
     Route::get('section',[SectionController::class,'index']);
+    Route::get('chart',[ChartController::class,'index']);
+    Route::get('avg/{id}',[ChartController::class,'avg'])->name('avg');
+    Route::resource('chart-list',ChartController::class);
 
    Route::get('/states/{countryId}', function ($countryId) {
       return State::where('country_id', $countryId)->get();
