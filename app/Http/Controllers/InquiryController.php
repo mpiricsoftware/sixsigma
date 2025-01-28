@@ -65,11 +65,12 @@ class InquiryController extends Controller
             $nestedData['date_time'] = $i->date_time;
             $nestedData['designation'] = $i->designation;
             $nestedData['type'] = $i->type;
+            $nestedData['user_id'] = $i->user_id;
 
             $data[] = $nestedData;
             $fackId++;
         }
-        // dd($data);
+        // dd($inquiry);
         return response()->json([
             'draw' => $draw,
             'recordsTotal' => $totalData,

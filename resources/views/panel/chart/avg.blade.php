@@ -15,22 +15,15 @@
 
 @section('content')
     <h4 style="text-align:center; margin-bottom:20px;"><strong>Average Performance Across Sections</strong></h4>
-
-    <!-- Container for both charts -->
     <div style="display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px;">
-        <!-- Bar Chart Container -->
         <div id="average-chart" style="height: 500px; width: 50%;"></div>
-
-        <!-- Radial Bar Chart Container -->
         <div id="radial-chart" style="height: 350px; width: 40%; margin-left: 20px;"></div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const chartLabels = {!! json_encode($chartLabels) !!}; // Existing section names
-            const chartData = {!! json_encode($chartData) !!}; // Existing average scores
-
-            // Bar Chart Options (unchanged)
+            const chartLabels = {!! json_encode($chartLabels) !!};
+            const chartData = {!! json_encode($chartData) !!};
             var barOptions = {
                 chart: {
                     type: 'bar',
@@ -51,7 +44,7 @@
                     bar: {
                         distributed: true,
                         columnWidth: '10%',
-                        borderRadius: 8 // Adjust this to change bar thickness
+                        borderRadius: 8
                     }
                 },
                 dataLabels: {
@@ -74,14 +67,10 @@
                     show: false
                 }
             };
-
-            // Render Bar Chart
             var barChart = new ApexCharts(document.querySelector("#average-chart"), barOptions);
             barChart.render();
-
-            // Radial Bar Chart Options using your data
             var radialOptions = {
-                series: chartData, // Use existing average scores
+                series: chartData,
                 chart: {
                     height: 390,
                     type: 'radialBar',
@@ -111,15 +100,15 @@
                             fontSize: '16px',
                             formatter(seriesName, opts) {
                                 return seriesName + ": " + opts.w.globals.series[opts.seriesIndex] +
-                                    "%"; // Display percentage
+                                    "%";
                             },
                         },
                     }
                 },
                 colors: ['#1ab7ea', '#0084ff', '#39539E',
                     '#0077B5'
-                ], // You can customize this based on your needs
-                labels: chartLabels, // Use existing section names as labels
+                ],
+                labels: chartLabels,
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -130,7 +119,6 @@
                 }]
             };
 
-            // Render Radial Bar Chart
             var radialChart = new ApexCharts(document.querySelector("#radial-chart"), radialOptions);
             radialChart.render();
         });
@@ -193,17 +181,12 @@
     </div>
     <script>
 function printPage() {
-    // Create a new print window
     var printWindow = window.open('', '', 'height=600,width=800');
-
-    // Define the header image HTML with improved styles
     var headerImage = `
     <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
         <img src="/assets/img/print/six-sigma-report.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
     </div>
     `;
-
-    // Collect all section charts, names, and descriptions
     var sectionsHTML = '';
     document.querySelectorAll('[id^="chart-"]').forEach(chartContainer => {
         const chartHTML = chartContainer.outerHTML;

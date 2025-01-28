@@ -85,7 +85,6 @@ $(function () {
               return (
                 '<div class="d-flex align-items-center">' +
                 `<a href="${showpage}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Preview"><i class="ri-eye-line ri-20px"></i></a>`+
-                `<span class="text-nowrap"><button data-id="${full['id']}" class="btn btn-sm btn-icon btn-text-secondary edit-record text-body rounded-pill waves-effect waves-light" data-bs-target="#editformModal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="ri-edit-box-line ri-20px"></i></button></span>` +
                 `<button data-id="${full['id']}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill delete-record text-body waves-effect waves-light me-1"><i class="ri-delete-bin-7-line ri-20px"></i></button>` +
                 '</div>'
               );

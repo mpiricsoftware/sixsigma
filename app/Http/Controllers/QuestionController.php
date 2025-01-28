@@ -99,19 +99,20 @@ class QuestionController extends Controller
     return view('panel.question.show',compact('questions','sections','form'));
   }
 
-  public function print($id)
+  public function print($id,$user_id)
 {
 
-    $userID =  auth()->user()->id;
+    $user_id =  auth()->user()->id;
+    // dd($user_id);
     $form = Form::findOrFail($id);
     $sections = Section::where('form_id',$id)->get();
     $questions = Question::where('form_id',$id)->get();
     $answers = Answer::whereIn('question_id', $questions->pluck('id'))
-    ->where('user_id', $userID)
+    ->where('user_id', $user_id)
     ->get();
 // dd($answers);
 
-    return view('panel.question.print', compact('sections', 'questions', 'answers','userID'));
+    return view('panel.question.print', compact('sections', 'questions', 'answers','user_id'));
 }
 
 

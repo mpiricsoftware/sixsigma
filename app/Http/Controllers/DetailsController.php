@@ -27,8 +27,16 @@ class DetailsController extends Controller
           $start = (int) $request->input('start', 0);
           $length = (int) $request->input('length', 10);
           $draw = (int) $request->input('draw', 1);
-          $userID =  auth()->user()->id;
-          $query = form::where('user_id',$userID);
+          // $userID = user()->id;
+          // dd($userID);
+
+          $query = Form::query()
+    ->leftJoin('users', 'form.user_id', '=', 'users.id')
+    ->select('form.*', 'users.name as user_name', 'users.email as user_email', 'form.user_id'); // Add user_id here
+
+$details = $query->get();
+
+          // dd($query);
           if ($search) {
               $query->where(function ($q) use ($search) {
                   $q->where('id', 'LIKE', "%{$search}%");
@@ -59,7 +67,10 @@ class DetailsController extends Controller
               $nestedData['fack_id'] = $fackid;
               $nestedData['id'] = $i->id;
               $nestedData['name'] = $i->name;
+              $nestedData['user_id'] = $i->user_id; // Add user_id to the data
               $nestedData['description'] = $i->description;
+              $nestedData['user_name'] = $i->user_name;
+              $nestedData['user_email'] = $i->user_email;
               $data[] = $nestedData;
               $fackid++;
           }
@@ -79,7 +90,7 @@ class DetailsController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -87,7 +98,7 @@ class DetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -96,6 +107,7 @@ class DetailsController extends Controller
     public function show(string $id)
     {
         //
+
     }
 
     /**

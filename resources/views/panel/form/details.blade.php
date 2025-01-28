@@ -40,6 +40,8 @@
               <tr>
                 <th></th>
                 <th>Id</th>
+                <th>UserName</th>
+                <th>Email</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Action</th>
@@ -50,6 +52,6 @@
 </div>
 @endsection
 <script>
-  var printRoute = "{{ route('print', ':id') }}";
+  var printRoute = "{{ route('print', ['id' => ':id', 'user_id' => ':user_id']) }}";
   var chart = "{{ route('avg', ':id')}}";
 </script>
