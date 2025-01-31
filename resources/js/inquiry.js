@@ -102,7 +102,8 @@ $(function ()
           orderable: false,
           render: function (data, type, full, meta) {
 
-            var url = printRoute.replace(':id', full.form_id);
+            var url = printRoute.replace(':id', full.form_id).replace(':user_id', full.user_id);
+
 
             return (
               '<div class="d-flex align-items-center gap-50">' +

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\form;
+use App\models\details;
 
 class DetailsController extends Controller
 {
@@ -27,8 +28,23 @@ class DetailsController extends Controller
           $start = (int) $request->input('start', 0);
           $length = (int) $request->input('length', 10);
           $draw = (int) $request->input('draw', 1);
-          $userID =  auth()->user()->id;
-          $query = form::where('user_id',$userID);
+          // $userID = user()->id;
+          // dd($userID);
+
+          $query = Details::query()
+          ->Join('users', 'details.user_id', '=', 'users.id')
+          ->leftjoin('form', 'details.form_id', '=', 'form.id')
+          ->select(
+              'details.*',
+              'users.name as user_name',
+              'users.email as user_email',
+              'form.name as form_name',
+              'form.description as form_description'
+          );
+
+$details = $query->get();
+
+          // dd($details);
           if ($search) {
               $query->where(function ($q) use ($search) {
                   $q->where('id', 'LIKE', "%{$search}%");
@@ -57,9 +73,12 @@ class DetailsController extends Controller
           $fackid = 1;
           foreach ($details as $i) {
               $nestedData['fack_id'] = $fackid;
-              $nestedData['id'] = $i->id;
-              $nestedData['name'] = $i->name;
-              $nestedData['description'] = $i->description;
+              $nestedData['form_id'] = $i->form_id;
+              $nestedData['form_name'] = $i->form_name;
+              $nestedData['user_id'] = $i->user_id; // Add user_id to the data
+              $nestedData['form_description'] = $i->form_description;
+              $nestedData['user_name'] = $i->user_name;
+              $nestedData['user_email'] = $i->user_email;
               $data[] = $nestedData;
               $fackid++;
           }
@@ -71,6 +90,7 @@ class DetailsController extends Controller
               'data' => $data,
           ]);
       }
+
         return view('panel.form.details');
     }
 
@@ -79,7 +99,7 @@ class DetailsController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -87,7 +107,7 @@ class DetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -96,6 +116,7 @@ class DetailsController extends Controller
     public function show(string $id)
     {
         //
+
     }
 
     /**

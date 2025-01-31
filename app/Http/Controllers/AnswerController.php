@@ -7,6 +7,7 @@ use App\Models\section;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\form;
+use App\Models\details;
 use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
@@ -70,25 +71,30 @@ class AnswerController extends Controller
           $answer = null;
         }
         $form = $question->form_id;
-        // dd($form);
-        // Save the answer
+        $user = auth()->user();
+        // dd($user);
         Answer::updateOrCreate(
           [
             'section_id' => $sectionId,
             'question_id' => $questionId,
-            'user_id' => auth()->id(),
+            'user_id' => $user->id,
             'form_id' => $form
           ],
           [
             'answer' => $answer,
           ]
         );
+        $details = details::firstOrCreate([
+          'user_id' => $user->id,
+          'form_id' => $form,
+      ]);
+
       }
     }
 
 
 
-    return view("panel.question.view",compact('form'));
+    return view("panel.question.view",compact('form','user'));
   }
 
 

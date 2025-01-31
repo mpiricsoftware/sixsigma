@@ -225,7 +225,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::resource('answer-list',AnswerController::class);
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
     Route::get('/home/{slug}',[QuestionController::class,'home'])->name('dashboard-analytics');
-    Route::get('/print/{id}',[QuestionController::class,'print'])->name('print');
+    Route::get('/print/{id}/{user_id}',[QuestionController::class,'print'])->name('print');
     Route::get('inquiry',[InquiryController::class,'index']);
     Route::resource('inquiry-list',InquiryController::class);
     Route::get('message',[InquiryController::class,'message'])->name('message');

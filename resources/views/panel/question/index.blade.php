@@ -59,5 +59,5 @@
 </div>
 @endsection
 <script>
-  var printRoute = "{{ route('print', ':id') }}"; // Pass route with placeholder to JavaScript
+  var printRoute = "{{ route('print', ['id' => ':id', 'user_id' => ':user_id']) }}"; // Pass route with placeholder to JavaScript
 </script>

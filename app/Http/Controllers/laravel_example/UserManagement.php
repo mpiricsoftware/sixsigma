@@ -166,7 +166,7 @@ class UserManagement extends Controller
   public function store(Request $request)
   {
 
-      $defaultRole = 'user';  // Or any default role you want
+      $defaultRole = 'User';  // Or any default role you want
 
       $userID = $request->id;
       $status = 'approved';
@@ -206,7 +206,7 @@ class UserManagement extends Controller
                   'city' => $request->city,
                   'office_no' => $request->office_no,
                   'mobileno' => $request->mobileno,
-                  'usertype' => $request->usertype,
+                  'usertype' => $request->usertype ?? $defaultRole,
                   'status' => $request->status,
                   'password' => $password ?? ($existingUser->password ?? Hash::make('12345678')),
               ]
@@ -241,7 +241,7 @@ class UserManagement extends Controller
                   'city' => $request->city,
                   'office_no' => $request->office_no,
                   'mobileno' => $request->mobileno,
-                  'usertype' => $request->usertype ?: $defaultRole,
+                  'usertype' => $request->usertype ?? $defaultRole,
                   'password' => $password ?? Hash::make('12345678'),
                   'status' => $status,
               ]);
@@ -249,7 +249,6 @@ class UserManagement extends Controller
 
               $role = $request->usertype ?: $defaultRole;
               $users->assignRole($role);
-
               return response()->json('User created successfully');
           }
       }
@@ -270,7 +269,7 @@ class UserManagement extends Controller
     public function edit($id): JsonResponse
 {
     $user = User::findOrFail($id);
-
+    $defaultRole = 'User';
 
     return response()->json([
         'id' => $user->id,
@@ -285,12 +284,10 @@ class UserManagement extends Controller
         'city' => $user->city,
         'office_no' => $user->office_no,
         'mobileno' => $user->mobileno,
-        'usertype' => $user->usertype,
+        'usertype' => $user->usertype ?? $defaultRole,
         'status' => $user->status,
     ]);
 }
-
-
 
     public function update(Request $request, $id)
     {

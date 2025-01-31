@@ -46,7 +46,7 @@ $(function () {
           { data: '' },
           // { data: 'id' },
           {data: 'name'},
-          {data: 'lastname'},
+          // {data: 'lastname'},
           {data: 'company' },
           {data: 'state' },
           {data: 'city'},
@@ -75,56 +75,57 @@ $(function () {
           //     return `<span>${full.fake_id}</span>`;
           //   }
           // },
-          {
-            // User full name
-            targets: 1,
-            orderable: true,
-            responsivePriority: 4,
-            render: function (data, type, full, meta) {
-              var $name = full['name'];
-              var $email = full['email'];
-              // For Avatar badge
-              var stateNum = Math.floor(Math.random() * 6);
-              var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
-              var $state = states[stateNum],
-                $name = full['name'],
-                $initials = $name.match(/\b\w/g) || [],
-                $output;
-              $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
-              $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
+            {
+              // User full name
+              targets: 1,
+              orderable: true,
+              responsivePriority: 4,
+              render: function (data, type, full, meta) {
+                var $name = full['name'];
+                var $lastname = full['lastname'] || '-' ;
+                var $email = full['email'];
+                // For Avatar badge
+                var stateNum = Math.floor(Math.random() * 6);
+                var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
+                var $state = states[stateNum],
+                  $name = full['name'],
+                  $initials = $name.match(/\b\w/g) || [],
+                  $output;
+                $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+                $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
 
-              // Creates full output for row
-              var $row_output =
-                '<div class="d-flex justify-content-start align-items-center user-name">' +
-                '<div class="avatar-wrapper">' +
-                '<div class="avatar avatar-sm me-3">' +
-                $output +
-                '</div>' +
-                '</div>' +
-                '<div class="d-flex flex-column">' +
-                '<a href="' +
-                userView.replace(':id', full['id']) +
-                '" class="text-truncate text-heading"><span class="fw-medium">' +
-                $name +
-                '</span></a>' +
-                '<span class="user-email text-muted">' + $email + '</span>' +
-                '</div>' +
-                '</div>';
-              return $row_output;
-            }
-          },
+                // Creates full output for row
+                var $row_output =
+                  '<div class="d-flex justify-content-start align-items-center user-name">' +
+                  '<div class="avatar-wrapper">' +
+                  '<div class="avatar avatar-sm me-3">' +
+                  $output +
+                  '</div>' +
+                  '</div>' +
+                  '<div class="d-flex flex-column">' +
+                  '<a href="' +
+                  userView.replace(':id', full['id']) +
+                  '" class="text-truncate text-heading"><span class="fw-medium">' +
+                  $name + '  ' + $lastname +
+                  '</span></a>' +
+                  '<span class="user-email text-muted">' + $email + '</span>' +
+                  '</div>' +
+                  '</div>';
+                return $row_output;
+              }
+            },
+          // {
+          //   // Company
+          //   targets: 2,
+          //   orderable: false,
+          //   render: function (data, type, full, meta) {
+          //     var $lastname = full.lastname ? full.lastname : '-';
+          //     return '<span class="text-nowrap">' + $lastname + '</span>';
+          //   }
+          // },
           {
             // Company
             targets: 2,
-            orderable: false,
-            render: function (data, type, full, meta) {
-              var $lastname = full.lastname ? full.lastname : '-';
-              return '<span class="text-nowrap">' + $lastname + '</span>';
-            }
-          },
-          {
-            // Company
-            targets: 3,
             orderable: false,
             render: function (data, type, full, meta) {
               var $company = full.company ? full.company : '-';
@@ -133,7 +134,7 @@ $(function () {
           },
           {
             // Country
-            targets: 4,
+            targets: 3,
             orderable: false,
             render: function (data, type, full, meta) {
                 var $state = full.state ? full.state : '-';
@@ -142,7 +143,7 @@ $(function () {
           },
           {
             // Country
-            targets: 5,
+            targets: 4,
             orderable: false,
             render: function (data, type, full, meta) {
                 var $city = full.city ? full.city : '-';
@@ -150,7 +151,7 @@ $(function () {
             }
           },
           {
-             target: 6,
+             target: 5,
              orderable: false,
              render: function (data, type, full, meta)
              {
@@ -159,7 +160,7 @@ $(function () {
              }
           },
           {
-            targets: 7,
+            targets: 6,
             orderable: false,
             render: function (data, type, full, meta) {
               var status = full.status;
@@ -183,7 +184,7 @@ $(function () {
           },
           {
             // email verify
-            targets: 8,
+            targets: 7,
             orderable: false,
             className: 'text-center',
             render: function (data, type, full, meta) {
@@ -515,6 +516,9 @@ $(function () {
         $('#office_no').val(data.office_no);
         $('#mobileno').val(data.mobileno);
         $('#usertype').val(data.usertype).trigger('change');
+        setTimeout(function () {
+          $('#usertype').val(data.usertype).trigger('change');
+      }, 500);
         $('#status').val(data.status).trigger('change');
         // console.log(data.usertype);
     });

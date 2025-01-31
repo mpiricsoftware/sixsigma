@@ -77,90 +77,120 @@
                                         </div>
 
                                         @foreach ($s->question as $q)
-                                        <div class="card-body">
-                                            <input type="hidden"
-                                                name="type[{{ $s->id }}][{{ $q->id }}]"
-                                                value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
+                                            <div class="card-body">
+                                                <input type="hidden"
+                                                    name="question_id[{{ $s->id }}][{{ $q->id }}]"
+                                                    value="{{ $q->id }}">
+                                                <input type="hidden"
+                                                    name="type[{{ $s->id }}][{{ $q->id }}]"
+                                                    value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
+                                                <input type="hidden"
+                                                    name="options[{{ $s->id }}][{{ $q->id }}]"
+                                                    value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
 
-                                            @if ($q->type === 'text')
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-
-                                            @elseif($q->type === 'date')
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-
-                                            @elseif($q->type === 'file')
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-
-                                                    @elseif($q->type == 'rating')
+                                                @if ($q->type === 'text')
                                                     <input type="text" class="form-control mt-2"
-                                                            name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                        <input type="text" class="form-control mt-2"
-                                                            name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-                                                    <div id="rating_{{ $q->id }}" class="rating" data-question-id="{{ $q->id }}">
-                                                        <input type="hidden" name="answers[{{ $s->id }}][{{ $q->id }}]" id="selectedRating_{{ $q->id }}">
-                                                        <span class="star" data-index="1" onclick="setRating({{ $q->id }}, 1)" onmouseover="highlightStars({{ $q->id }}, 1)" onmouseout="resetStars({{ $q->id }}, 1)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="2" onclick="setRating({{ $q->id }}, 2)" onmouseover="highlightStars({{ $q->id }}, 2)" onmouseout="resetStars({{ $q->id }}, 2)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="3" onclick="setRating({{ $q->id }}, 3)" onmouseover="highlightStars({{ $q->id }}, 3)" onmouseout="resetStars({{ $q->id }}, 3)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="4" onclick="setRating({{ $q->id }}, 4)" onmouseover="highlightStars({{ $q->id }}, 4)" onmouseout="resetStars({{ $q->id }}, 4)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="5" onclick="setRating({{ $q->id }}, 5)" onmouseover="highlightStars({{ $q->id }}, 5)" onmouseout="resetStars({{ $q->id }}, 5)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
+                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+                                                @elseif($q->type === 'date')
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+                                                @elseif($q->type === 'file')
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+                                                @elseif($q->type == 'rating')
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+                                                    <div id="rating_{{ $q->id }}" class="rating"
+                                                        data-question-id="{{ $q->id }}">
+                                                        <input type="hidden"
+                                                            name="answers[{{ $s->id }}][{{ $q->id }}]"
+                                                            id="selectedRating_{{ $q->id }}">
+                                                        <span class="star" data-index="1"
+                                                            onclick="setRating({{ $q->id }}, 1)"
+                                                            onmouseover="highlightStars({{ $q->id }}, 1)"
+                                                            onmouseout="resetStars({{ $q->id }}, 1)"
+                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
+                                                        <span class="star" data-index="2"
+                                                            onclick="setRating({{ $q->id }}, 2)"
+                                                            onmouseover="highlightStars({{ $q->id }}, 2)"
+                                                            onmouseout="resetStars({{ $q->id }}, 2)"
+                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
+                                                        <span class="star" data-index="3"
+                                                            onclick="setRating({{ $q->id }}, 3)"
+                                                            onmouseover="highlightStars({{ $q->id }}, 3)"
+                                                            onmouseout="resetStars({{ $q->id }}, 3)"
+                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
+                                                        <span class="star" data-index="4"
+                                                            onclick="setRating({{ $q->id }}, 4)"
+                                                            onmouseover="highlightStars({{ $q->id }}, 4)"
+                                                            onmouseout="resetStars({{ $q->id }}, 4)"
+                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
+                                                        <span class="star" data-index="5"
+                                                            onclick="setRating({{ $q->id }}, 5)"
+                                                            onmouseover="highlightStars({{ $q->id }}, 5)"
+                                                            onmouseout="resetStars({{ $q->id }}, 5)"
+                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
                                                     </div>
+                                                @elseif($q->type === 'radio')
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}"><br>
 
-                                            @elseif($q->type === 'radio')
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}"><br>
+                                                    @foreach ($q->options as $index => $option)
+                                                        <div class="form-check">
+                                                            <input type="radio" name="choice[{{ $q->id }}]"
+                                                                value="{{ $option }}"
+                                                                data-option-index="{{ $index }}"
+                                                                {{ isset($q->choice) && $option == $q->choice ? 'checked' : '' }}
+                                                                class="form-check-input">
+                                                            <label class="form-check-label">{{ $option }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                @elseif($q->type === 'checkbox')
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+                                                    <input type="text" class="form-control mt-2"
+                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
+                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
 
-                                                @foreach ($q->options as $option)
-                                                    <div class="form-check">
-                                                        <input type="radio" name="choice[{{ $q->id }}]" value="{{ $option }}"
-                                                            {{ isset($q->choice) && $option == $q->choice ? 'checked' : '' }} class="form-check-input">
-                                                        <label class="form-check-label">{{ $option }}</label>
-                                                    </div>
-                                                @endforeach
-
-                                            @elseif($q->type === 'checkbox')
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                <input type="text" class="form-control mt-2"
-                                                    name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-
-                                                @foreach ($q->options as $option)
-                                                    <div class="form-check">
-                                                        <input type="checkbox" name="selected_option[{{ $q->id }}][]" value="{{ $option }}"
-                                                            {{ isset($q->selected_options) && in_array($option, $q->selected_options) ? 'checked' : '' }}
-                                                            class="form-check-input">
-                                                        <label class="form-check-label">{{ $option }}</label>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    @endforeach
+                                                    @foreach ($q->options as $option)
+                                                        <div class="form-check">
+                                                            <input type="checkbox"
+                                                                name="selected_option[{{ $q->id }}][]"
+                                                                value="{{ $option }}"
+                                                                {{ isset($q->selected_options) && in_array($option, $q->selected_options) ? 'checked' : '' }}
+                                                                class="form-check-input">
+                                                            <label class="form-check-label">{{ $option }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endforeach
 
                                         <div class="card-body">
                                             <button type="button" class="btn btn-dark rounded-0"
-                                                id="addSection_{{ $s->id }}" style="background-color:#00a6d5">+ Add
+                                                id="addSection_{{ $s->id }}" style="background-color:#00a6d5">+
+                                                Add
                                                 Option</button>
                                             <div id="dynamicFields_{{ $s->id }}">&nbsp;</div>
                                         </div>
@@ -209,21 +239,21 @@
 
 @endsection
 <script>
-  $(document).ready(function() {
-    let fieldCount = 0;
-    let isUpdate = false;
-    $('[id^="addSection"]').on('click', function() {
-        let sectionId = $(this).attr('id');
-        let dynamicSectionId = '';
-        if (sectionId.includes('_')) {
-            dynamicSectionId = sectionId.split('_')[1];
-            isUpdate = true;
-        }
+    $(document).ready(function() {
+        let fieldCount = 0;
+        let isUpdate = false;
+        $('[id^="addSection"]').on('click', function() {
+            let sectionId = $(this).attr('id');
+            let dynamicSectionId = '';
+            if (sectionId.includes('_')) {
+                dynamicSectionId = sectionId.split('_')[1];
+                isUpdate = true;
+            }
 
-        if (!isUpdate) {
-          // alert('hello');
-            fieldCount++;
-            const newSection = `
+            if (!isUpdate) {
+                // alert('hello');
+                fieldCount++;
+                const newSection = `
             <div class="section-box form-control mt-3" id="section_${fieldCount}">
                 <!-- Dynamic fields container -->
                 <div id="dynamicFields_${fieldCount}"></div>
@@ -278,15 +308,15 @@
                 </div>
             </div>`;
 
-            // For new section, append based on dynamicSectionId or default container
-            if (dynamicSectionId) {
-                $('#dynamicFields_' + dynamicSectionId).append(newSection);
+                // For new section, append based on dynamicSectionId or default container
+                if (dynamicSectionId) {
+                    $('#dynamicFields_' + dynamicSectionId).append(newSection);
+                } else {
+                    $('#dynamicFields').append(newSection);
+                }
             } else {
-                $('#dynamicFields').append(newSection);
-            }
-        } else {
-          // alert('hi');
-            const newSection = `
+                // alert('hi');
+                const newSection = `
             <div class="section-box form-control mt-3" id="section_${dynamicSectionId}">
                 <!-- Dynamic fields container -->
                 <div id="dynamicFields_${dynamicSectionId}"></div>
@@ -344,19 +374,40 @@
                 </div>
             </div>`;
 
-            // Append the new section into the existing section's container
-            $('#dynamicFields_' + dynamicSectionId).append(newSection);
-        }
+                // Append the new section into the existing section's container
+                $('#dynamicFields_' + dynamicSectionId).append(newSection);
+            }
+        });
     });
-});
 
-const globalOptionIndex = {};
+    const globalOptionIndex = {};
+    let questionCounter = {};
 
-function addChoiceField(sectionId) {
-    const container = $(`#dynamicFields_${sectionId}`);
-    const questionId = `question_${sectionId}_${new Date().getTime()}`; // Unique question ID
+    // Function to get the maximum question ID for a given section
+    function getMaxQuestionId(sectionId) {
+        const questionIds = $(`#dynamicFields_${sectionId} .choice-field, input[name^="question_id[${sectionId}]"]`)
+            .map(function() {
+                const id = $(this).attr('id') || $(this).val();
+                const parts = id.split('_');
+                return parseInt(parts[2] || parts[0]);
+            }).get();
+        return Math.max(0, ...questionIds);
+    }
 
-    const choiceField = `
+    // Function to add a new choice field to a section
+    function addChoiceField(sectionId) {
+        const container = $(`#dynamicFields_${sectionId}`);
+
+        // Initialize or update the question counter for the section
+        if (!questionCounter[sectionId]) {
+            questionCounter[sectionId] = getMaxQuestionId(sectionId) + 1;
+        } else {
+            questionCounter[sectionId]++;
+        }
+
+        const questionId = `question_${sectionId}_${questionCounter[sectionId]}`; // Unique question ID
+
+        const choiceField = `
     <div class="row mt-5 choice-field" id="${questionId}">
         <div class="col-md-12">
             <input type="text" class="form-control" placeholder="Enter your question" name="question_text[${sectionId}][${questionId}]">
@@ -369,7 +420,7 @@ function addChoiceField(sectionId) {
                 <button type="button" class="btn btn-whiterounded-0" onclick="showChoiceOptions(${sectionId}, 'radio', this, '${questionId}')">Radio Button</button>
                 <button type="button" class="btn btn-dark rounded-0" onclick="showChoiceOptions(${sectionId}, 'checkbox', this, '${questionId}')">Checkbox</button>
             </div>
-            <div class="choice-options mt-4"></div>
+            <div class="choice-options mt-4"></div> <!-- Ensure this container exists -->
             <button type="button" class="btn btn-dark rounded-0 mt-2" onclick="addChoiceOption(${sectionId}, '${questionId}')" style="background-color:#00a6d5">+</button>
             <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
                 <i class="ri-delete-bin-7-line ri-20px"></i>
@@ -378,46 +429,65 @@ function addChoiceField(sectionId) {
         <input type="hidden" name="type[${sectionId}][${questionId}]" class="choice-type-hidden" value="">
     </div>
     `;
-    container.append(choiceField);
-
-    if (!globalOptionIndex[sectionId]) {
-        globalOptionIndex[sectionId] = 0;
+        container.append(choiceField);
     }
 
-    const existingOptionsCount = $(`#dynamicFields_${sectionId} .choice-option`).length;
-    globalOptionIndex[sectionId] = existingOptionsCount;
+    function showChoiceOptions(sectionId, type, button, questionId) {
+        const choiceContainer = $(`#${questionId} .choice-options`);
+        choiceContainer.empty();
 
-}
+        $(button).siblings().removeClass('btn-primary').addClass('btn-outline-primary');
+        $(button).removeClass('btn-outline-primary').addClass('btn-primary');
 
-function showChoiceOptions(sectionId, type, button, questionId) {
-    const choiceContainer = $(`#${questionId} .choice-options`);
-    choiceContainer.empty();
+        const typeField = $(`#${questionId} .choice-type-hidden`);
+        typeField.val(type);
 
-    $(button).siblings().removeClass('btn-primary').addClass('btn-outline-primary');
-    $(button).removeClass('btn-outline-primary').addClass('btn-primary');
-
-    const typeField = $(`#${questionId} .choice-type-hidden`);
-    typeField.val(type);
-
-    // Add initial option when the choice type is selected
-    addChoiceOption(sectionId, questionId);
-}
-
-function addChoiceOption(sectionId, questionId) {
-    const container = $(`#${questionId} .choice-options`);
-    const choiceType = $(`#${questionId} .choice-type-hidden`).val();
-
-    if (!choiceType) {
-        alert("Please select Radio or Checkbox type first.");
-        return;
+        addChoiceOption(sectionId, questionId);
     }
 
-    // Use and increment the global option index for this section
-    const newIndex = globalOptionIndex[sectionId]++;
+    function getMaxOptionIndex(sectionId, questionId) {
+    const choiceOptionsContainer = $(`#${questionId} .choice-options`);
 
-    const choiceOption = `
+    if (choiceOptionsContainer.length === 0) {
+        console.error(`No .choice-options container found for questionId: ${questionId}`);
+        return -1;
+    }
+    const optionElements = choiceOptionsContainer.find('.option-value');
+
+    if (optionElements.length === 0) {
+        console.warn("No .option-value elements found inside .choice-options");
+        return -1;
+    }
+
+    const optionIndices = optionElements.map(function() {
+        const index = $(this).data('option-index');
+        console.log("Found option-index:", index);
+        return index !== undefined ? parseInt(index, 10) : 0;
+    }).get();
+
+    console.log("Option Indices Array:", optionIndices);
+
+    return optionIndices.length > 0 ? Math.max(...optionIndices) : -1;
+}
+
+
+    function addChoiceOption(sectionId, questionId) {
+        const container = $(`#${questionId} .choice-options`);
+        const choiceType = $(`#${questionId} .choice-type-hidden`).val();
+
+        if (!choiceType) {
+            alert("Please select Radio or Checkbox type first.");
+            return;
+        }
+
+        // Get the highest existing option index
+        let maxOptionIndex = getMaxOptionIndex(sectionId, questionId);
+        // alert(maxOptionIndex);
+        const newIndex = maxOptionIndex + 1;
+
+        const choiceOption = `
     <div class="d-flex align-items-center mt-2 choice-option">
-        <input type="${choiceType}" name="choice_${sectionId}_${questionId}${choiceType === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
+        <input type="${choiceType}" name="choice[${newIndex}]" value="${newIndex}" class="me-2" data-option-index="${newIndex}">
         <input type="text" class="form-control me-2" placeholder="Option ${newIndex + 1}" onchange="updateOptionValue(${sectionId}, ${newIndex}, this)">
         <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeOption(this)">
             <i class="ri-delete-bin-7-line ri-20px"></i>
@@ -425,31 +495,32 @@ function addChoiceOption(sectionId, questionId) {
     </div>
     `;
 
-    container.append(choiceOption);
+        container.append(choiceOption);
 
-    const hiddenOptionsField = `
+        const hiddenOptionsField = `
     <input type="hidden" name="options[choice_${sectionId}_${questionId}][]" class="option-value" data-option-index="${newIndex}" value="">
     `;
 
-    container.append(hiddenOptionsField);
-}
+        container.append(hiddenOptionsField);
+    }
 
-function updateOptionValue(sectionId, index, element) {
-    const optionValue = element.value;
-    const hiddenOptionField = $(`#dynamicFields_${sectionId} input.option-value[data-option-index="${index}"]`);
-    hiddenOptionField.val(optionValue);
-}
 
-function updateSelectedValue(sectionId, element) {
-    const selectedValue = $(element).siblings("input[type='text']").val();
-    $(`#selectedValue_${sectionId}`).val(selectedValue);
-}
+
+    function updateOptionValue(sectionId, index, element) {
+        const optionValue = element.value;
+        const hiddenOptionField = $(`#dynamicFields_${sectionId} input.option-value[data-option-index="${index}"]`);
+        hiddenOptionField.val(optionValue);
+    }
+
+
+    function updateSelectedValue(sectionId, element) {
+        const selectedValue = $(element).siblings("input[type='text']").val();
+        $(`#selectedValue_${sectionId}`).val(selectedValue);
+    }
 
     function removeOption(element) {
         $(element).closest('.choice-option').remove();
     }
-
-
 
     function addRatingField(sectionId) {
         const container = $(`#dynamicFields_${sectionId}`);

@@ -46,7 +46,7 @@
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         id="name" name="name" placeholder="johndoe" autofocus
                                         value="{{ old('name') }}">
-                                    <label for="firstname">Firstname</label>
+                                    <label for="firstname">First Name</label>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <span class="fw-medium">{{ $message }}</span>
@@ -60,7 +60,7 @@
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         id="add-user-lastname" name="lastname" placeholder="johndoe" autofocus
                                         value="{{ old('lastname') }}">
-                                    <label for="lastname">LastName</label>
+                                    <label for="lastname">Last Name</label>
                                     @error('lastname')
                                         <span class="invalid-feedback" role="alert">
                                             <span class="fw-medium">{{ $message }}</span>
@@ -88,7 +88,7 @@
                           <div class="col-md-6">
                         <div class="form-floating form-floating-outline mb-5">
                             <input type="text" class="form-control @error('designation') is-invalid @enderror" id="designation"
-                                name="designation"  value="{{ old('designation') }}">
+                                name="designation"  value="{{ old('designation') }}" placeholder="Your Designation" autofocus>
                             <label for="designation">Designation</label>
                             @error('designation')
                                 <span class="invalid-feedback" role="alert">
@@ -228,9 +228,9 @@
                             <i class="tf-icons ri-twitter-fill"></i>
                         </a>
 
-                        <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-github">
+                        {{-- <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-github">
                             <i class="tf-icons ri-github-fill"></i>
-                        </a>
+                        </a> --}}
 
                         <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-google-plus">
                             <i class="tf-icons ri-google-fill"></i>
