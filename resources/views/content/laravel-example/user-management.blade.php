@@ -144,7 +144,7 @@
                         <th></th>
                         {{-- <th>Id</th> --}}
                         <th>User</th>
-                        <th>Last Name</th>
+                        {{-- <th>Last Name</th> --}}
                         <th>Company</th>
                         <th>State</th>
                         <th>City</th>

@@ -66,14 +66,14 @@
           "url": "inquiry",
           "name": "Inquiry",
           "slug": "inquiry",
-          "role": ["Admin"]
+          "role": ["Admin","Super Admin"]
 
         },
         {
           "url": "details",
           "name": "Form Details",
           "slug": "details",
-          "role": ["Admin"]
+          "role": ["Admin","Super Admin"]
 
         }
 

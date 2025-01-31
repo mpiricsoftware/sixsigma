@@ -128,95 +128,119 @@
     <h4 style="text-align:center; margin-bottom=20px; font-family:'Arial', sans-serif;"><strong>Section Performance
             Levels</strong></h4>
 
-            @foreach ($sectionData as $sectionId => $data)
-            <div style="display:flex; align-items:center; margin-bottom:40px;">
-                <div id="chart-{{ $sectionId }}" data-section-name="{{ $data['name'] }}" data-section-description="{{ $data['description'] }}" style="height:400px; width:70%;"></div>
-                <div style="width:30%; padding-left:20px;">
-                    <h5 style="font-family:'Arial', sans-serif; color:#333;"><strong>{{ $data['name'] }}</strong></h5>
-                    <h5 style="font-family:'Arial', sans-serif; color:#333;">{{ $data['description'] }}</h5>
-                </div>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const chartLabels = {!! json_encode($data['labels']) !!};
-                        const sectionPercentages = {!! json_encode($data['percentages']) !!};
-
-                        var options = {
-                            chart: {
-                                type: 'bar',
-                                height: 400,
-                                background: '#f9f9f9',
-                                toolbar: { show: true }
-                            },
-                            series: [{ name: 'Performance Level', data: sectionPercentages }],
-                            xaxis: { categories: chartLabels },
-                            plotOptions: {
-                                bar: {
-                                    distributed: true,
-                                    columnWidth: '10%',
-                                    borderRadius: 8
-                                }
-                            },
-                            dataLabels: { enabled: true },
-                            yaxis: {
-                                title: { text: 'Percentage (%)' },
-                                min: 0,
-                                max: 100
-                            },
-                            tooltip: { theme: 'dark' },
-                            grid: { borderColor: '#e0e0e0' },
-                            legend: { show: false }
-                        };
-
-                        var chart = new ApexCharts(document.querySelector("#chart-{{ $sectionId }}"), options);
-                        chart.render();
-                    });
-                </script>
+    @foreach ($sectionData as $sectionId => $data)
+        <div style="display:flex; align-items:center; margin-bottom:40px;">
+            <div id="chart-{{ $sectionId }}" data-section-name="{{ $data['name'] }}"
+                data-section-description="{{ $data['description'] }}" style="height:400px; width:70%;"></div>
+            <div style="width:30%; padding-left:20px;">
+                <h5 style="font-family:'Arial', sans-serif; color:#333;"><strong>{{ $data['name'] }}</strong></h5>
+                <h5 style="font-family:'Arial', sans-serif; color:#333;">{{ $data['description'] }}</h5>
             </div>
-        @endforeach
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const chartLabels = {!! json_encode($data['labels']) !!};
+                    const sectionPercentages = {!! json_encode($data['percentages']) !!};
+
+                    var options = {
+                        chart: {
+                            type: 'bar',
+                            height: 400,
+                            background: '#f9f9f9',
+                            toolbar: {
+                                show: true
+                            }
+                        },
+                        series: [{
+                            name: 'Performance Level',
+                            data: sectionPercentages
+                        }],
+                        xaxis: {
+                            categories: chartLabels
+                        },
+                        plotOptions: {
+                            bar: {
+                                distributed: true,
+                                columnWidth: '10%',
+                                borderRadius: 8
+                            }
+                        },
+                        dataLabels: {
+                            enabled: true
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Percentage (%)'
+                            },
+                            min: 0,
+                            max: 100
+                        },
+                        tooltip: {
+                            theme: 'dark'
+                        },
+                        grid: {
+                            borderColor: '#e0e0e0'
+                        },
+                        legend: {
+                            show: false
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chart-{{ $sectionId }}"), options);
+                    chart.render();
+                });
+            </script>
+        </div>
+    @endforeach
 
 
     <div class="text-center" style="padding-bottom: 2%; padding-block-end: 2%">
         <button class="btn btn-dark rounded-0" onclick="printPage()" style="background-color: #00a6d5;">Print</button>
     </div>
     <script>
-function printPage() {
+      function printPage() {
     var printWindow = window.open('', '', 'height=600,width=800');
     var headerImage = `
-    <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/six-sigma-report.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-    </div>
+        <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
+            <img src="/assets/img/print/six-sigma-report.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
+        </div>
     `;
+
     var sectionsHTML = '';
     document.querySelectorAll('[id^="chart-"]').forEach(chartContainer => {
         const chartHTML = chartContainer.outerHTML;
         const sectionName = chartContainer.getAttribute('data-section-name');
         const sectionDescription = chartContainer.getAttribute('data-section-description');
 
+        // Log the section name and description to ensure they are captured
+        console.log(`Section Name: ${sectionName}, Section Description: ${sectionDescription}`);
+
         sectionsHTML += `
-        <div style="display: flex; align-items: flex-start; margin-bottom: 40px; page-break-inside: avoid;">
-            <div style="width: 70%; margin-right: 20px;">
-                ${chartHTML}
-            </div>
-            <div style="width: 30%; font-family: Arial, sans-serif; color: #333;">
-                <h5><strong>${sectionName}</strong></h5>
-                <h5>${sectionDescription}</h5>
-            </div>
+
+    <div style="page-break-inside: avoid; display: flex; align-items: center; margin-bottom: 20px;">
+        <div style="flex: 0 0 50%; margin-right: 20px;">
+            ${chartHTML}
         </div>
-        `;
+        <div style="flex: 0 0 15%; font-family: Arial, sans-serif; color: #333; text-align: left; font-size:18px;">
+            <h5 style="text-align: center;"><strong>${sectionName}</strong></h5>
+            <h5 style="text-align: center;">${sectionDescription}</h5>
+        </div>
+    </div>
+`;
+
     });
 
     // Add the overall charts (average and radial)
     var averageChartHTML = document.querySelector('#average-chart').outerHTML;
     var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
     var overallChartsHTML = `
-    <div style="page-break-inside: avoid; margin-bottom: 40px;">
-        <h4 style="text-align: center; font-family: Arial, sans-serif;"><strong>Average Performance Across Sections</strong></h4>
-        <div style="display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px;">
-            <div style="width: 50%;">${averageChartHTML}</div>
-            <div style="width: 50%;">${radialChartHTML}</div>
+        <div style="page-break-inside: avoid; margin-bottom: 40px;">
+            <h4 style="text-align: center; font-family: Arial, sans-serif;"><strong>Average Performance Across Sections</strong></h4>
+            <div style="display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px;">
+                <div style="width: 50%;">${averageChartHTML}</div>
+                <div style="width: 50%;">${radialChartHTML}</div>
+            </div>
         </div>
-    </div>
     `;
 
     // Write the HTML content to the new window
@@ -224,44 +248,44 @@ function printPage() {
 
     // Add styles for printing
     printWindow.document.write(`
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-        }
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+            }
 
-        @page {
-            size: A4;
-            margin: 0px;
-        }
+            @page {
+                size: A4;
+                margin: 0px;
+            }
 
-        .image-page {
-            width: 100%;
-            height: 100%;
-            page-break-after: always;
-        }
+            .image-page {
+                width: 100%;
+                height: 100%;
+                page-break-after: always;
+            }
 
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-            justify-content: space-around;
-            align-items: flex-start;
-            padding: 30px;
-            width: 100%;
-        }
+            .chart-container {
+                display: flex;
+                flex-direction: column;
+                margin-top: 20px;
+                justify-content: space-around;
+                align-items: flex-start;
+                padding: 30px;
+                width: 100%;
+            }
 
-        .apexcharts-toolbar {
-            display: none !important;
-        }
+            .apexcharts-toolbar {
+                display: none !important;
+            }
 
-        h4, h5 {
-            margin: 0;
-            padding: 5px 0;
-        }
-    </style>
+            h4, h5 {
+                margin: 0;
+                padding: 5px 0;
+            }
+        </style>
     `);
 
     // Add the header image
@@ -276,7 +300,7 @@ function printPage() {
 
     // Add each section chart with its name and description
     printWindow.document.write('<div class="chart-container">');
-    printWindow.document.write(sectionsHTML);  // Ensure sectionsHTML is correctly injected
+    printWindow.document.write(sectionsHTML);
     printWindow.document.write('</div>');
 
     // Close the document for rendering
@@ -285,12 +309,11 @@ function printPage() {
 
     // Wait for the content to load and then trigger printing
     printWindow.onload = function() {
-        // Ensure the sections are properly rendered before printing
         printWindow.print();
         printWindow.close();
     };
 }
 
-</script>
+    </script>
 
 @endsection

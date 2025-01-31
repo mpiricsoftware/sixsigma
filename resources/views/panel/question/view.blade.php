@@ -40,7 +40,8 @@
 
                   <a href="/" class="btn btn-dark rounded-0">Go to Home</a>
 
-                  <a href="{{ route('print', ['id' => $form] )}}" class="btn btn-white rounded-0" id="print-btn">Print</a>
+                  <a href="{{ route('print', ['id' => $form, 'user_id' => $user->id] ) }}" class="btn btn-white rounded-0" id="print-btn">Print</a>
+
 
               </div>
           </div>

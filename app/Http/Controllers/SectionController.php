@@ -75,8 +75,7 @@ class SectionController extends Controller
    */
     public function store(Request $request)
     {
-      // dd($request->all());
-      // Validate the request
+      // dd("store");
       $request->validate([
         'section_name.*' => 'required|string|max:255',
         'section_description.*' => 'nullable|string|max:10000',
@@ -150,12 +149,16 @@ class SectionController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function updateNew(Request $request)
+
+   public function updateNew(Request $request)
 {
+    // Validate the request
     $request->validate([
         'section_id.*' => 'nullable|integer|exists:section,id',
         'section_name.*' => 'required|string|max:255',
         'section_description.*' => 'nullable|string|max:10000',
+        'question_id.*' => 'nullable|array',
+        'question_id.*.*' => 'nullable|integer|exists:question,id',
         'question_text.*' => 'nullable|array',
         'question_text.*.*' => 'nullable|string|max:255',
         'question_description.*' => 'nullable|array',
@@ -166,70 +169,75 @@ class SectionController extends Controller
     ]);
 
     $formId = $request->id;
-    $processedSectionIds = [];
-    $processedQuestionIds = [];
 
-    foreach ($request->section_name as $index => $sectionName) {
-        $sectionId = $request->section_id[$index] ?? 0;
-        $sectionDescription = $request->section_description[$index] ?? null;
-
-        // Create or update section
-        $section = [
-            'form_id' => $formId,
-            'section_name' => $sectionName,
-            'section_description' => $sectionDescription,
-        ];
+    // Loop through each section
+    foreach ($request->section_name as $sectionIndex => $sectionName) {
+        $sectionId = $request->section_id[$sectionIndex] ?? null;
+        $sectionDescription = $request->section_description[$sectionIndex] ?? null;
 
         if ($sectionId) {
-            Section::updateOrCreate(['id' => $sectionId], $section);
-            $processedSectionIds[] = $sectionId;
+            $section = Section::find($sectionId);
+            if ($section) {
+                $section->update([
+                    'form_id' => $formId,
+                    'section_name' => $sectionName,
+                    'section_description' => $sectionDescription,
+                ]);
+            }
         } else {
-            $newSection = Section::create($section);
-            $processedSectionIds[] = $newSection->id;
-            $sectionId = $newSection->id;
+            $newsection = Section::create([
+                'form_id' => $formId,
+                'section_name' => $sectionName,
+                'section_description' => $sectionDescription,
+            ]);
+            $sectionId = $newsection->id;
         }
         if (isset($request->question_text[$sectionId]) && is_array($request->question_text[$sectionId])) {
             foreach ($request->question_text[$sectionId] as $questionIndex => $questionText) {
-                $questionId = isset($request->question_id[$sectionId][$questionIndex]) ? $request->question_id[$sectionId][$questionIndex] : null;
+                $questionId = $request->question_id[$sectionId][$questionIndex] ?? null;
                 $description = $request->question_description[$sectionId][$questionIndex] ?? null;
                 $type = $request->type[$sectionId][$questionIndex] ?? null;
-                $choiceOptions = $request->options["choice_{$sectionId}_{$questionIndex}"] ?? [];
-                $ratingOptions = $request->options["rating_{$sectionId}"] ?? [];
 
-                // Determine the options to store
+                $options = null;
                 if ($type === 'radio' || $type === 'checkbox') {
-                    $options = !empty($choiceOptions) ? json_encode($choiceOptions) : null;
+                    $options = json_encode($request->options["choice_{$sectionId}_{$questionIndex}"] ?? []);
                 } elseif ($type === 'rating') {
-                    $options = !empty($ratingOptions) ? json_encode($ratingOptions) : null;
-                } else {
-                    $options = null;
+                    $options = json_encode($request->options["rating_{$sectionId}"] ?? []);
                 }
 
-                // Store or update the question
-                if ($questionText) {
-                    $questionData = [
+                if ($questionId) {
+                    $question = Question::find($questionId);
+                    if ($question) {
+                        $question->update([
+                            'section_id' => $sectionId,
+                            'form_id' => $formId,
+                            'question_text' => $questionText,
+                            'question_description' => $description,
+                            'type' => $type,
+                            'options' => $options,
+                        ]);
+                    }
+
+                } else {
+                    Question::create([
                         'section_id' => $sectionId,
                         'form_id' => $formId,
                         'question_text' => $questionText,
                         'question_description' => $description,
                         'type' => $type,
                         'options' => $options,
-                    ];
-
-                    if ($questionId) {
-                        Question::updateOrCreate(['id' => $questionId], $questionData);
-                        $processedQuestionIds[] = $questionId; // Track processed question IDs
-                    } else {
-                        // Create a new question and track its ID
-                        $newQuestion = Question::create($questionData);
-                        $processedQuestionIds[] = $newQuestion->id;
-                    }
+                    ]);
                 }
             }
         }
     }
+// dd($request->all());
     return redirect()->route('form-list.index')->with('success', 'Sections and questions updated successfully!');
 }
+
+
+
+
 
 
 
