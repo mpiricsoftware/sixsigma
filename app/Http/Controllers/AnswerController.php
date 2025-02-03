@@ -7,7 +7,7 @@ use App\Models\section;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\form;
-use App\Models\details;
+use App\Models\Details;
 use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
@@ -84,7 +84,7 @@ class AnswerController extends Controller
             'answer' => $answer,
           ]
         );
-        $details = details::firstOrCreate([
+        $details = Details::firstOrCreate([
           'user_id' => $user->id,
           'form_id' => $form,
       ]);
