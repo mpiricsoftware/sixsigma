@@ -32,7 +32,7 @@
             var pieOptions = {
                 chart: {
                     type: 'pie',
-                    height: 350,
+                    height: 300,
                     background: '#f9f9f9'
                 },
                 series: chartData, // Data for the pie chart
@@ -197,6 +197,51 @@
             radialChart.render();
         });
     </script>
+<h4 style="text-align:center; margin-bottom:20px;"><strong>All Over Sections Average</strong></h4>
+<div id="bar-chart"></div>
+<script>
+    const chartLabel = {!! json_encode($chartLabel) !!}; // Labels for categories (x-axis)
+    const chartData = {!! json_encode($chartDatas) !!}; // Numeric values for bars
+
+    var options = {
+        series: [{
+            name: "Average Score",
+            data: chartData // Should be an array of numbers
+        }],
+        chart: {
+            type: 'bar',
+            height: 150
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                borderRadiusApplication: 'end',
+                horizontal: true,
+                columnWidth: '30%' // Set the column width for the bar chart
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        xaxis: {
+            categories: chartLabel,
+            min: 0,
+            max: 100,
+            tickAmount: 5, // Should be an array of labels
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#bar-chart"), options);
+    chart.render();
+</script>
+<style>
+    #bar-chart {
+        text-align: center;
+        margin-bottom: 40px;
+
+    }
+</style>
+
 
     <h4 style="text-align:center; margin-bottom=20px; font-family:'Arial', sans-serif;"><strong>Section Performance
             Levels</strong></h4>
@@ -266,43 +311,7 @@
 
         </div>
     @endforeach
-    <h4 style="text-align:center; margin-bottom:20px;"><strong>All Over Sections Average</strong></h4>
-    <div id="bar-chart"></div>
-    <script>
-        const chartLabel = {!! json_encode($chartLabel) !!}; // Labels for categories (x-axis)
-        const chartData = {!! json_encode($chartDatas) !!}; // Numeric values for bars
 
-        var options = {
-            series: [{
-                name: "Average Score",
-                data: chartData // Should be an array of numbers
-            }],
-            chart: {
-                type: 'bar',
-                height: 200
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    borderRadiusApplication: 'end',
-                    horizontal: true,
-                }
-            },
-            dataLabels: {
-                enabled: true
-            },
-            xaxis: {
-                categories: chartLabel,
-                min: 0,
-                max: 100,
-                tickAmount: 5, // Should be an array of labels
-            }
-
-        };
-
-        var chart = new ApexCharts(document.querySelector("#bar-chart"), options);
-        chart.render();
-    </script>
 
     <h4 style="text-align:center; margin-bottom:20px;"><strong>Average Performance Scores by Section</strong></h4>
     <div id="basiccharts"></div>
@@ -364,11 +373,254 @@
     <style>
         #basiccharts {
             width: 50%;
-            /* Adjust the width to your desired size */
             margin: 0 auto;
-            /* Center the chart */
         }
     </style>
+
+<h4 style="text-align:center; margin-bottom:20px;"><strong>Average Performance Scores by Pillar</strong></h4>
+<div id="PillarChart"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var radarData = @json($radarSeriesData);
+      var radarLabels = @json($radarLabels);
+
+      // Ensure the data covers all four sections
+      var completeRadarData = [0, 0, 0, 0]; // Initialize an array with four parts
+      for (var i = 0; i < radarData.length; i++) {
+          if (i < completeRadarData.length) {
+              completeRadarData[i] = radarData[i];
+          }
+      }
+
+      var options = {
+          chart: {
+              type: 'radar',
+              height: 500,
+              width: 500
+          },
+          series: [{
+              name: 'Average Score',
+              data: completeRadarData
+          }],
+          labels: radarLabels,
+          plotOptions: {
+              radar: {
+                  size: 140,
+                  polygons: {
+                      strokeColors: '#e9e9e9',
+                      fill: {
+                          colors: ['#f8f8f8', '#fff']
+                      }
+                  }
+              }
+          },
+          markers: {
+              size: 6,
+              colors: ['#FFF'],
+              strokeColor: '#FF4560',
+              strokeWidth: 2,
+          },
+          tooltip: {
+              y: {
+                  formatter: function(val) {
+                      return val; // Ensures formatted values
+                  }
+              }
+          },
+          yaxis: {
+              show: true,
+              min: 0,
+              max: 100,
+              tickAmount: 5,
+              labels: {
+                  formatter: function(val) {
+                      return val;
+                  }
+              }
+          },
+          xaxis: {
+              labels: {
+                  style: {
+                      fontSize: '14px',
+
+                  }
+              }
+          },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#PillarChart"), options);
+      chart.render();
+  });
+</script>
+
+
+<style>
+  #PillarChart {
+      width: 40%;
+      margin: 0 auto;
+  }
+</style>
+
+<h4 style="text-align:center; margin-bottom:20px;"><strong>Average Performance Scores by Question</strong></h4>
+<div id="questioncharts">
+  @php
+  use Illuminate\Support\Str;
+@endphp
+  @foreach($pillarDatas as $pillar)
+
+      <div id="chart_{{ Str::slug($pillar['pillar_name']) }}" class="chart-container"></div>
+      <h5>{{ $pillar['pillar_name'] }}</h5>
+  @endforeach
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var pillarDatas = @json($pillarDatas);
+    var pillarName = "{{ $pillar['pillar_name'] }}";
+    pillarDatas.forEach(function(pillar, index) {
+        var radarData = pillar.questions.map(function(question) {
+            return question.average_score;  // Extract average score for each question in the pillar
+        });
+
+        var radarLabels = pillar.questions.map(function(question) {
+            return question.question_text;  // Extract question text for labels
+        });
+
+        // Ensure the data covers all sections
+        var completeRadarData = new Array(radarLabels.length).fill(0); // Initialize with 0 values
+        for (var i = 0; i < radarData.length; i++) {
+            completeRadarData[i] = radarData[i];  // Fill the radarData
+        }
+
+        // Create the options for the radar chart
+        var options = {
+            chart: {
+                type: 'radar',
+                height: 500,
+                width: 500
+            },
+            series: [{
+                name: 'Average Score',
+                data: completeRadarData
+            }],
+            labels: radarLabels,
+            plotOptions: {
+                radar: {
+                    size: 140,
+                    polygons: {
+                        strokeColors: '#e9e9e9',
+                        fill: {
+                            colors: ['#f8f8f8', '#fff']
+                        }
+                    }
+                }
+            },
+            markers: {
+                size: 6,
+                colors: ['#FFF'],
+                strokeColor: '#FF4560',
+                strokeWidth: 2,
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return val; // Ensures formatted values
+                    }
+                }
+            },
+            yaxis: {
+                show: true,
+                min: 0,
+                max: 100,
+                tickAmount: 5,
+                labels: {
+                    formatter: function(val) {
+                        return val;
+                    }
+                }
+            },
+            xaxis: {
+                labels: {
+                    style: {
+                        fontSize: '14px'
+                    }
+                }
+            },
+        };
+
+        // Render the chart for each pillar in a separate div
+        var chart = new ApexCharts(document.querySelector("#chart_" + pillar.pillar_name.replace(/\s+/g, '_').toLowerCase()), options);
+        chart.render();
+    });
+});
+</script>
+<style>
+  #questioncharts {
+      width: 40%;
+      margin: 0 auto;
+  }
+
+  h5 {
+        margin: 0;
+        padding-bottom: 0px;
+        margin-bottom: 5px;
+    }
+    .chart-container {
+        margin-top: 0px;
+        margin-bottom: 15px;
+    }
+</style>
+
+
+<div id="StackedCharts"></div>
+<script>
+ var options = {
+            chart: {
+                type: 'bar',
+                stacked: true,
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '30%',
+                }
+            },
+            series: [
+                @foreach($StackedData as $data)
+                    {
+                        name: 'Section {{ $loop->iteration }}',
+                        data: @json($data)
+                    },
+                @endforeach
+            ],
+            xaxis: {
+                categories: @json($StackedLabels),
+                title: {
+                    text: 'Pillars'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Average Score'
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'center'
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#StackedCharts"), options);
+        chart.render();
+
+  </script>
+<style>
+  #StackedCharts {
+        width: 40%;
+        margin: 0 auto;
+    }
+  </style>
     <div class="text-center" style="padding-bottom: 2%; padding-block-end: 2%">
         <button class="btn btn-dark rounded-0" onclick="printPage()" style="background-color: #00a6d5;">Print</button>
     </div>
@@ -388,9 +640,6 @@
               const chartHTML = chartContainer.outerHTML;
               const sectionName = chartContainer.getAttribute('data-section-name');
               const sectionDescription = chartContainer.getAttribute('data-section-description');
-
-              // Log the section name and description to ensure they are captured
-              console.log(`Section Name: ${sectionName}, Section Description: ${sectionDescription}`);
 
               sectionsHTML += `
                   <div style="page-break-inside: avoid; display: flex; align-items: center; margin-bottom: 20px;">
@@ -421,14 +670,51 @@
 
           // Add the bar chart
           var basicchartstHTML = `
+              <div style="page-break-inside: avoid; margin-bottom: 20px;">
 
-              <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
+                  <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
+              </div>
           `;
 
-          // Write the HTML content to the new window
+          // Add Stacked Charts HTML
+          var StackedChartsHTML = `
+              <div style="page-break-inside: avoid; margin-bottom: 20px;">
+
+                  <div id="StackedCharts">${document.querySelector('#StackedCharts').outerHTML}</div>
+              </div>
+          `;
+
+          // Add Question charts HTML
+          var questionchartsHTML = `
+              <div style="page-break-inside: avoid; margin-bottom: 20px;">
+
+                  <div id="questioncharts">${document.querySelector('#questioncharts').outerHTML}</div>
+              </div>
+          `;
+
+          // Add Pillar Chart HTML
+          var PillarChartHTML = `
+              <div style="page-break-inside: avoid; margin-bottom: 20px;">
+
+                  <div id="PillarChart">${document.querySelector('#PillarChart').outerHTML}</div>
+              </div>
+          `;
+          var barchartHtml = `
+              <div style="page-break-inside: avoid; margin-bottom: 20px;">
+
+                  <div id="bar-chart">${document.querySelector('#bar-chart').outerHTML}</div>
+              </div>
+          `;
+          var piechartHTML = `
+
+                 <h3 style="text-align:center"><strong>All Over Sections Average</strong></h3>
+                  <div id="bar-chart">${document.querySelector('#pie-chart').outerHTML}</div>
+
+          `;
+          // Opening print window
           printWindow.document.write('<html><head><title>Six Sigma Report</title>');
 
-          // Add styles for printing
+          // Add print styles
           printWindow.document.write(`
               <style>
                   body {
@@ -439,9 +725,13 @@
                   }
 
                   @page {
-                      size: A4;
-                      margin: 0px;
-                  }
+                size: A4;
+                margin: 5mm;
+
+            }
+                @page :first {
+                margin: 0;
+             }
 
                   .image-page {
                       width: 100%;
@@ -467,19 +757,73 @@
                       margin: 0;
                       padding: 5px 0;
                   }
-                      #basiccharts {
-                      margin: 0 auto;
 
-        }
+                  .centered-chart {
+                      text-align: center;
+                      margin-bottom: 40px;
+                      page-break-inside: avoid;
+                  }
+
+                  .centered-chart h3,h5 {
+                      margin-bottom: 10px;
+                  }
+
+                  .centered-chart div {
+                      display: inline-block;
+                      page-break-inside: avoid;
+                  }
+
               </style>
           `);
 
-          // Add the header image
+          // Add header image
           printWindow.document.write('<div class="image-page">');
           printWindow.document.write(headerImage);
           printWindow.document.write('</div>');
 
-          // Add the overall charts
+          printWindow.document.write(`
+
+
+                  ${piechartHTML}
+
+          `);
+
+
+          // Add centered charts with titles
+          printWindow.document.write(`
+              <div class="centered-chart">
+
+                  ${barchartHtml}
+              </div>
+          `);
+          printWindow.document.write(`
+              <div class="centered-chart">
+                  <h3><strong>Average Performance Scores by Pillar</strong></h3>
+                  ${PillarChartHTML}
+              </div>
+          `);
+          printWindow.document.write(`
+              <div class="centered-chart">
+                  <h3><strong>Average Performance Scores by Section</strong></h3>
+                  ${basicchartstHTML}
+              </div>
+          `);
+
+
+
+          printWindow.document.write(`
+              <div class="centered-chart">
+                  <h3><strong>Stacked Performance Scores</strong></h3>
+                  ${StackedChartsHTML}
+              </div>
+          `);
+
+          printWindow.document.write(`
+              <div class="centered-chart">
+                  <h3><strong>Average Performance Scores by Question</strong></h3>
+                  ${questionchartsHTML}
+              </div>
+          `);
           printWindow.document.write('<div class="chart-container">');
           printWindow.document.write(overallChartsHTML);
           printWindow.document.write('</div>');
@@ -489,21 +833,21 @@
           printWindow.document.write(sectionsHTML);
           printWindow.document.write('</div>');
 
-         // Add the bar chart
-          printWindow.document.write('<div class="chart-container">');
-          printWindow.document.write(basicchartstHTML);
-          printWindow.document.write('</div>');
+
+
           // Close the document for rendering
           printWindow.document.write('</body></html>');
           printWindow.document.close();
 
-          // Wait for the content to load and then trigger printing
+          // Wait for content to load and trigger print
           printWindow.onload = function() {
               printWindow.print();
               printWindow.close();
           };
       }
   </script>
+
+
 
 
 @endsection
