@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\form;
 use App\Models\Question;
 use App\Models\section;
+use App\models\pillar;
 
 class ChartController extends Controller
 {
@@ -137,51 +138,212 @@ class ChartController extends Controller
   {
     //
   }
-  public function avg($form_id)
+  public function avg($form_id,$user_id)
   {
+    $user_id =  auth()->user()->id;
+    $pillars = Section::with('pillar')->where('form_id', $form_id)->get();
+
+    $pillarData = [];
+    $radarLabels = [];
+    $radarSeriesData = [];
+    $questionAverages = [];
+
+    foreach ($pillars->groupBy('pillar_id') as $pillarId => $sections) {
+        $pillarName = $sections->first()->pillar->name ?? 'Unknown Pillar';
+        $sectionScores = [];
+
+        foreach ($sections as $section) {
+            $questions = Question::where('form_id', $form_id)->where('section_id', $section->id)->get();
+            $totalScore = 0;
+            $count = 0;
+
+            foreach ($questions as $question) {
+                $options = json_decode($question->options);
+                $answers = Answer::where('question_id', $question->id)->get();
+
+                foreach ($answers as $answer) {
+                    if (is_array($options)) {
+                        $selectedIndex = array_search($answer->answer, $options);
+                        if ($selectedIndex !== false) {
+                            $percentage = ($selectedIndex + 1) * 20;
+                            $totalScore += $percentage;
+                            $count++;
+                        }
+                    }
+                }
+            }
+
+            if ($count > 0) {
+                $averageScore = $totalScore / $count;
+                $sectionScores[] = round($averageScore, 2);
+            }
+
+        }
+        if (!empty($sectionScores)) {
+            $pillarData[$pillarId] = [
+                'pillar_name' => $pillarName,
+                'total_sections' => count($sections),
+                'sections' => $sectionScores,
+            ];
+        }
+    }
+
+    $StackedLabels = [];
+    $StackedData = [];
+
+    $sectionNames = [];
+
+    foreach ($pillarData as $pillar) {
+        // Add pillar name as x-axis label
+        $StackedLabels[] = $pillar['pillar_name'];
+
+        // Add section averages as stacked data
+        foreach ($pillar['sections'] as $index => $average) {
+            // Ensure there's a column for each section in each pillar
+            if (!isset($StackedData[$index])) {
+                $StackedData[$index] = [];
+            }
+
+            $StackedData[$index][] = $average;
+        }
+    }
+
+    // Flatten the section names for the legend
+    foreach ($pillarData as $pillar) {
+        foreach ($pillar['sections'] as $index => $score) {
+            if (!isset($sectionNames[$index])) {
+                $sectionNames[] = "Section " . ($index + 1);
+            }
+        }
+    }
+// dd($StackedLabels);
+
+
+    foreach ($pillarData as $pillar) {
+        $radarLabels[] = $pillar['pillar_name'];
+        $radarSeriesData[] = round(array_sum($pillar['sections']) / count($pillar['sections']), 2);
+    }
+
+    $pillarDatas = [];
+    // Iterate through the sections grouped by pillar_id
+    foreach ($pillars->groupBy('pillar_id') as $pillarId => $sectionsInPillar) {
+        $pillarName = Pillar::find($pillarId)->name ?? 'Unknown Pillar';
+        $questionAverages = [];
+
+        // Loop through the sections under this pillar
+        foreach ($sectionsInPillar as $section) {
+            // Get questions for this section
+            $questions = Question::where('form_id', $form_id)->where('section_id', $section->id)->get();
+
+            // Loop through each question to calculate averages
+            foreach ($questions as $question) {
+                $answers = Answer::where('question_id', $question->id)->get();
+                $totalScore = 0;
+                $count = 0;
+
+                foreach ($answers as $answer) {
+                    $options = json_decode($question->options);
+                    if (is_array($options)) {
+                        $selectedIndex = array_search($answer->answer, $options);
+                        if ($selectedIndex !== false) {
+                            $percentage = ($selectedIndex + 1) * 20;
+                            $totalScore += $percentage;
+                            $count++;
+                        }
+                    }
+                }
+
+                // Calculate and store average score for this question
+                if ($count > 0) {
+                    $averageScore = $totalScore / $count;
+                    $questionAverages[] = [
+                        'question_text' => $question->question_text,
+                        'average_score' => round($averageScore, 2)
+                    ];
+                }
+            }
+        }
+
+        // Store the data for this pillar if it has questions
+        if (!empty($questionAverages)) {
+            $pillarDatas[] = [
+                'pillar_name' => $pillarName,
+                'questions' => $questionAverages
+            ];
+        }
+    }
+
+    // Debugging output to verify all pillars and their questions
+    // dd($pillarDatas);
+
+
+    $questionLabels = [];
+    $questionData = [];
+    foreach ($pillarDatas as $pillar) {
+        foreach ($pillar['questions'] as $question) {
+            $questionLabels[] = $question['question_text'];
+            $questionData[] = $question['average_score'];
+        }
+    }
+// dd($questionData);
+
     $sections = Section::where('form_id', $form_id)->get();
     $averageData = [];
+    $totalSectionScore = 0;
+    $validSectionsCount = 0;
 
     foreach ($sections as $section) {
       $questions = Question::where('form_id', $form_id)
-        ->where('section_id', $section->id)
-        ->get();
+          ->where('section_id', $section->id)
+          ->get();
       $totalScore = 0;
+      $totalCount = 0;
       $count = 0;
 
+      // Loop through each question in the section
       foreach ($questions as $question) {
-        $options = json_decode($question->options);
-        // Find answers for this question
-        $answers = Answer::where('question_id', $question->id)->get();
+          $options = json_decode($question->options);
+          // Find answers for this question
+          $answers = Answer::where('question_id', $question->id)->get();
 
-        foreach ($answers as $answer) {
-          if (is_array($options)) {
-            // Find the index of the selected answer in options
-            $selectedIndex = array_search($answer->answer, $options);
-            if ($selectedIndex !== false) {
-              // Calculate percentage based on selected index
-              $percentage = ($selectedIndex + 1) * 20; // Assuming options are indexed from 0
-              $totalScore += $percentage; // Accumulate score
-              $count++; // Count valid answers
-            }
+          // Loop through each answer for the question
+          foreach ($answers as $answer) {
+              if (is_array($options)) {
+                  // Find the index of the selected answer in options
+                  $selectedIndex = array_search($answer->answer, $options);
+                  if ($selectedIndex !== false) {
+                      // Calculate percentage based on selected index (Assuming options are indexed from 0)
+                      $percentage = ($selectedIndex + 1) * 20;
+                      $totalScore += $percentage; // Accumulate score
+                      $count++;
+                  }
+              }
+
           }
-        }
       }
-// dd($selectedIndex);
+
       // Calculate average for this section if there are valid answers
       if ($count > 0) {
-        $averageScore = ($totalScore / ($count * 100)) * 100; // Normalize to percentage out of 100
-        $averageData[$section->id] = [
-          'section_name' => $section->section_name,
-          'average_score' => round($averageScore, 2) // Round off to two decimal places
-        ];
+          $averageScore = ($totalScore / $count); // Average score per section
+          $averageData[$section->id] = [
+              'section_name' => $section->section_name,
+              'average_score' => round($averageScore, 2) // Round off to two decimal places
+          ];
+          $totalSectionScore += $averageScore;
+          $validSectionsCount++;
       }
-    }
-    // dd($averageScore);
-    // Prepare data for charting averages
+
+  }
+  $overallAverage = $validSectionsCount > 0 ? round($totalSectionScore / $validSectionsCount, 2) : 0;
+
+  // dd($averageData, $overallAverage);
+
+
+    // dd($averageData);
     $chartLabels = array_column($averageData, 'section_name');
     $chartData = array_column($averageData, 'average_score');
-
+    $chartLabel[] = 'Overall Average';
+    $chartDatas[] = $overallAverage;
     // Logic for creating section data
     $sections = Section::where('form_id', $form_id)->get()->keyBy('id');
     $questions = Question::where('form_id', $form_id)->with('section')->get();
@@ -231,7 +393,8 @@ class ChartController extends Controller
         $sectionData[$question->section_id]['percentages'][] = 0;
       }
     }
-
-    return view('panel.chart.avg', compact('chartLabels', 'chartData', 'sectionData'));
+// dd($sectionData);
+    return view('panel.chart.avg', compact('chartLabels', 'chartData', 'sectionData','chartDatas','chartLabel','radarLabels',
+    'radarSeriesData','pillarDatas','StackedLabels','StackedData'));
   }
 }

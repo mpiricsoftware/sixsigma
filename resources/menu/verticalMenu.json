@@ -75,6 +75,13 @@
           "slug": "details",
           "role": ["Admin","Super Admin"]
 
+        },
+        {
+          "url": "pillar",
+          "name": "Form pillar",
+          "slug": "pillar",
+          "role": ["Admin","Super Admin"]
+
         }
 
 

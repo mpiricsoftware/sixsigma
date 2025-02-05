@@ -51,11 +51,26 @@
                             @endforeach
                         </div>
 
-                        @foreach ($sections as $s)
+
+                                  @foreach ($sections as $s)
                             <div class="row g-6 ms-3 me-3 mt-4">
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
+                                          <div class="col-md-12">
+                                            <div class="form-floating form-floting-outline">
+                                              <select name="pillar_id[]" id="pillar_id" class="select2 form-select name" data-placeholder="Select name" data-allow-clear="true">
+                                                <option value="Select Pillar">Select Pillar</option>
+                                                @foreach ($pillar as $p)
+                                                <option value="{{ $p->id }}" {{ $s->pillar_id == $p->id ? 'selected' : '' }}>
+                                                  {{ $p->name }}</option>
+                                                @endforeach
+
+                                              </select>
+
+                                            </div>
+                                          </div>
+                                          <br>
                                             <div class="col-md-12">
                                                 <div class="form-floating form-floating-outline">
                                                     <input type="hidden" name="section_id[]" value="{{ $s->id }}">
@@ -203,6 +218,19 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
+                                          <div class="col-md-12">
+                                            <div class="form-floating form-floting-outline">
+                                              <select name="pillar_id" id="pillar_id" class="select2 form-select name" data-placeholder="Select name" data-allow-clear="true">
+                                                <option value="Select Pillar">Select Pillar</option>
+                                                @foreach ($pillar as $p)
+                                                  <option value="{{$p->id}}">{{$p->name}}</option>
+                                                @endforeach
+
+                                              </select>
+
+                                            </div>
+                                          </div>
+                                          <br>
                                             <div class="col-md-12">
                                                 <div class="form-floating form-floating-outline">
                                                     <input type="text" name="section_name[]" id="section_name"
@@ -256,7 +284,7 @@
                 const newSection = `
             <div class="section-box form-control mt-3" id="section_${fieldCount}">
                 <!-- Dynamic fields container -->
-                <div id="dynamicFields_${fieldCount}"></div>
+
                 <div class="row mt-3">
                     <!-- Column 1: Choice -->
                     <div class="col-md-4">
@@ -306,6 +334,7 @@
                     </div>
                   </div>
                 </div>
+                <div id="dynamicFields_${fieldCount}"></div>
             </div>`;
 
                 // For new section, append based on dynamicSectionId or default container
@@ -319,7 +348,7 @@
                 const newSection = `
             <div class="section-box form-control mt-3" id="section_${dynamicSectionId}">
                 <!-- Dynamic fields container -->
-                <div id="dynamicFields_${dynamicSectionId}"></div>
+
 
                 <div class="row mt-3">
                     <!-- Column 1: Choice -->
@@ -372,6 +401,7 @@
                     </div>
                   </div>
                 </div>
+                <div id="dynamicFields_${dynamicSectionId}"></div>
             </div>`;
 
                 // Append the new section into the existing section's container
@@ -383,54 +413,55 @@
     const globalOptionIndex = {};
     let questionCounter = {};
 
-    // Function to get the maximum question ID for a given section
-    function getMaxQuestionId(sectionId) {
-        const questionIds = $(`#dynamicFields_${sectionId} .choice-field, input[name^="question_id[${sectionId}]"]`)
-            .map(function() {
-                const id = $(this).attr('id') || $(this).val();
-                const parts = id.split('_');
-                return parseInt(parts[2] || parts[0]);
-            }).get();
-        return Math.max(0, ...questionIds);
-    }
+    // // Function to get the maximum question ID for a given section
+    // function getMaxQuestionId(sectionId) {
+    //     const questionIds = $(`#dynamicFields_${sectionId} .choice-field, input[name^="question_id[${sectionId}]"]`)
+    //         .map(function() {
+    //             const id = $(this).attr('id') || $(this).val();
+    //             const parts = id.split('_');
+    //             return parseInt(parts[2] || parts[0]);
+    //         }).get();
+    //     return Math.max(0, ...questionIds);
+    // }
 
     // Function to add a new choice field to a section
     function addChoiceField(sectionId) {
         const container = $(`#dynamicFields_${sectionId}`);
 
-        // Initialize or update the question counter for the section
-        if (!questionCounter[sectionId]) {
-            questionCounter[sectionId] = getMaxQuestionId(sectionId) + 1;
-        } else {
-            questionCounter[sectionId]++;
-        }
+        const questionId = `question_${sectionId}_${new Date().getTime()}`; // Unique question ID
 
-        const questionId = `question_${sectionId}_${questionCounter[sectionId]}`; // Unique question ID
-
-        const choiceField = `
-    <div class="row mt-5 choice-field" id="${questionId}">
-        <div class="col-md-12">
-            <input type="text" class="form-control" placeholder="Enter your question" name="question_text[${sectionId}][${questionId}]">
-        </div>
-        <div class="col-md-12 mt-2">
-            <input type="text" class="form-control" placeholder="Enter your Description" name="question_description[${sectionId}][${questionId}]">
-        </div>
-        <div class="col-md-12 mt-2">
-            <div class="btn-group" role="group" aria-label="Choice Type">
-                <button type="button" class="btn btn-whiterounded-0" onclick="showChoiceOptions(${sectionId}, 'radio', this, '${questionId}')">Radio Button</button>
-                <button type="button" class="btn btn-dark rounded-0" onclick="showChoiceOptions(${sectionId}, 'checkbox', this, '${questionId}')">Checkbox</button>
-            </div>
-            <div class="choice-options mt-4"></div> <!-- Ensure this container exists -->
-            <button type="button" class="btn btn-dark rounded-0 mt-2" onclick="addChoiceOption(${sectionId}, '${questionId}')" style="background-color:#00a6d5">+</button>
-            <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
-                <i class="ri-delete-bin-7-line ri-20px"></i>
-            </button>
-        </div>
-        <input type="hidden" name="type[${sectionId}][${questionId}]" class="choice-type-hidden" value="">
+const choiceField = `
+<div class="row mt-5 choice-field" id="${questionId}">
+    <div class="col-md-12">
+        <input type="text" class="form-control" placeholder="Enter your question" name="question_text[${sectionId}][${questionId}]">
     </div>
-    `;
-        container.append(choiceField);
-    }
+    <div class="col-md-12 mt-2">
+        <input type="text" class="form-control" placeholder="Enter your Description" name="question_description[${sectionId}][${questionId}]">
+    </div>
+    <div class="col-md-12 mt-2">
+        <div class="btn-group" role="group" aria-label="Choice Type">
+            <button type="button" class="btn btn-whiterounded-0" onclick="showChoiceOptions(${sectionId}, 'radio', this, '${questionId}')">Radio Button</button>
+            <button type="button" class="btn btn-dark rounded-0" onclick="showChoiceOptions(${sectionId}, 'checkbox', this, '${questionId}')">Checkbox</button>
+        </div>
+        <div class="choice-options mt-4"></div>
+        <button type="button" class="btn btn-dark rounded-0 mt-2" onclick="addChoiceOption(${sectionId}, '${questionId}')" style="background-color:#00a6d5">+</button>
+        <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeField(this)">
+            <i class="ri-delete-bin-7-line ri-20px"></i>
+        </button>
+    </div>
+    <input type="hidden" name="type[${sectionId}][${questionId}]" class="choice-type-hidden" value="">
+</div>
+`;
+container.append(choiceField);
+
+if (!globalOptionIndex[sectionId]) {
+    globalOptionIndex[sectionId] = 0;
+}
+
+const existingOptionsCount = $(`#dynamicFields_${sectionId} .choice-option`).length;
+globalOptionIndex[sectionId] = existingOptionsCount;
+
+}
 
     function showChoiceOptions(sectionId, type, button, questionId) {
         const choiceContainer = $(`#${questionId} .choice-options`);
@@ -445,34 +476,34 @@
         addChoiceOption(sectionId, questionId);
     }
 
-    function getMaxOptionIndex(sectionId, questionId) {
-    const choiceOptionsContainer = $(`#${questionId} .choice-options`);
+//     function getMaxOptionIndex(sectionId, questionId) {
+//     const choiceOptionsContainer = $(`#${questionId} .choice-options`);
 
-    if (choiceOptionsContainer.length === 0) {
-        console.error(`No .choice-options container found for questionId: ${questionId}`);
-        return -1;
-    }
-    const optionElements = choiceOptionsContainer.find('.option-value');
+//     if (choiceOptionsContainer.length === 0) {
+//         console.error(`No .choice-options container found for questionId: ${questionId}`);
+//         return -1;
+//     }
+//     const optionElements = choiceOptionsContainer.find('.option-value');
 
-    if (optionElements.length === 0) {
-        console.warn("No .option-value elements found inside .choice-options");
-        return -1;
-    }
+//     if (optionElements.length === 0) {
+//         console.warn("No .option-value elements found inside .choice-options");
+//         return -1;
+//     }
 
-    const optionIndices = optionElements.map(function() {
-        const index = $(this).data('option-index');
-        console.log("Found option-index:", index);
-        return index !== undefined ? parseInt(index, 10) : 0;
-    }).get();
+//     const optionIndices = optionElements.map(function() {
+//         const index = $(this).data('option-index');
+//         console.log("Found option-index:", index);
+//         return index !== undefined ? parseInt(index, 10) : 0;
+//     }).get();
 
-    console.log("Option Indices Array:", optionIndices);
+//     console.log("Option Indices Array:", optionIndices);
 
-    return optionIndices.length > 0 ? Math.max(...optionIndices) : -1;
-}
+//     return optionIndices.length > 0 ? Math.max(...optionIndices) : -1;
+// }
 
 
     function addChoiceOption(sectionId, questionId) {
-        const container = $(`#${questionId} .choice-options`);
+      const container = $(`#${questionId} .choice-options`);
         const choiceType = $(`#${questionId} .choice-type-hidden`).val();
 
         if (!choiceType) {
@@ -481,13 +512,11 @@
         }
 
         // Get the highest existing option index
-        let maxOptionIndex = getMaxOptionIndex(sectionId, questionId);
-        // alert(maxOptionIndex);
-        const newIndex = maxOptionIndex + 1;
+        const newIndex = globalOptionIndex[sectionId]++;
 
         const choiceOption = `
     <div class="d-flex align-items-center mt-2 choice-option">
-        <input type="${choiceType}" name="choice[${newIndex}]" value="${newIndex}" class="me-2" data-option-index="${newIndex}">
+        <input type="${choiceType}" name="choice_${sectionId}_${questionId}${choiceType === 'checkbox' ? '[]' : ''}" class="me-2" onclick="updateSelectedValue(${sectionId}, this)">
         <input type="text" class="form-control me-2" placeholder="Option ${newIndex + 1}" onchange="updateOptionValue(${sectionId}, ${newIndex}, this)">
         <button type="button" class="btn btn-sm btn-icon btn-text-secondary rounded-pill me-1" onclick="removeOption(this)">
             <i class="ri-delete-bin-7-line ri-20px"></i>
@@ -671,12 +700,23 @@
     }
 
     function addsection(sectionId) {
-        alert(sectionId);
+        // alert(sectionId);
         let fieldCount = ++window.fieldCount;
         //  alert(fieldCount);
         const newCard = `
     <div class="card form-control mt-3" id="section_${fieldCount}">
-        <div class="col-md-12">
+      <div class="col-md-12">
+            <div class="form-floating form-floating-outline">
+                <select name="pillar_id[]" id="pillar_${fieldCount}" class="select2 form-select name" data-placeholder="Select Pillar" data-allow-clear="true">
+                    <option value="">Select Pillar</option>
+                    @foreach ($pillar as $p)
+                        <option value="{{$p->id}}">{{$p->name}}</option>
+                    @endforeach
+                </select>
+                <label for="name_${fieldCount}">Select Pillar</label>
+            </div>
+        </div>
+        <div class="col-md-12 mt-3">
             <div class="form-floating form-floating-outline">
                 <input type="text" name="section_name[]" placeholder="Enter Section Name" class="form-control">
                 <label for="name">Section Name</label>
@@ -734,7 +774,8 @@
     </div>
     `;
 
-        $('#dynamicFields_' + sectionId).append(`<hr style="border: 1px solid #bbb; margin: 20px 0;">`).append(newCard);
+    $('#dynamicFields_' + sectionId).append(`<hr style="border: 1px solid #bbb; margin: 20px 0;">`).append(newCard);
+
     }
 
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\section;
 use App\Models\form;
 use App\Models\Question;
-
+use App\Models\pillar;
 class SectionController extends Controller
 {
   /**
@@ -75,8 +75,10 @@ class SectionController extends Controller
    */
     public function store(Request $request)
     {
-      // dd("store");
+      $user_id =  auth()->user()->id;
+
       $request->validate([
+        'pillar_id.*' => 'required|exists:pillar,id',
         'section_name.*' => 'required|string|max:255',
         'section_description.*' => 'nullable|string|max:10000',
         'question_text.*' => 'nullable|array',
@@ -95,12 +97,15 @@ class SectionController extends Controller
         foreach ($request->section_name as $key => $sectionName) {
           // dd($request->all(),$request->question_text[$i] );
           $sectionDescription = $request->section_description[$key] ?? null;
+          $pillarId = $request->pillar_id[$key] ?? null;
           $section = Section::create([
             'form_id' => $form['id'],
             'section_name' => $sectionName,
             'section_description' => $sectionDescription,
+            'pillar_id' => $pillarId
           ]);
-// dd($key);
+
+// dd($section);
           if (isset($request->question_text[$i]) && is_array($request->question_text[$i])) {
             foreach ($request->question_text[$i] as $key => $questionText) {
               $description = $request->question_description[$i][$key] ?? null;
@@ -152,8 +157,9 @@ class SectionController extends Controller
 
    public function updateNew(Request $request)
 {
-    // Validate the request
+
     $request->validate([
+        'pillar_id.*' => 'required|exists:pillar,id',
         'section_id.*' => 'nullable|integer|exists:section,id',
         'section_name.*' => 'required|string|max:255',
         'section_description.*' => 'nullable|string|max:10000',
@@ -174,7 +180,8 @@ class SectionController extends Controller
     foreach ($request->section_name as $sectionIndex => $sectionName) {
         $sectionId = $request->section_id[$sectionIndex] ?? null;
         $sectionDescription = $request->section_description[$sectionIndex] ?? null;
-
+        $pillarId = $request->pillar_id[$sectionIndex] ?? null;
+        // dd($pillarId);
         if ($sectionId) {
             $section = Section::find($sectionId);
             if ($section) {
@@ -182,13 +189,17 @@ class SectionController extends Controller
                     'form_id' => $formId,
                     'section_name' => $sectionName,
                     'section_description' => $sectionDescription,
-                ]);
+                    'pillar_id' => $pillarId
+                ]
+              );
             }
+            // dd($section);
         } else {
             $newsection = Section::create([
                 'form_id' => $formId,
                 'section_name' => $sectionName,
                 'section_description' => $sectionDescription,
+                'pillar_id' => $pillarId
             ]);
             $sectionId = $newsection->id;
         }
@@ -214,7 +225,10 @@ class SectionController extends Controller
                             'question_text' => $questionText,
                             'question_description' => $description,
                             'type' => $type,
+                          ],
+                            [
                             'options' => $options,
+
                         ]);
                     }
 
@@ -225,6 +239,8 @@ class SectionController extends Controller
                         'question_text' => $questionText,
                         'question_description' => $description,
                         'type' => $type,
+
+
                         'options' => $options,
                     ]);
                 }
