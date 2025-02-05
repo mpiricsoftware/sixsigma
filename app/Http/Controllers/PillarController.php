@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\pillar;
+use App\Models\pillar;
 use App\Models\form;
 
 class PillarController extends Controller
