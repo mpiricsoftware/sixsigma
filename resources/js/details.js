@@ -76,7 +76,7 @@ $(function () {
           orderable: false,
           render: function (data, type, full, meta) {
             var urls = printRoute.replace(':id', full.form_id).replace(':user_id', full.user_id);
-            var chartsd = chart.replace(':id', full.form_id);
+            var chartsd = chart.replace(':id', full.form_id).replace(':user_id', full.user_id);
             return (
               '<div class="d-flex align-items-center gap-50">' +
                 '<a href="' + urls + '" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Download">' +

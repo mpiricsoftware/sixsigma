@@ -53,5 +53,5 @@
 @endsection
 <script>
   var printRoute = "{{ route('print', ['id' => ':id', 'user_id' => ':user_id']) }}";
-  var chart = "{{ route('avg', ':id')}}";
+  var chart = "{{ route('avg', ['id' => ':id', 'user_id' => ':user_id']) }}";
 </script>

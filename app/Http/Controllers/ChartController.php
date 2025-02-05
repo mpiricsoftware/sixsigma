@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\form;
 use App\Models\Question;
 use App\Models\section;
+use App\models\pillar;
 
 class ChartController extends Controller
 {
@@ -137,51 +138,68 @@ class ChartController extends Controller
   {
     //
   }
-  public function avg($form_id)
+  public function avg($form_id,$user_id)
   {
+    $user_id =  auth()->user()->id;
+    $pillars = Section::with('pillar')->where('form_id', $form_id)->get();
+
     $sections = Section::where('form_id', $form_id)->get();
     $averageData = [];
+    $totalSectionScore = 0;
+    $validSectionsCount = 0;
 
     foreach ($sections as $section) {
       $questions = Question::where('form_id', $form_id)
-        ->where('section_id', $section->id)
-        ->get();
+          ->where('section_id', $section->id)
+          ->get();
       $totalScore = 0;
+      $totalCount = 0;
       $count = 0;
 
+      // Loop through each question in the section
       foreach ($questions as $question) {
-        $options = json_decode($question->options);
-        // Find answers for this question
-        $answers = Answer::where('question_id', $question->id)->get();
+          $options = json_decode($question->options);
+          // Find answers for this question
+          $answers = Answer::where('question_id', $question->id)->get();
 
-        foreach ($answers as $answer) {
-          if (is_array($options)) {
-            // Find the index of the selected answer in options
-            $selectedIndex = array_search($answer->answer, $options);
-            if ($selectedIndex !== false) {
-              // Calculate percentage based on selected index
-              $percentage = ($selectedIndex + 1) * 20; // Assuming options are indexed from 0
-              $totalScore += $percentage; // Accumulate score
-              $count++; // Count valid answers
-            }
+          // Loop through each answer for the question
+          foreach ($answers as $answer) {
+              if (is_array($options)) {
+                  // Find the index of the selected answer in options
+                  $selectedIndex = array_search($answer->answer, $options);
+                  if ($selectedIndex !== false) {
+                      // Calculate percentage based on selected index (Assuming options are indexed from 0)
+                      $percentage = ($selectedIndex + 1) * 20;
+                      $totalScore += $percentage; // Accumulate score
+                      $count++;
+                  }
+              }
+
           }
-        }
       }
-// dd($selectedIndex);
+
       // Calculate average for this section if there are valid answers
       if ($count > 0) {
-        $averageScore = ($totalScore / ($count * 100)) * 100; // Normalize to percentage out of 100
-        $averageData[$section->id] = [
-          'section_name' => $section->section_name,
-          'average_score' => round($averageScore, 2) // Round off to two decimal places
-        ];
+          $averageScore = ($totalScore / $count); // Average score per section
+          $averageData[$section->id] = [
+              'section_name' => $section->section_name,
+              'average_score' => round($averageScore, 2) // Round off to two decimal places
+          ];
+          $totalSectionScore += $averageScore;
+          $validSectionsCount++;
       }
-    }
-    // dd($averageScore);
-    // Prepare data for charting averages
+
+  }
+  $overallAverage = $validSectionsCount > 0 ? round($totalSectionScore / $validSectionsCount, 2) : 0;
+
+  // dd($averageData, $overallAverage);
+
+
+    // dd($averageData);
     $chartLabels = array_column($averageData, 'section_name');
     $chartData = array_column($averageData, 'average_score');
-
+    $chartLabel[] = 'Overall Average';
+    $chartDatas[] = $overallAverage;
     // Logic for creating section data
     $sections = Section::where('form_id', $form_id)->get()->keyBy('id');
     $questions = Question::where('form_id', $form_id)->with('section')->get();
@@ -231,7 +249,7 @@ class ChartController extends Controller
         $sectionData[$question->section_id]['percentages'][] = 0;
       }
     }
-
-    return view('panel.chart.avg', compact('chartLabels', 'chartData', 'sectionData'));
+// dd($sectionData);
+    return view('panel.chart.avg', compact('chartLabels', 'chartData', 'sectionData','chartDatas','chartLabel'));
   }
 }

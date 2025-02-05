@@ -20,6 +20,10 @@
                 @endphp
 
                 @if ($answeredQuestions->isNotEmpty())
+                <h5 class="card-title"
+                style="color: #0d003d; text-align:left">
+                {{ $s->pillar->name}}
+                </h5>
                     <div class="section mb-4">
                         <h5 class="card-title"
                             style="color: #00a6d5; background-color: #f1f1f1; padding: 7px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
@@ -344,7 +348,7 @@
         </div>
     `;
             var titleAndContent = `
-        <div style="page-break-before: always;">
+        <div style="page-break-before: always;padding:20px;margin:0px auto;">
             <div class="card-body">${printContent}</div>
         </div>
     `;
@@ -363,8 +367,14 @@
 
             @page {
                 size: A4;
-                margin: 0;
+                margin: 1mm;
+
             }
+                @page :first {
+                margin: 0;
+             }
+
+
 
             /* Image page styles */
             .image-page {
@@ -442,7 +452,9 @@
                     transition: left 0.3s ease;
                 }
                 .section {
-                    margin-bottom: 20px;
+                   margin-top: 20px;
+                   margin-bottom: 20px;
+                    page-break-inside: avoid;
                 }
 
                 .section h5 {
@@ -452,7 +464,7 @@
                     border-radius: 5px;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     margin-bottom: 10px;
-                    page-break-before: always;
+
                 }
                      .section-table {
                     display: table;
@@ -500,6 +512,14 @@
 
                   /* Adjust this value to position the highlighted value vertically */
               }
+                  .question {
+                   page-break-after: auto; /* Allow breaks after questions if needed */
+                 }
+                   h5.card-title {
+                   padding-top:20px;
+                   padding-bottom:20px;
+                  page-break-after: avoid; /* Ensure section title doesn't get separated */
+                }
 }
 
         </style>

@@ -9,6 +9,7 @@ use App\Models\Input;
 use App\Models\Question;
 use App\Models\section;
 use Illuminate\Http\JsonResponse;
+use App\Models\pillar;
 
 class FormController extends Controller
 {
@@ -106,6 +107,7 @@ class FormController extends Controller
    */
   public function show(string $id)
   {
+    $pillar = pillar::all();
       $form = form::where('id',$id)->get();
       $sections = Section::where('form_id', $id)
     ->with(['question' => function ($query) use ($id) {
@@ -116,10 +118,11 @@ class FormController extends Controller
       foreach ($section->question as $question) {
           $question->options = $question->options ? json_decode($question->options, true) : [];
       }
+
   }
 
 // dd($sections);
-      return view('panel.form.show',compact('form','sections'));
+      return view('panel.form.show',compact('form','sections','pillar'));
   }
 
   /**
