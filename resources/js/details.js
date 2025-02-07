@@ -1,7 +1,10 @@
 $(function () {
+  // console.log('JavaScript is running');
   var dataTableform = $('.datatables-details');
   if (dataTableform.length) {
+
     var dt_form = dataTableform.DataTable({
+
       processing: true,
       serverSide: false,
       ajax: {
@@ -75,8 +78,8 @@ $(function () {
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
-            var urls = printRoute.replace(':id', full.form_id).replace(':user_id', full.user_id);
-            var chartsd = chart.replace(':id', full.form_id).replace(':user_id', full.user_id);
+            var urls = printRoute.replace(':id', full.id);
+            var chartsd = chart.replace(':id', full.form_id).replace(':user_id', full.user_id).replace(':details_id', full.id);
             return (
               '<div class="d-flex align-items-center gap-50">' +
                 '<a href="' + urls + '" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Download">' +

@@ -35,67 +35,49 @@ class AnswerController extends Controller
    * Store a newly created resource in storage.
    */
   public function store(Request $request)
-  {
+{
     $answers = $request->input('answers');
     $questionIds = $request->input('question_ids');
+    $user = auth()->user();
+    $form = null;
+
+    // Generate unique submission ID for each form submission
+    $submissionId = now()->timestamp . '-' . $user->id;
 
     foreach ($answers as $sectionId => $questions) {
-      $sectionHasAnswers = false;
-      foreach ($questions as $answer) {
-        if (!empty($answer)) {
-          $sectionHasAnswers = true;
-          break;
-        }
-      }
-      if (!$sectionHasAnswers) {
-        continue;
-      }
-      foreach ($questions as $index => $answer) {
-        $questionId = $questionIds[$sectionId][$index] ?? null;
+        foreach ($questions as $index => $answer) {
+            $questionId = $questionIds[$sectionId][$index] ?? null;
+            if (!$questionId) continue;
 
-        if (!$questionId) {
-          continue;
-        }
-        $question = Question::where('id', $questionId)
-          ->where('section_id', $sectionId)
-          ->first();
+            $question = Question::where('id', $questionId)->where('section_id', $sectionId)->first();
+            if (!$question) continue;
 
-        if (!$question) {
-          continue;
-        }
-        if (is_array($answer)) {
-          $answer = json_encode($answer);
-        }
+            $form = $question->form_id;
 
-        if (empty($answer)) {
-          $answer = null;
+            $answersd = Answer::create([
+                'section_id' => $sectionId,
+                'question_id' => $questionId,
+                'user_id' => $user->id,
+                'submission_id' => $submissionId,
+                'form_id' => $form,
+                'answer' => is_array($answer) ? json_encode($answer) : $answer,
+            ]);
         }
-        $form = $question->form_id;
-        $user = auth()->user();
-        // dd($user);
-        Answer::updateOrCreate(
-          [
-            'section_id' => $sectionId,
-            'question_id' => $questionId,
-            'user_id' => $user->id,
-            'form_id' => $form
-          ],
-          [
-            'answer' => $answer,
-          ]
-        );
-        $details = Details::firstOrCreate([
-          'user_id' => $user->id,
-          'form_id' => $form,
-      ]);
-
-      }
     }
 
+    // Store submission details
+    if ($form) {
+        $detais  = Details::create([
+            'user_id' => $user->id,
+            'form_id' => $form,
+            'submission_id' => $submissionId,
+        ]);
+    }
+
+    return view("panel.question.view", compact('form', 'user'));
+}
 
 
-    return view("panel.question.view",compact('form','user'));
-  }
 
 
   /**

@@ -8,7 +8,8 @@ class Details extends Model
 {
     protected $fillable = [
       'user_id',
-      'form_id'
+      'form_id',
+      'submission_id'
     ];
 
     public function user()

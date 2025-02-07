@@ -227,6 +227,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
     Route::get('/home/{slug}',[QuestionController::class,'home'])->name('dashboard-analytics');
     Route::get('/print/{id}/{user_id}',[QuestionController::class,'print'])->name('print');
+    Route::get('/dprint/{id}',[QuestionController::class,'dprint'])->name('dprint');
     Route::get('inquiry',[InquiryController::class,'index']);
     Route::resource('inquiry-list',InquiryController::class);
     Route::get('message',[InquiryController::class,'message'])->name('message');
@@ -235,7 +236,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::post('section-list/updateNew',[SectionController::class,'updateNew'])->name('section-list.updateNew');
     Route::get('section',[SectionController::class,'index']);
     Route::get('chart',[ChartController::class,'index']);
-    Route::get('avg/{id}/{user_id}',[ChartController::class,'avg'])->name('avg');
+    Route::get('avg/{id}/{user_id}/{details_id}',[ChartController::class,'avg'])->name('avg');
     Route::resource('chart-list',ChartController::class);
     Route::resource('pillar-list',PillarController::class);
     Route::get('pillar',[PillarController::class,'index']);

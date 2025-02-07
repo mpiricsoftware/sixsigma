@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\answer;
+use App\Models\Details;
 use Illuminate\Http\Request;
 use App\Models\form;
 use App\Models\Question;
@@ -138,11 +139,16 @@ class ChartController extends Controller
   {
     //
   }
-  public function avg($form_id,$user_id)
+  public function avg($form_id,$user_id,$details_id)
   {
     $user_id =  auth()->user()->id;
     $pillars = Section::with('pillar')->where('form_id', $form_id)->get();
+    $detail = Details::find($details_id); // Retrieve single instance
 
+    if ($detail) {
+        $submission_id = $detail->submission_id; // Access the submission_id property
+
+    }
     $pillarData = [];
     $radarLabels = [];
     $radarSeriesData = [];
@@ -159,7 +165,9 @@ class ChartController extends Controller
 
             foreach ($questions as $question) {
                 $options = json_decode($question->options);
-                $answers = Answer::where('question_id', $question->id)->get();
+                $answers = Answer::where('question_id', $question->id)
+                ->where('submission_id', $submission_id)
+                ->get();
 
                 foreach ($answers as $answer) {
                     if (is_array($options)) {
@@ -237,7 +245,9 @@ class ChartController extends Controller
 
             // Loop through each question to calculate averages
             foreach ($questions as $question) {
-                $answers = Answer::where('question_id', $question->id)->get();
+              $answers = Answer::where('question_id', $question->id)
+              ->where('submission_id', $submission_id) // Filter by submission_id
+              ->get();
                 $totalScore = 0;
                 $count = 0;
 
@@ -304,7 +314,9 @@ class ChartController extends Controller
       foreach ($questions as $question) {
           $options = json_decode($question->options);
           // Find answers for this question
-          $answers = Answer::where('question_id', $question->id)->get();
+          $answers = Answer::where('question_id', $question->id)
+          ->where('submission_id', $submission_id) // Filter by submission_id
+          ->get();
 
           // Loop through each answer for the question
           foreach ($answers as $answer) {
@@ -345,53 +357,61 @@ class ChartController extends Controller
     $chartLabel[] = 'Overall Average';
     $chartDatas[] = $overallAverage;
     // Logic for creating section data
-    $sections = Section::where('form_id', $form_id)->get()->keyBy('id');
-    $questions = Question::where('form_id', $form_id)->with('section')->get();
-    $answers = Answer::where('form_id', $form_id)->get();
+    // Logic for creating section data
+$sections = Section::where('form_id', $detail->form_id)->get()->keyBy('id');
+$questions = Question::where('form_id', $detail->form_id)->with('section')->get();
 
-    // Initialize data structure for sections
-    $sectionData = [];
+// Initialize data structure for sections
+$sectionData = [];
 
-    foreach ($questions as $question) {
-      if (!isset($sectionData[$question->section_id])) {
+foreach ($questions as $question) {
+    if (!isset($sectionData[$question->section_id])) {
         if (isset($sections[$question->section_id])) {
-          $sectionData[$question->section_id] = [
-            'name' => $sections[$question->section_id]->section_name,
-            'description' => $sections[$question->section_id]->section_description,
-            'labels' => [],
-            'percentages' => []
-          ];
+            $sectionData[$question->section_id] = [
+                'name' => $sections[$question->section_id]->section_name,
+                'description' => $sections[$question->section_id]->section_description,
+                'labels' => [],
+                'percentages' => []
+            ];
         } else {
-          $sectionData[$question->section_id] = [
-            'name' => 'Unknown Section',
-            'labels' => [],
-            'percentages' => []
-          ];
+            $sectionData[$question->section_id] = [
+                'name' => 'Unknown Section',
+                'labels' => [],
+                'percentages' => []
+            ];
         }
-      }
+    }
 
-      // Store question text
-      $sectionData[$question->section_id]['labels'][] = $question->question_text;
+    // Store question text
+    $sectionData[$question->section_id]['labels'][] = $question->question_text;
 
-      // Decode options for the question
-      $options = json_decode($question->options);
-      // Find the answer for this question
-      $answer = $answers->where('question_id', $question->id)->first();
+    // Decode options for the question
+    $options = json_decode($question->options);
 
-      if ($answer && is_array($options)) {
+    // ✅ Fix: Fetch answers for the current question inside the loop
+    $answers = Answer::where('question_id', $question->id)
+        ->where('submission_id', $submission_id)
+        ->get();
+
+    // Find the answer for this question
+    $answer = $answers->first(); // Since each question has one answer per submission
+
+    if ($answer && is_array($options)) {
         // Find the index of the selected answer in options
         $selectedIndex = array_search($answer->answer, $options);
 
         if ($selectedIndex !== false) {
-          // Calculate the score based on the selected answer index
-          $percentage = ($selectedIndex + 1) * 20;
-          $sectionData[$question->section_id]['percentages'][] = $percentage;
+            // Calculate the score based on the selected answer index
+            $percentage = ($selectedIndex + 1) * 20;
+            $sectionData[$question->section_id]['percentages'][] = $percentage;
         } else {
-          $sectionData[$question->section_id]['percentages'][] = 0;
+            $sectionData[$question->section_id]['percentages'][] = 0;
         }
-      } else {
+    } else {
         $sectionData[$question->section_id]['percentages'][] = 0;
-      }
+    }
+
+
     }
 // dd($sectionData);
     return view('panel.chart.avg', compact('chartLabels', 'chartData', 'sectionData','chartDatas','chartLabel','radarLabels',
