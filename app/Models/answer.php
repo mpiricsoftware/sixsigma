@@ -12,7 +12,8 @@ class answer extends Model
       'question_id',
       'section_id',
       'answer',
-      'form_id'
+      'form_id',
+      'submission_id'
     ];
     public function user()
     {
@@ -29,5 +30,9 @@ class answer extends Model
     public function form()
     {
       return $this->belongsTo(Form::class, 'id');
+    }
+    public function details()
+    {
+      return $this->belongsTo(details::class,'id');
     }
 }

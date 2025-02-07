@@ -15,7 +15,7 @@ class DetailsController extends Controller
     public function index(Request $request)
 
       {
-        // dd('hi');
+
         if ($request->ajax()) {
 
           $columns = [
@@ -72,16 +72,17 @@ $details = $query->get();
           $data = [];
           $fackid = 1;
           foreach ($details as $i) {
-              $nestedData['fack_id'] = $fackid;
-              $nestedData['form_id'] = $i->form_id;
-              $nestedData['form_name'] = $i->form_name;
-              $nestedData['user_id'] = $i->user_id; // Add user_id to the data
-              $nestedData['form_description'] = $i->form_description;
-              $nestedData['user_name'] = $i->user_name;
-              $nestedData['user_email'] = $i->user_email;
-              $data[] = $nestedData;
-              $fackid++;
-          }
+            $nestedData['fack_id'] = $fackid;
+            $nestedData['id'] = $i->id; // Ensure this is the correct details_id
+            $nestedData['form_id'] = $i->form_id;
+            $nestedData['form_name'] = $i->form_name;
+            $nestedData['user_id'] = $i->user_id; // Add user_id to the data
+            $nestedData['form_description'] = $i->form_description;
+            $nestedData['user_name'] = $i->user_name;
+            $nestedData['user_email'] = $i->user_email;
+            $data[] = $nestedData;
+            $fackid++;
+        }
           // dd($data);
           return response()->json([
               'draw' => $draw,
