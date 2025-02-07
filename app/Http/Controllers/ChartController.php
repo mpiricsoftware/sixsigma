@@ -201,36 +201,46 @@ class ChartController extends Controller
 
     $sectionNames = [];
 
-    foreach ($pillarData as $pillar) {
-        // Add pillar name as x-axis label
-        $StackedLabels[] = $pillar['pillar_name'];
+    foreach ($pillarData as $pillarId => $pillar) {
+      $totalPillarScore = 0;
+      $totalQuestionCount = 0;
 
-        // Add section averages as stacked data
-        foreach ($pillar['sections'] as $index => $average) {
-            // Ensure there's a column for each section in each pillar
-            if (!isset($StackedData[$index])) {
-                $StackedData[$index] = [];
-            }
+      foreach ($pillar['sections'] as $sectionIndex => $sectionScore) {
+          $section = $pillars->where('pillar_id', $pillarId)->skip($sectionIndex)->first();
+          if ($section) {
+              // Count the actual number of questions in this section
+              $questionCount = Question::where('form_id', $form_id)
+                  ->where('section_id', $section->id)
+                  ->count();
 
-            $StackedData[$index][] = $average;
+              if ($questionCount > 0) { // Avoid division by zero
+                  $totalPillarScore += $sectionScore * $questionCount; // Weight section score by question count
+                  $totalQuestionCount += $questionCount;
+              }
+          }
+      }
+
+      $radarLabels[] = $pillar['pillar_name'];
+      $radarSeriesData[] = ($totalQuestionCount > 0) ? round($totalPillarScore / $totalQuestionCount, 2) : 0;
+  }
+
+  foreach ($pillarData as $pillarId => $pillar) {
+    $StackedLabels[] = $pillar['pillar_name']; // Add pillar name
+
+    foreach ($pillar['sections'] as $index => $average) {
+        // Ensure there's a column for each section in each pillar
+        if (!isset($StackedData[$index])) {
+            $StackedData[$index] = [];
+        }
+
+        $StackedData[$index][] = $average; // Store section averages
+
+        // Collect section names
+        if (!isset($sectionNames[$index])) {
+            $sectionNames[$index] = "Section " . ($index + 1);
         }
     }
-
-    // Flatten the section names for the legend
-    foreach ($pillarData as $pillar) {
-        foreach ($pillar['sections'] as $index => $score) {
-            if (!isset($sectionNames[$index])) {
-                $sectionNames[] = "Section " . ($index + 1);
-            }
-        }
-    }
-// dd($StackedLabels);
-
-
-    foreach ($pillarData as $pillar) {
-        $radarLabels[] = $pillar['pillar_name'];
-        $radarSeriesData[] = round(array_sum($pillar['sections']) / count($pillar['sections']), 2);
-    }
+}
 
     $pillarDatas = [];
     // Iterate through the sections grouped by pillar_id
@@ -388,7 +398,7 @@ foreach ($questions as $question) {
     // Decode options for the question
     $options = json_decode($question->options);
 
-    // ✅ Fix: Fetch answers for the current question inside the loop
+
     $answers = Answer::where('question_id', $question->id)
         ->where('submission_id', $submission_id)
         ->get();
