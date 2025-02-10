@@ -53,7 +53,8 @@ class AnswerController extends Controller
             if (!$question) continue;
 
             $form = $question->form_id;
-
+            $answers_future = $request->answers_future[$sectionId][$index] ?? null;
+            // dd($answers_future);
             $answersd = Answer::create([
                 'section_id' => $sectionId,
                 'question_id' => $questionId,
@@ -61,10 +62,12 @@ class AnswerController extends Controller
                 'submission_id' => $submissionId,
                 'form_id' => $form,
                 'answer' => is_array($answer) ? json_encode($answer) : $answer,
+                'answers_future' => $answers_future,
+
             ]);
         }
     }
-
+// dd($request->all());
     // Store submission details
     if ($form) {
         $detais  = Details::create([

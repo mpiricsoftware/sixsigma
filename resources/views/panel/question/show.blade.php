@@ -3,29 +3,11 @@
 @section('title', 'Quiz')
 
 @section('vendor-style')
-    @vite([
-        'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
-        'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
-        'resources/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.scss',
-        'resources/assets/vendor/libs/select2/select2.scss',
-        'resources/assets/vendor/libs/@form-validation/form-validation.scss',
-        'resources/assets/vendor/libs/animate-css/animate.scss',
-        'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
-    ])
+    @vite(['resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss', 'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss', 'resources/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.scss', 'resources/assets/vendor/libs/select2/select2.scss', 'resources/assets/vendor/libs/@form-validation/form-validation.scss', 'resources/assets/vendor/libs/animate-css/animate.scss', 'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'])
 @endsection
 
 @section('vendor-script')
-    @vite([
-        'resources/assets/vendor/libs/moment/moment.js',
-        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
-        'resources/assets/vendor/libs/select2/select2.js',
-        'resources/assets/vendor/libs/@form-validation/popular.js',
-        'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
-        'resources/assets/vendor/libs/@form-validation/auto-focus.js',
-        'resources/assets/vendor/libs/cleavejs/cleave.js',
-        'resources/assets/vendor/libs/cleavejs/cleave-phone.js',
-        'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'
-    ])
+    @vite(['resources/assets/vendor/libs/moment/moment.js', 'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js', 'resources/assets/vendor/libs/select2/select2.js', 'resources/assets/vendor/libs/@form-validation/popular.js', 'resources/assets/vendor/libs/@form-validation/bootstrap5.js', 'resources/assets/vendor/libs/@form-validation/auto-focus.js', 'resources/assets/vendor/libs/cleavejs/cleave.js', 'resources/assets/vendor/libs/cleavejs/cleave-phone.js', 'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'])
 @endsection
 
 @section('page-script')
@@ -33,93 +15,180 @@
 @endsection
 
 @section('content')
-<div class="container mt-5">
+    <div class="container mt-5">
 
 
-  <form class="add-new-vendor pt-9" method="POST" action="{{ route('answer-list.store') }}" id="id" name="id">
-      @csrf
-      @foreach ($sections as $index => $section)
-          <div class="card mb-4" id="section-card-{{ $section->id }}" style="display: {{ $index == 0 ? 'block' : 'none' }};">
-              <div class="card-body text-center" style="height:50%; margin:7%; padding:5%">
-                  <h5 class="card-title" style="padding-top: 1%; color:#00a6d5;">{{ $section->section_name }}</h5>
-                  <p class="card-text me-1">{{ $section->section_description }}</p>
-                  <div class="card-body text-end" style="padding-top: 8%; padding-bottom:0%;">
-                      <a href="javascript:void(0);" class="btn btn-dark rounded-0" onclick="startQuiz({{ $section->id }})">Assessment</a>
-                  </div>
-              </div>
-          </div>
+        <form class="add-new-vendor pt-9" method="POST" action="{{ route('answer-list.store') }}" id="id" name="id">
+            @csrf
 
-          <div class="card mb-4" id="question-card-{{ $section->id }}" style="display: {{ $index == 0 ? 'none' : 'none' }};">
-              <div class="card-body" style="height:50%; margin:7%; padding:4%">
-                  <h5 class="text-end" style="color:#00a6d5;" id="section-name-dynamic-{{ $section->id }}">{{ $section->section_name }}</h5>
-                  <div id="questions-container-{{ $section->id }}" class="question">
-                      @foreach($questions->where('section_id', $section->id) as $qIndex => $q)
-                      <input type="hidden" name="question_ids[{{ $section->id }}][{{ $qIndex }}]" value="{{ $q->id }}">
-                          <div class="question" id="question_{{ $section->id }}_{{ $qIndex }}" style="display: {{ $qIndex == -1 ? 'block' : 'none' }}">
-                              <h6 class="font-weight-bold text-dark">{{ $q->question_text }}</h6>
-                              <div>
-                                  <a href="#guidance_{{ $section->id }}_{{ $qIndex }}" data-bs-toggle="collapse" class="text-primary" style="cursor: pointer;">&#9650; Click to see guidance</a>
-                                  <div id="guidance_{{ $section->id }}_{{ $qIndex }}" class="collapse show mt-2">
-                                      <p class="text-muted">{{ $q->question_description }}</p>
-                                  </div>
-                              </div>
-                              @if($q->type == 'text')
-                                  <input type="text" name="answers[{{ $section->id }}][{{ $qIndex }}]" class="form-control" placeholder="Enter your answer" value="{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}">
-                              @elseif($q->type == 'radio')
-                                  <div>
-                                      @foreach(json_decode($q->options) as $option)
-                                          <label>
-                                              <input type="radio" name="answers[{{ $section->id }}][{{ $qIndex }}]" value="{{ $option }}" {{ old('answers.' . $section->id . '.' . $qIndex) == $option || (isset($answers[$section->id][$qIndex]) && $answers[$section->id][$qIndex] == $option) ? 'checked' : '' }}>
-                                              {{ $option }}
-                                          </label><br>
-                                      @endforeach
-                                  </div>
-                              @elseif($q->type == 'checkbox')
-                                  <div>
-                                      @foreach(json_decode($q->options) as $option)
-                                          <label>
-                                              <input type="checkbox" name="answers[{{ $section->id }}][{{ $qIndex }}][]" value="{{ $option }}" {{ in_array($option, old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? [])) ? 'checked' : '' }}>
-                                              {{ $option }}
-                                          </label><br>
-                                      @endforeach
-                                  </div>
-                              @elseif($q->type == 'date')
-                                  <input type="date" name="answers[{{ $section->id }}][{{ $qIndex }}]" class="form-control" value="{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}">
-                              @elseif($q->type == 'file')
-                                  <input type="file" name="answers[{{ $section->id }}][{{ $qIndex }}]" class="form-control">
-                              @elseif($q->type == 'rating')
-                                  <div id="rating_{{ $q->id }}" class="rating" data-question-id="{{ $q->id }}">
-                                      <input type="hidden" name="answers[{{ $section->id }}][{{ $qIndex }}]" id="selectedRating_{{ $q->id }}" value="{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? 0) }}">
-                                      <span class="star" data-index="1" onclick="setRating({{ $q->id }}, 1)" onmouseover="highlightStars({{ $q->id }}, 1)" onmouseout="resetStars({{ $q->id }}, 1)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                      <span class="star" data-index="2" onclick="setRating({{ $q->id }}, 2)" onmouseover="highlightStars({{ $q->id }}, 2)" onmouseout="resetStars({{ $q->id }}, 2)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                      <span class="star" data-index="3" onclick="setRating({{ $q->id }}, 3)" onmouseover="highlightStars({{ $q->id }}, 3)" onmouseout="resetStars({{ $q->id }}, 3)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                      <span class="star" data-index="4" onclick="setRating({{ $q->id }}, 4)" onmouseover="highlightStars({{ $q->id }}, 4)" onmouseout="resetStars({{ $q->id }}, 4)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                      <span class="star" data-index="5" onclick="setRating({{ $q->id }}, 5)" onmouseover="highlightStars({{ $q->id }}, 5)" onmouseout="resetStars({{ $q->id }}, 5)" style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                  </div>
-                              @elseif($q->type == 'textarea')
-                                  <textarea name="answers[{{ $section->id }}][{{ $qIndex }}]" class="form-control" rows="4" placeholder="Enter your answer">{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}</textarea>
-                              @endif
-
+            @foreach ($sections as $index => $section)
+                <div class="card mb-4" id="section-card-{{ $section->id }}"
+                    style="display: {{ $index == 0 ? 'block' : 'none' }};">
+                    <div class="card-body text-center" style="height:50%; margin:7%; padding:5%">
+                        <h5 class="card-title" style="padding-top: 1%; color:#00a6d5;">{{ $section->section_name }}</h5>
+                        <p class="card-text me-1">{{ $section->section_description }}</p>
+                        <div class="card-body text-end" style="padding-top: 8%; padding-bottom:0%;">
+                            <a href="javascript:void(0);" class="btn btn-dark rounded-0"
+                                onclick="startQuiz({{ $section->id }})">Assessment</a>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
-                <div class="text-end" style="padding-top:7%; padding-bottom:0%;">
-                    <button type="button" class="btn btn-dark rounded-0" id="prev-btn{{ $section->id }}" onclick="showQuestion('{{ $section->id }}', 'prev')">Previous</button>
-                    <button type="button" class="btn rounded-0" style="background-color: #00a6d5" id="next-btn{{ $section->id }}" onclick="showQuestion('{{ $section->id }}', 'next')">Next</button>
-                    {{-- <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Submit</button> --}}
+
+                <div class="card mb-4" id="question-card-{{ $section->id }}"
+                    style="display: {{ $index == 0 ? 'none' : 'none' }};">
+
+                    <div class="card-body" style="height:50%; margin:7%; padding:4%">
+
+                        <!-- Pillar Name here -->
+                        <h5 class="text-end" style="color:#00a6d5;" id="section-name-dynamic-{{ $section->id }}">
+                            <span style="color: #69706e;">{{ $section->pillar->name }}</span> /
+                            {{ $section->section_name }}
+                        </h5>
+
+
+                        <div id="questions-container-{{ $section->id }}" class="question">
+                            @foreach ($questions->where('section_id', $section->id) as $qIndex => $q)
+                                <input type="hidden" name="question_ids[{{ $section->id }}][{{ $qIndex }}]"
+                                    value="{{ $q->id }}">
+                                <div class="question" id="question_{{ $section->id }}_{{ $qIndex }}"
+                                    style="display: {{ $qIndex == -1 ? 'block' : 'none' }};">
+                                    <h6 class="font-weight-bold text-dark">{{ $q->question_text }}</h6>
+
+                                    <div>
+                                        <a href="#guidance_{{ $section->id }}_{{ $qIndex }}"
+                                            data-bs-toggle="collapse" class="text-primary" style="cursor: pointer;">&#9650;
+                                            Click to see guidance</a>
+                                        <div id="guidance_{{ $section->id }}_{{ $qIndex }}"
+                                            class="collapse show mt-2">
+                                            <p class="text-muted">{{ $q->question_description }}</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Toggle Buttons -->
+                                    {{-- <div class="button-container mb-4 d-flex justify-content-center">
+                                        <button type="button" id="todayButton" class="btn btn-primary rounded-pill me-2"
+                                            onclick="showToday()">Today</button>
+                                        <button type="button" id="futureButton"
+                                            class="btn btn-outline-primary rounded-pill" onclick="showFuture()">Next Three
+                                            Years</button>
+                                    </div> --}}
+
+
+                                    @if ($q->type == 'text')
+                                        <input type="text" name="answers[{{ $section->id }}][{{ $qIndex }}]"
+                                            class="form-control" placeholder="Enter your answer"
+                                            value="{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}">
+                                    @elseif ($q->type == 'radio')
+                                        @php
+                                            $predefinedLabels = [
+                                                'Nascent',
+                                                'Stable',
+                                                'Maturing',
+                                                'Efficient',
+                                                'World Class',
+                                            ];
+                                            $backgroundColors = ['1a9cad', 'f47c9b', '2a6bb3', 'c64c8c', '079ff7'];
+                                            $options = json_decode($q->options, true) ?? [];
+                                        @endphp
+
+                                        <!-- Today Section -->
+                                        <div class="today-section">
+                                            <label class="font-weight-bold" style="padding-left:13% "><strong>Today</strong></label>
+                                            <label class="font-weight-bold" style="padding-left: 70%"><strong>Next Three Year</strong></label>
+                                            <div class="options-container mt-2">
+                                                @foreach ($predefinedLabels as $index => $label)
+                                                    <div class="d-flex align-items-center mb-3 rounded shadow-sm"
+                                                        style="border: 1px solid #ced4da; padding: 10px;">
+
+                                                        <div class="p-3 flex-grow-1 d-flex align-items-center"
+                                                            style="min-height: 30px;
+                                                                     background-color: #f8f9fa;
+                                                                     border-radius: 0 5px 5px 0;">
+                                                            @if (isset($options[$index]))
+                                                                <label class="d-flex align-items-center w-100 mb-3">
+                                                                    <input type="radio"
+                                                                        name="answers[{{ $section->id }}][{{ $qIndex }}]"
+                                                                        value="{{ $options[$index] }}"
+                                                                        {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }}>&nbsp;<div class="p-3 rounded text-left"
+                                                                        style="background-color: #{{ $backgroundColors[$index] }};
+                                                                                 color: white;
+                                                                                 font-weight: bold;
+                                                                                 min-width: 150px;
+                                                                                 text-align: center;">
+                                                                        {{ $label }}
+                                                                    </div>
+                                                                    <span
+                                                                        style="word-wrap: break-word; padding-left: 10px;">{{ $options[$index] }}</span>
+                                                                </label>
+
+                                                                <label class="d-flex w-10">
+                                                                    <input type="radio"
+                                                                        name="answers_future[{{ $section->id }}][{{ $qIndex }}]"
+                                                                        value="{{ $options[$index] }}"
+                                                                        {{ old('answers_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }}>
+
+                                                                @else
+                                                                    <span class="text-muted">N/A</span>
+                                                                </label>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @elseif ($q->type == 'checkbox')
+                                        <div>
+                                            @foreach (json_decode($q->options) as $option)
+                                                <label>
+                                                    <input type="checkbox"
+                                                        name="answers[{{ $section->id }}][{{ $qIndex }}][]"
+                                                        value="{{ $option }}"
+                                                        {{ in_array($option, old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? [])) ? 'checked' : '' }}>
+                                                    {{ $option }}
+                                                </label><br>
+                                            @endforeach
+                                        </div>
+                                    @elseif ($q->type == 'date')
+                                        <input type="date" name="answers[{{ $section->id }}][{{ $qIndex }}]"
+                                            class="form-control"
+                                            value="{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}">
+                                    @elseif ($q->type == 'file')
+                                        <input type="file" name="answers[{{ $section->id }}][{{ $qIndex }}]"
+                                            class="form-control">
+                                    @elseif ($q->type == 'textarea')
+                                        <textarea name="answers[{{ $section->id }}][{{ $qIndex }}]" class="form-control" rows="4"
+                                            placeholder="Enter your answer">{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}</textarea>
+                                    @endif
+                                </div>
+
+                                <!-- Progress Bar -->
+                                <div style="width: 100%; background-color: #f3f3f3; border-radius: 5px; overflow: hidden; margin: 10px 0;">
+                                  <div id="progress" style="height: 20px; background-color: #4caf50; width: 0; border-radius: 5px; transition: width 0.4s ease-in-out;"></div>
+                              </div>
+
+                            @endforeach
+                        </div>
+                        <div class="text-end" style="padding-top:7%; padding-bottom:0%;">
+                            <button type="button" class="btn btn-dark rounded-0" id="prev-btn{{ $section->id }}"
+                                onclick="showQuestion('{{ $section->id }}', 'prev')">Previous</button>
+                            <button type="button" class="btn rounded-0" style="background-color: #00a6d5"
+                                id="next-btn{{ $section->id }}"
+                                onclick="showQuestion('{{ $section->id }}', 'next')">Next</button>
+                            {{-- <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Submit</button> --}}
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
+                    <p class="card-text">You have completed the quiz. Well done!</p>
+                    <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Save your
+                        response</button>
                 </div>
             </div>
-        </div>
-    @endforeach
-    <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
-        <div class="card-body text-center">
-            <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
-            <p class="card-text">You have completed the quiz. Well done!</p>
-            <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Save your response</button>
-        </div>
-    </div>
 
-    {{-- <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
+            {{-- <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
         <div class="card-body text-center">
             <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
             <p class="card-text">You have completed the quiz. Well done!</p>
@@ -129,9 +198,13 @@
 
 
 
-</form>
+        </form>
 
 
-</div>
+    </div>
+
 
 @endsection
+
+
+
