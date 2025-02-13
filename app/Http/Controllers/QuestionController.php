@@ -95,9 +95,9 @@ class QuestionController extends Controller
     $sections = Section::where('form_id',$form->id)->get();
     // dd($sections);
     $questions = Question::where('form_id',$form->id)->get();
-    // dd($questions);
+    $totalQuestions = Question::where('form_id', $form->id)->count();
 
-    return view('panel.question.show',compact('questions','sections','form'));
+    return view('panel.question.show',compact('questions','sections','form','totalQuestions'));
   }
 
   public function print($id, $user_id)

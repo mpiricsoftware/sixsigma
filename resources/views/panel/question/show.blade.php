@@ -50,8 +50,12 @@
                             @foreach ($questions->where('section_id', $section->id) as $qIndex => $q)
                                 <input type="hidden" name="question_ids[{{ $section->id }}][{{ $qIndex }}]"
                                     value="{{ $q->id }}">
-                                <div class="question" id="question_{{ $section->id }}_{{ $qIndex }}"
-                                    style="display: {{ $qIndex == -1 ? 'block' : 'none' }};">
+                                    <div class="question"
+                                    id="question_{{ $section->id }}_{{ $qIndex }}"
+                                    data-section-id="{{ $section->id }}"
+                                    data-question-id="{{ $q->id }}"
+                                    style="display: {{ $qIndex == 0 ? 'block' : 'none' }};">
+
                                     <h6 class="font-weight-bold text-dark">{{ $q->question_text }}</h6>
 
                                     <div>
@@ -63,17 +67,6 @@
                                             <p class="text-muted">{{ $q->question_description }}</p>
                                         </div>
                                     </div>
-
-                                    <!-- Toggle Buttons -->
-                                    {{-- <div class="button-container mb-4 d-flex justify-content-center">
-                                        <button type="button" id="todayButton" class="btn btn-primary rounded-pill me-2"
-                                            onclick="showToday()">Today</button>
-                                        <button type="button" id="futureButton"
-                                            class="btn btn-outline-primary rounded-pill" onclick="showFuture()">Next Three
-                                            Years</button>
-                                    </div> --}}
-
-
                                     @if ($q->type == 'text')
                                         <input type="text" name="answers[{{ $section->id }}][{{ $qIndex }}]"
                                             class="form-control" placeholder="Enter your answer"
@@ -93,49 +86,72 @@
 
                                         <!-- Today Section -->
                                         <div class="today-section">
-                                            <label class="font-weight-bold" style="padding-left:13% "><strong>Today</strong></label>
-                                            <label class="font-weight-bold" style="padding-left: 70%"><strong>Next Three Year</strong></label>
-                                            <div class="options-container mt-2">
-                                                @foreach ($predefinedLabels as $index => $label)
-                                                    <div class="d-flex align-items-center mb-3 rounded shadow-sm"
-                                                        style="border: 1px solid #ced4da; padding: 10px;">
+                                          <label class="font-weight-bold" style="padding-right:1%"><strong>Today</strong></label>
+                                          <label class="font-weight-bold" style="padding-left:82%"><strong>Next Three Year</strong></label>
+                                          <div class="options-container mt-2">
+                                              @foreach ($predefinedLabels as $index => $label)
+                                                  <div class="d-flex align-items-center mb-3 rounded shadow-sm"
+                                                      style="border: 1px solid #ced4da; padding: 10px;">
 
-                                                        <div class="p-3 flex-grow-1 d-flex align-items-center"
+                                                      <div class="p-3 flex-grow-1 d-flex align-items-center"
                                                             style="min-height: 30px;
                                                                      background-color: #f8f9fa;
                                                                      border-radius: 0 5px 5px 0;">
-                                                            @if (isset($options[$index]))
-                                                                <label class="d-flex align-items-center w-100 mb-3">
-                                                                    <input type="radio"
-                                                                        name="answers[{{ $section->id }}][{{ $qIndex }}]"
-                                                                        value="{{ $options[$index] }}"
-                                                                        {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }}>&nbsp;<div class="p-3 rounded text-left"
-                                                                        style="background-color: #{{ $backgroundColors[$index] }};
-                                                                                 color: white;
-                                                                                 font-weight: bold;
-                                                                                 min-width: 150px;
-                                                                                 text-align: center;">
-                                                                        {{ $label }}
-                                                                    </div>
-                                                                    <span
-                                                                        style="word-wrap: break-word; padding-left: 10px;">{{ $options[$index] }}</span>
-                                                                </label>
+                                                          @if (isset($options[$index]))
+                                                              <label class="d-flex align-items-center w-100 mb-3">
+                                                                  <div class="radio-box"
+                                                                      style="border: 2px solid #3498db;
+                                                                             padding: 10px;
+                                                                             background-color: #f8f9fa;
+                                                                             border-radius: 10px;
+                                                                             width: 40px;
+                                                                             height: 40px;
+                                                                             display: flex;
+                                                                             justify-content: center;
+                                                                             align-items: center;
+                                                                             margin-right: 10px;">
+                                                                      <input type="radio"
+                                                                          name="answers[{{ $section->id }}][{{ $qIndex }}]"
+                                                                          value="{{ $options[$index] }}"
+                                                                          {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);">
+                                                                  </div>
+                                                                  <div class="p-3 rounded text-left"
+                                                                      style="background-color: #{{ $backgroundColors[$index] }};
+                                                                             color: white;
+                                                                             font-weight: bold;
+                                                                             min-width: 150px;
+                                                                             text-align: center;">
+                                                                      {{ $label }}
+                                                                  </div>
+                                                                  <span style="word-wrap: break-word; padding-left: 10px;">{{ $options[$index] }}</span>
+                                                              </label>
+                                                              <label class="d-flex w-10">
+                                                                  <div class="radio-box"
+                                                                      style="border: 2px solid #3498db;
+                                                                             padding: 10px;
+                                                                             background-color: #f8f9fa;
+                                                                             border-radius: 10px;
+                                                                             width: 40px;
+                                                                             height: 40px;
+                                                                             display: flex;
+                                                                             justify-content: center;
+                                                                             align-items: center;">
+                                                                      <input type="radio"
+                                                                          name="answers_future[{{ $section->id }}][{{ $qIndex }}]"
+                                                                          value="{{ $options[$index] }}"
+                                                                          {{ old('answers_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);">
+                                                                  </div>
+                                                              </label>
+                                                          @else
+                                                              <span class="text-muted">N/A</span>
+                                                          @endif
+                                                      </div>
+                                                  </div>
+                                              @endforeach
+                                          </div>
+                                      </div>
 
-                                                                <label class="d-flex w-10">
-                                                                    <input type="radio"
-                                                                        name="answers_future[{{ $section->id }}][{{ $qIndex }}]"
-                                                                        value="{{ $options[$index] }}"
-                                                                        {{ old('answers_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }}>
 
-                                                                @else
-                                                                    <span class="text-muted">N/A</span>
-                                                                </label>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
                                     @elseif ($q->type == 'checkbox')
                                         <div>
                                             @foreach (json_decode($q->options) as $option)
@@ -160,14 +176,24 @@
                                             placeholder="Enter your answer">{{ old('answers.' . $section->id . '.' . $qIndex, $answers[$section->id][$qIndex] ?? '') }}</textarea>
                                     @endif
                                 </div>
-
-                                <!-- Progress Bar -->
-                                <div style="width: 100%; background-color: #f3f3f3; border-radius: 5px; overflow: hidden; margin: 10px 0;">
-                                  <div id="progress" style="height: 20px; background-color: #4caf50; width: 0; border-radius: 5px; transition: width 0.4s ease-in-out;"></div>
-                              </div>
-
                             @endforeach
                         </div>
+
+
+                    <div id="progress-container-{{ $form->id }}"
+                        style="width: 100%; background-color: #e0e0e0; border-radius: 5px; height: 20px; margin-bottom: 10px;
+                               box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+
+                        <div id="progress-bar-{{ $form->id }}"
+                            style="height: 100%; width:0; background-color: #71858b; border-radius: 5px;
+                                   transition: width 0.4s ease-in-out; box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);">
+                        </div>
+                    </div>
+                    <p id="question-progress-{{ $form->id }}"> {{ $questions->count() }}</p>
+
+
+
+
                         <div class="text-end" style="padding-top:7%; padding-bottom:0%;">
                             <button type="button" class="btn btn-dark rounded-0" id="prev-btn{{ $section->id }}"
                                 onclick="showQuestion('{{ $section->id }}', 'prev')">Previous</button>
@@ -187,21 +213,13 @@
                         response</button>
                 </div>
             </div>
-
-            {{-- <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
-        <div class="card-body text-center">
-            <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
-            <p class="card-text">You have completed the quiz. Well done!</p>
-           <a href="{{ route('home')}}" class="btn btn-dark rounded-0">Restart Quiz</a>
-        </div>
-    </div> --}}
-
-
-
         </form>
 
 
     </div>
+
+
+
 
 
 @endsection

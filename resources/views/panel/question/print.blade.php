@@ -61,16 +61,18 @@
                                             <td style="padding: 10px; text-align: left;">
                                                 <strong>{{ $q->question_text }}</strong>
                                             </td>
-
+                                            @foreach ($userAnswers as $userAnswer)
                                             @if ($q->type == 'radio')
-                                                @foreach (json_decode($q->options) as $option)
-                                                    <td style="text-align: center;"
-                                                        name="answers[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ $option }}">
-                                                        {{ $option }}
-                                                    </td>
-                                                @endforeach
-                                            @endif
+                                            @foreach (json_decode($q->options) as $option)
+                                                <td style="text-align: center;"
+                                                    name="answers[{{ $s->id }}][{{ $q->id }}]"
+                                                    value="{{ $option }}"
+                                                    class="@if($userAnswer->answer == $option) selected @endif">
+                                                    {{ $option }}
+                                                </td>
+                                            @endforeach
+                                        @endif
+                                      @endforeach
 
                                             @if ($q->type == 'checkbox')
                                                 @foreach (json_decode($q->options) as $option)
@@ -336,6 +338,15 @@
             border-radius: 12px;
             text-align: center;
         }
+        .selected {
+    background-color: #d3d3d3;
+    border: 2px solid #d3d3d3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+}
+
+
+
     </style>
 
     <script>
@@ -520,6 +531,12 @@
                    padding-bottom:20px;
                   page-break-after: avoid; /* Ensure section title doesn't get separated */
                 }
+                   .selected {
+    background-color: #d3d3d3;
+    border: 2px solid #d3d3d3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+}
 }
 
         </style>
