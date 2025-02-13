@@ -13,7 +13,8 @@ class answer extends Model
       'section_id',
       'answer',
       'form_id',
-      'submission_id'
+      'submission_id',
+      'answers_future'
     ];
     public function user()
     {
