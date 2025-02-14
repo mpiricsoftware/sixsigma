@@ -108,16 +108,60 @@ $details = $query->get();
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+        $form = $request->id ?? null;
+        $submissionId = now()->timestamp . '-' . $user->id;
 
+        if ($request->has('details_id')) {
+            $details = Details::find($request->details_id);
+            if ($details) {
+                // Update the existing record
+                $details->update([
+                    'comment' => $request->comment,
+
+                ]);
+            } else {
+                return back()->with('error', 'Details not found');
+            }
+        } else {
+            // Create a new record
+            $details = Details::create([
+                'name' => $request->name,
+                'lastname' => $request->lastname,
+                'company' => $request->company,
+                'date_time' => $request->date_time,
+                'email' => $request->email,
+                'Phone_no' => $request->Phone_no,
+                'company_size' => $request->company_size,
+                'form_name' => $request->form_name,
+                'form_id' => $form,
+                'user_id' => $user->id,
+                'submission_id' => $submissionId,
+                'comment' => $request->comment,
+            ]);
+        }
+
+        if ($form) {
+            $formData = Form::find($form);
+            if ($formData) {
+                return redirect()->route('home', ['slug' => $formData->slug]);
+            }
+        }
+
+        return back()->with('error', 'Form not found');
     }
+
+
+
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
 
+        return view('panel.form.details');
     }
 
     /**
@@ -142,5 +186,11 @@ $details = $query->get();
     public function destroy(string $id)
     {
         //
+    }
+    public function comment(string $id)
+    {
+      $details = details::where('id',$id)->get();
+      // dd($details);
+      return view('panel.form.details',compact('details'));
     }
 }
