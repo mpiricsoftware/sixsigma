@@ -85,14 +85,21 @@ class FormController extends Controller
     // dd($request->all());
     $user_id = Auth::user()->id;
     $authID = Auth::id();
+    $filePath = null;
+
+    // Check if a file is uploaded and store it
+    if ($request->hasFile('file')) {
+        $filePath = $request->file('file')->store('uploads', 'public');
+    }
     $form = Form::create([
       'name' => $request->name,
       'description' => $request->description,
       'slug' => $request->slug,
       'user_id' => $user_id,
+      'file' => $filePath,
     ]);
 
-
+dd($filePath);
 
     // Return a JSON response with success message
     return response()->json([

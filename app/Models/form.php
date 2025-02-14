@@ -12,6 +12,7 @@ class form extends Model
        'user_id',
        'input_id',
        'name',
+       'file',
        'description',
        'slug'
     ];

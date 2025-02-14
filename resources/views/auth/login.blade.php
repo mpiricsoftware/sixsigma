@@ -111,8 +111,8 @@ $customizerHidden = 'customizer-hide';
             <i class="tf-icons ri-facebook-fill"></i>
           </a> --}}
 
-          <a href="{{ route('login.twitter') }}" class="btn btn-icon rounded-circle btn-text-twitter">
-            <i class="tf-icons ri-twitter-fill"></i>
+          {{-- <a href="{{ route('login.twitter') }}" class="btn btn-icon rounded-circle btn-text-twitter">
+            <i class="tf-icons ri-twitter-fill"></i> --}}
           </a>
 
           {{-- <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-github">

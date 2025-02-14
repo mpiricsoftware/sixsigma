@@ -184,7 +184,7 @@
                         </div>
                         @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                             <div class="mb-5">
-                                <div class="form-check mt-2 @error('terms') is-invalid @enderror">
+                                {{-- <div class="form-check mt-2 @error('terms') is-invalid @enderror">
                                     <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox"
                                         id="terms" name="terms" />
                                     <label class="form-check-label" for="terms" style="color:#2129bd">
@@ -193,6 +193,15 @@
                                             style="color: #2129bd">privacy policy</a> &
                                         <a href="{{ route('terms.show') }}" target="_blank"
                                             style="color: #2129bd">terms</a>
+                                    </label>
+                                </div> --}}
+                                <div class="form-check mt-2 @error('terms') is-invalid @enderror">
+                                    <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox"
+                                        id="terms" name="terms" />
+                                    <label class="form-check-label" for="terms" style="color:#2129bd">
+                                        I agree to
+                                        <a href="#" style="color: #2129bd">privacy policy</a> &
+                                        <a href="#" style="color: #2129bd">terms</a>
                                     </label>
                                 </div>
                                 @error('terms')
@@ -220,22 +229,22 @@
                     </div>
 
                     <div class="d-flex justify-content-center gap-2">
-                        <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-facebook">
-                            <i class="tf-icons ri-facebook-fill"></i>
-                        </a>
-
-                        <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-twitter">
-                            <i class="tf-icons ri-twitter-fill"></i>
-                        </a>
-
-                        {{-- <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-github">
-                            <i class="tf-icons ri-github-fill"></i>
+                        {{-- <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-facebook">
+                          <i class="tf-icons ri-facebook-fill"></i>
                         </a> --}}
-
-                        <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-google-plus">
-                            <i class="tf-icons ri-google-fill"></i>
+              
+                        {{-- <a href="{{ route('login.twitter') }}" class="btn btn-icon rounded-circle btn-text-twitter">
+                          <i class="tf-icons ri-twitter-fill"></i> --}}
                         </a>
-                    </div>
+              
+                        {{-- <a href="javascript:;" class="btn btn-icon rounded-circle btn-text-github">
+                          <i class="tf-icons ri-github-fill"></i>
+                        </a> --}}
+              
+                        <a href="{{ route('login.google') }}" class="btn btn-icon rounded-circle btn-text-google-plus">
+                          <i class="tf-icons ri-google-fill"></i>
+                        </a>
+                      </div>
                 </div>
             </div>
             <!-- /Register -->

@@ -89,6 +89,13 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="name">
                     <label for="name">Name</label>
                   </div></div>
+
+                  <div class="col-md-12">
+                    <div class="form-floating form-floating-outline">
+                      <textarea name="description" id="description" class="form-control" placeholder="Enter Pillar Description"></textarea>
+                      <label for="description">Description</label>
+                    </div>
+                  </div>
                    <div class="col-12 text-end">
                      <button type="submit" class="btn btn-dark rounded-0">Submit</button>
                    </div>

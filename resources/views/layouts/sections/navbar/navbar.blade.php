@@ -449,7 +449,7 @@ $navbarDetached = ($navbarDetached ?? '');
                   </a>
                 </li>
               @endif
-              <li>
+              {{-- <li>
                 <a class="dropdown-item" href="{{url('pages/account-settings-billing')}}">
                   <span class="d-flex align-items-center align-middle">
                     <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
@@ -457,7 +457,7 @@ $navbarDetached = ($navbarDetached ?? '');
                     <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger">4</span>
                   </span>
                 </a>
-              </li>
+              </li> --}}
 
               @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
                 <li>

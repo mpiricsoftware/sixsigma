@@ -101,7 +101,12 @@
                        <label for="description">Description</label>
                      </div>
                    </div>
-
+                   <div class="col-12">
+                    <div class="form-floating form-floating-outline">
+                      <input type="file" class="form-control" id="file" name="file">
+                      <label for="file">Image</label>
+                    </div>
+                  </div>
                    <div class="col-12 text-end">
                      <button type="submit" class="btn btn-dark rounded-0">Submit</button>
                    </div>
