@@ -10,7 +10,8 @@ class pillar extends Model
     protected $fillable = [
       'user_id',
       'form_id',
-      'name'
+      'name',
+      'description'
     ];
 
     public function form()

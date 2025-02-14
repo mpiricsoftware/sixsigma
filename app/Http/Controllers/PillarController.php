@@ -84,7 +84,8 @@ class PillarController extends Controller
       $pillar = pillar::create([
         'form_id' => $form,
         'user_id' => $user_id,
-        'name' =>$request->name ?? ''
+        'name' =>$request->name ?? '',
+        'description' =>$request->description
       ]);
       // dd($request->all());
     }

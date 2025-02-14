@@ -148,7 +148,7 @@
                                                                     <div class="progress-value-checkbox"
                                                                         style="left: calc(({{ $index }} / {{ count($options) - 1 }}) * 100%);">
                                                                         @if (in_array($option, $selectedOptions))
-                                                                            {{ 'Our Overall Maturity Level' }}
+                                                                            {{ 'Current Level' }}
                                                                         @endif
                                                                     </div>
                                                                 @endforeach
@@ -165,7 +165,11 @@
                                                             <div class="progress-bar">
                                                                 <div class="progress-value"
                                                                     style="left: calc(({{ array_search($userAnswer->answer, json_decode($q->options)) }} / 5) * 100%);">
-                                                                    {{ 'Our Overall Maturity Level' }}
+                                                                    {{ 'Current Level' }}
+                                                                </div>
+                                                                <div class="progress-ansvalue"
+                                                                    style="left: calc(({{ array_search($userAnswer->answers_future, json_decode($q->options)) }} / 5) * 100%);">
+                                                                    {{ 'After Three Year' }}
                                                                 </div>
                                                             </div>
                                                             <div>
@@ -278,7 +282,7 @@
             color: white;
             font-size: 14px;
             white-space: nowrap;
-            padding: 0 5px;
+            padding:0px 20px 0px 20px;
             transition: left 0.3s ease;
         }
 
@@ -344,13 +348,29 @@
             border-radius: 12px;
             text-align: center;
         }
-        .selected {
+        .progress-ansvalue{
+          position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            transform: translateX(40%);
+            background-color: #244ed8;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 14px;
+            white-space: nowrap;
+            padding:0px 30px 0px 30px;
+            transition: left 0.3s ease;
+        }
+        /* .selected {
     background-color: #d3d3d3;
     border: 2px solid #d3d3d3;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
 
-}
+} */
 .comment {
     margin-top: 20px;
     padding: 15px 20px;
@@ -487,7 +507,7 @@
                     color: white;
                     font-size: 12px;
                     white-space: nowrap;
-                    padding: 0 3px;
+                     padding:0px 20px 0px 20px;
                     transition: left 0.3s ease;
                 }
                 .section {
@@ -559,12 +579,7 @@
                    padding-bottom:20px;
                   page-break-after: avoid; /* Ensure section title doesn't get separated */
                 }
-                   .selected {
-    background-color: #d3d3d3;
-    border: 2px solid #d3d3d3;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
-}
+
 }
 .comment {
     width: 100%;
@@ -577,6 +592,22 @@
     border-radius: 5px;
     background: #f9f9f9;
 }
+     .progress-ansvalue{
+         position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 15px;
+                     transform: translateX(10%);
+                   background-color: #244ed8;
+                    border-radius: 10px;
+                    text-align: center;
+                    line-height: 15px;
+                    color: white;
+                    font-size: 12px;
+                    white-space: nowrap;
+                     padding: 0px 20px 0px 20px;
+                    transition: left 0.3s ease;
+        }
 
 @media print {
     .comment {

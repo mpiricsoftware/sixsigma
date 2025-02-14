@@ -239,6 +239,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('section',[SectionController::class,'index']);
     Route::get('chart',[ChartController::class,'index']);
     Route::get('avg/{id}/{user_id}/{details_id}',[ChartController::class,'avg'])->name('avg');
+
     Route::resource('chart-list',ChartController::class);
     Route::resource('pillar-list',PillarController::class);
     Route::get('pillar',[PillarController::class,'index']);
