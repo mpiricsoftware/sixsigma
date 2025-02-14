@@ -69,13 +69,14 @@ class AnswerController extends Controller
     }
 // dd($request->all());
     // Store submission details
-    if ($form) {
-        $detais  = Details::create([
-            'user_id' => $user->id,
-            'form_id' => $form,
-            'submission_id' => $submissionId,
-        ]);
-    }
+    // if ($form) {
+    //     $detais  = Details::create([
+    //         'user_id' => $user->id,
+    //         'form_id' => $form,
+    //         'submission_id' => $submissionId,
+
+    //     ]);
+    // }
 
     return view("panel.question.view", compact('form', 'user'));
 }

@@ -9,7 +9,16 @@ class Details extends Model
     protected $fillable = [
       'user_id',
       'form_id',
-      'submission_id'
+      'submission_id',
+      'comment',
+      'name',
+      'lastname',
+      'company',
+      'date_time',
+      'email',
+      'Phone_no',
+      'company_size',
+      'form_name'
     ];
 
     public function user()

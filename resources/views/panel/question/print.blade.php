@@ -202,10 +202,16 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+
                     </div>
                 @endif
 
             @endforeach
+            <div class="comment">
+              <p>Assessment Comments: </p>{{ $comment ?? '' }}
+          </div>
+
         </div>
 
         <div class="text-center" style="padding-bottom: 2%; padding-block-end: 2%">
@@ -214,7 +220,7 @@
     </div>
 
     <style>
-        .card-body {
+            .card-body {
             padding: 40px;
             line-height: 1.6;
             font-size: 14pt;
@@ -343,7 +349,29 @@
     border: 2px solid #d3d3d3;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+
 }
+.comment {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: #f1f1f1; /* Softer gray */
+    border-radius: 8px;
+    font-size: 16px;
+    color: #000000;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Smooth shadow */
+    text-align: center;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.comment p {
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #00a6d5;
+}
+
 
 
 
@@ -538,6 +566,38 @@
     transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
 }
 }
+.comment {
+    width: 100%;
+    max-width: 800px; /* Adjust based on your layout */
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 14px;
+    text-align: justify;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+@media print {
+    .comment {
+        page-break-inside: avoid;
+         padding-top:20px;
+        font-size: 12px;
+        width: 100%;
+        max-width: 100%;
+
+    }
+        .comment p{
+
+        font-size: 12px;
+        width: 100%;
+        max-width: 100%;
+        color: #00a6d5;
+         font-weight: bold;
+
+    }
+}
+
 
         </style>
     `);

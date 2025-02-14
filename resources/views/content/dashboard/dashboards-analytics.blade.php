@@ -9,7 +9,7 @@
             <div class="col-lg-8">
                 <div class="card mb-8">
                     <div class="d-flex flex-column align-items-center">
-                      <a href="{{ url('/home',['slug' => $forms->slug]) }}">
+                      <a href="{{ url('/info',['slug' => $forms->slug]) }}">
                             <img src="{{ asset('assets/img/logo/1.png') }}" class="img-fluid mb-2" alt="Image 1" style="border-radius:10px">
                         </a>
                     </div>
@@ -37,7 +37,7 @@
             <div class="col-lg-8">
                 <div class="card mb-8">
                     <div class="d-flex flex-column align-items-center">
-                      <a href="{{ url('/home',['slug' => $forms->slug]) }}">
+                      <a href="{{ url('/info',['slug' => $forms->slug]) }}">
                             <img src="{{ asset('assets/img/logo/1.png') }}" class="img-fluid mb-2" alt="Image 1" style="border-radius:10px">
                         </a>
                     </div>

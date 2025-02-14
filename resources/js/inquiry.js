@@ -5,7 +5,7 @@ $(function ()
     // alert("HIIII");
     var dt_form = dataTableform.DataTable({
       processing: true,
-      serverSide: false,
+      serverSide: true,
       ajax: {
         url: baseUrl + 'inquiry-list'
       },

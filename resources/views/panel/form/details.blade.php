@@ -50,8 +50,40 @@
       </table>
   </div>
 </div>
+
+<div class="modal fade" id="addcommentModal" tabindex="-1" aria-modal="true" aria-labelledby="addcommentModalLabel" role="dialog">
+  <div class="modal-dialog modal-lg modal-simple">
+      <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-body p-0">
+              <div class="text-center mb-6">
+                  <h4 class="title mb-2" id="addcommentModalLabel">Add form</h4>
+              </div>
+              <form id="addformcomment" class="row g-4" method="POST" action="{{route('details-list.store')}}">
+                @csrf
+                <input type="hidden" name="details_id" id="details_id" value="{{ $id ?? '' }}">
+
+
+                   <div class="col-md-12">
+                    <div class="form-floating form-floating-outline">
+                      <textarea name="comment" id="comment" class="form-control">{{ old('comment', $details->comment ?? '') }}</textarea>
+                      <label for="comment">Comment</label>
+                    </div>
+                  </div>
+
+                   <div class="col-12 text-end">
+                     <button type="submit" class="btn btn-dark rounded-0">Submit</button>
+                   </div>
+
+                 </form>
+          </div>
+      </div>
+  </div>
+</div>
+
 @endsection
 <script>
+
   var printRoute = "{{ route('dprint', ['id' => ':id']) }}";
   var chart = "{{ route('avg', ['id' => ':id', 'user_id' => ':user_id', 'details_id' => ':details_id']) }}";
 </script>

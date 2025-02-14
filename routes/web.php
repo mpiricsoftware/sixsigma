@@ -221,11 +221,13 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::resource('question-list',QuestionController::class);
     Route::get('details',[DetailsController::class,'index']);
     Route::resource('details-list',DetailsController::class);
+    Route::get('/comment/{id}',[DetailsController::class,'comment'])->name('comment');
     // Route::get('define/{sectionId}', [QuestionController::class, 'define'])->name('define');
     Route::get('answer',[AnswerController::class,'index']);
     Route::resource('answer-list',AnswerController::class);
     Route::get('/get-questions/{sectionId}', [AnswerController::class, 'getQuestions']);
-    Route::get('/home/{slug}',[QuestionController::class,'home'])->name('dashboard-analytics');
+    Route::get('/home/{slug}',[QuestionController::class,'home'])->name('home');
+    Route::get('/info/{slug}',[QuestionController::class,'info'])->name('dashboard-analytics');
     Route::get('/print/{id}/{user_id}',[QuestionController::class,'print'])->name('print');
     Route::get('/dprint/{id}',[QuestionController::class,'dprint'])->name('dprint');
     Route::get('inquiry',[InquiryController::class,'index']);

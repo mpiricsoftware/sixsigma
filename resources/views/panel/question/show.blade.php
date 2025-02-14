@@ -16,8 +16,6 @@
 
 @section('content')
     <div class="container mt-5">
-
-
         <form class="add-new-vendor pt-9" method="POST" action="{{ route('answer-list.store') }}" id="id" name="id">
             @csrf
 
