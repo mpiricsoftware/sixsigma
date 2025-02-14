@@ -18,7 +18,7 @@ return [
     'navbarType' => 'sticky', // options[String]: 'sticky', 'static', 'hidden' (Only for vertical Layout)
     'footerFixed' => false, // options[Boolean]: false(default), true // Footer Fixed
     'menuFixed' => true, // options[Boolean]: true(default), false // Layout(menu) Fixed (Only for vertical Layout)
-    'menuCollapsed' => false, // options[Boolean]: false(default), true // Show menu collapsed, (Only for vertical Layout)
+    'menuCollapsed' => true, // options[Boolean]: false(default), true // Show menu collapsed, (Only for vertical Layout)
     'headerType' => 'fixed', // options[String]: 'static', 'fixed' (for horizontal layout only)
     'showDropdownOnHover' => true, // true, false (for horizontal layout only)
     'customizerControls' => [
