@@ -4,7 +4,7 @@
       "name": "Dashboards",
       "icon": "menu-icon tf-icons ri-home-smile-line",
       "slug": "dashboard",
-      "role": ["Super Admin","Admin"],
+      "role": [],
       "submenu": [
         {
           "url": "app/ecommerce/dashboard",
@@ -20,7 +20,7 @@
           "url": "/",
           "name": "Dashboards",
           "slug": "dashboard-analytics",
-          "role": ["Super Admin","Admin"]
+          "role": []
         },
         {
           "url": "/",
@@ -31,7 +31,45 @@
           "url": "app/academy/dashboard",
           "name": "Academy",
           "slug": "app-academy-dashboard"
-        },
+        }        
+      ]
+    },
+    {
+      "url": "/",
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons ri-home-smile-line",
+      "slug": "dashboard-analytics",
+      "role": ["Super Admin","Admin"]
+    },
+    {
+      "url":"user-management",
+      "name":"User-management",
+      "icon": "menu-icon tf-icons ri-mail-open-line",
+      "slug":"dashboard-user-management",
+      "role":["Super Admin","Admin"]
+    },
+    {
+      "url": "inquiry",
+      "name": "Inquiry",
+      "icon": "menu-icon tf-icons ri-mail-open-line",
+      "slug": "inquiry",
+      "role": ["Admin","Super Admin"]
+
+    },
+    {
+      "url": "details",
+      "name": "Form Details",
+      "icon": "menu-icon tf-icons ri-mail-open-line",
+      "slug": "details",
+      "role": ["Admin","Super Admin"]
+
+    },
+    {
+      "name": "Form Management",
+      "icon": "menu-icon tf-icons ri-layout-2-line",
+      "slug": "layouts",
+      "role":["Super Admin","Admin"],
+      "submenu": [
         {
           "url": "form",
           "name":"Form Master",
@@ -57,34 +95,12 @@
           "role":[""]
         },
         {
-          "url":"user-management",
-          "name":"User-management",
-          "slug":"dashboard-user-management",
-          "role":["Super Admin","Admin"]
-        },
-        {
-          "url": "inquiry",
-          "name": "Inquiry",
-          "slug": "inquiry",
-          "role": ["Admin","Super Admin"]
-
-        },
-        {
-          "url": "details",
-          "name": "Form Details",
-          "slug": "details",
-          "role": ["Admin","Super Admin"]
-
-        },
-        {
           "url": "pillar",
           "name": "Form pillar",
-          "slug": "pillar",
+          "slug": "dashboard-pillar",
           "role": ["Admin","Super Admin"]
 
         }
-
-
       ]
     },
     {

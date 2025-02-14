@@ -15,14 +15,14 @@
 @endsection
 
 @section('content')
-    <div class="container mt-5">
-        <form class="add-new-vendor pt-9" method="POST" action="{{ route('answer-list.store') }}" id="id" name="id">
+    {{-- <div class="container"> --}}
+        <form class="add-new-vendor" method="POST" action="{{ route('answer-list.store') }}" id="id" name="id">
             @csrf
 
             @foreach ($sections as $index => $section)
                 <div class="card mb-4" id="section-card-{{ $section->id }}"
                     style="display: {{ $index == 0 ? 'block' : 'none' }};">
-                    <div class="card-body text-center" style="height:50%; margin:7%; padding:5%">
+                    <div class="card-body text-center" style="height:50%;">
                         <h5 class="card-title" style="padding-top: 1%; color:#00a6d5;">{{ $section->section_name }}</h5>
                         <p class="card-text me-1">{{ $section->section_description }}</p>
                         <div class="card-body text-end" style="padding-top: 8%; padding-bottom:0%;">
@@ -35,7 +35,7 @@
                 <div class="card mb-4" id="question-card-{{ $section->id }}"
                     style="display: {{ $index == 0 ? 'none' : 'none' }};">
 
-                    <div class="card-body" style="height:50%; margin:7%; padding:4%">
+                    <div class="card-body" style="height:50%;">
 
                         <!-- Pillar Name here -->
                         <h5 class="text-end" style="color:#00a6d5;" id="section-name-dynamic-{{ $section->id }}">
@@ -85,7 +85,9 @@
                                         <!-- Today Section -->
                                         <div class="today-section">
                                           <label class="font-weight-bold" style="padding-right:1%"><strong>Today</strong></label>
-                                          <label class="font-weight-bold" style="padding-left:82%"><strong>Next Three Year</strong></label>
+                                          <label class="font-weight-bold text-end" style="position: absolute;right: 30px;">
+                                            <strong>Next Three Year</strong>
+                                        </label>
                                           <div class="options-container mt-2">
                                               @foreach ($predefinedLabels as $index => $label)
                                                   <div class="d-flex align-items-center mb-3 rounded shadow-sm"
@@ -96,7 +98,7 @@
                                                                      background-color: #f8f9fa;
                                                                      border-radius: 0 5px 5px 0;">
                                                           @if (isset($options[$index]))
-                                                              <label class="d-flex align-items-center w-100 mb-3">
+                                                              <label class="d-flex align-items-center w-100 ">
                                                                   <div class="radio-box"
                                                                       style="border: 2px solid #3498db;
                                                                              padding: 10px;
@@ -192,7 +194,7 @@
 
 
 
-                        <div class="text-end" style="padding-top:7%; padding-bottom:0%;">
+                        <div class="text-end" style="">
                             <button type="button" class="btn btn-dark rounded-0" id="prev-btn{{ $section->id }}"
                                 onclick="showQuestion('{{ $section->id }}', 'prev')">Previous</button>
                             <button type="button" class="btn rounded-0" style="background-color: #00a6d5"
@@ -203,7 +205,7 @@
                     </div>
                 </div>
             @endforeach
-            <div id="completion-card" class="card mb-4" style="display: none; width: 100%; margin: 5%; padding: 5%;">
+            <div id="completion-card" class="card mb-4" style="display: none; width: 100%;">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
                     <p class="card-text">You have completed the quiz. Well done!</p>
@@ -214,12 +216,7 @@
         </form>
 
 
-    </div>
-
-
-
-
-
+    {{-- </div> --}}
 @endsection
 
 
