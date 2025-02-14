@@ -26,7 +26,7 @@
                         <h5 class="card-title" style="padding-top: 1%; color:#00a6d5;">{{ $section->section_name }}</h5>
                         <p class="card-text me-1">{{ $section->section_description }}</p>
                         <div class="card-body text-end" style="padding-top: 8%; padding-bottom:0%;">
-                            <a href="javascript:void(0);" class="btn btn-dark rounded-0"
+                            <a href="javascript:void(0);" class="btn btn-dark rounded"
                                 onclick="startQuiz({{ $section->id }})">Assessment</a>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                                                 'Efficient',
                                                 'World Class',
                                             ];
-                                            $backgroundColors = ['1a9cad', 'f47c9b', '2a6bb3', 'c64c8c', '079ff7'];
+                                            $backgroundColors = ['55cae5', 'fabee0', '9df7c0', 'f0c87a', 'd8cfee'];
                                             $options = json_decode($q->options, true) ?? [];
                                         @endphp
 
@@ -117,7 +117,7 @@
                                                                   </div>
                                                                   <div class="p-3 rounded text-left"
                                                                       style="background-color: #{{ $backgroundColors[$index] }};
-                                                                             color: white;
+                                                                             color: #525252;
                                                                              font-weight: bold;
                                                                              min-width: 150px;
                                                                              text-align: center;">
@@ -195,9 +195,9 @@
 
 
                         <div class="text-end" style="">
-                            <button type="button" class="btn btn-dark rounded-0" id="prev-btn{{ $section->id }}"
-                                onclick="showQuestion('{{ $section->id }}', 'prev')">Previous</button>
-                            <button type="button" class="btn rounded-0" style="background-color: #00a6d5"
+                            <button type="button" class="btn btn-dark rounded" id="prev-btn{{ $section->id }}"
+                                onclick="showQuestion('{{ $section->id }}', 'prev')">Back</button>
+                            <button type="button" class="btn rounded" style="background-color: #00a6d5;color: white;"
                                 id="next-btn{{ $section->id }}"
                                 onclick="showQuestion('{{ $section->id }}', 'next')">Next</button>
                             {{-- <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Submit</button> --}}
@@ -209,7 +209,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
                     <p class="card-text">You have completed the quiz. Well done!</p>
-                    <button type="submit" class="btn btn-dark rounded-0" id="submit-btn{{ $section->id }}">Save your
+                    <button type="submit" class="btn btn-dark rounded" id="submit-btn{{ $section->id }}">Save your
                         response</button>
                 </div>
             </div>
