@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\section;
 use Illuminate\Http\JsonResponse;
 use App\Models\pillar;
+use Illuminate\Support\Facades\Storage;
 
 class FormController extends Controller
 {
@@ -82,7 +83,7 @@ class FormController extends Controller
    */
   public function store(Request $request)
   {
-    // dd($request->all());
+
     $user_id = Auth::user()->id;
     $authID = Auth::id();
     $filePath = null;
@@ -99,14 +100,16 @@ class FormController extends Controller
       'file' => $filePath,
     ]);
 
-dd($filePath);
+    // dd($request->all());
 
     // Return a JSON response with success message
     return response()->json([
       'message' => 'Form created successfully',
       'form' => $form,
+      'file_url' => $filePath ? Storage::url($filePath) : null
 
     ]);
+
   }
 
   /**

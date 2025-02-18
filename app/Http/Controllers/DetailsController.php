@@ -111,7 +111,10 @@ $details = $query->get();
         $user = auth()->user();
         $form = $request->id ?? null;
         $submissionId = now()->timestamp . '-' . $user->id;
-
+        $user->submission_id = $submissionId;
+        $user->save();
+        $business_goals = json_encode($request->business_goals);
+        $drivers = json_encode($request->drivers);
         if ($request->has('details_id')) {
             $details = Details::find($request->details_id);
             if ($details) {
@@ -138,13 +141,18 @@ $details = $query->get();
                 'user_id' => $user->id,
                 'submission_id' => $submissionId,
                 'comment' => $request->comment,
+                'designation' => $request->designation,
+                'located' => $request->located,
+                'consultant' => $request->consultant,
+                'Primary' => $request->Primary,
+                'business_goals' => $business_goals,
+                'drivers' => $drivers
             ]);
         }
-
         if ($form) {
             $formData = Form::find($form);
             if ($formData) {
-                return redirect()->route('home', ['slug' => $formData->slug]);
+                return redirect()->route('img', ['slug' => $formData->slug]);
             }
         }
 

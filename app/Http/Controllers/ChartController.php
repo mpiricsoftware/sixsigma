@@ -131,11 +131,25 @@ class ChartController extends Controller
   public function avg($form_id, $user_id, $details_id)
   {
     $user_id =  auth()->user()->id;
+    $user = auth()->user();
+
     $pillars = Section::with('pillar')->where('form_id', $form_id)->get();
     $detail = Details::find($details_id); // Retrieve single instance
 
     if ($detail) {
-      $submission_id = $detail->submission_id; // Access the submission_id property
+      $submission_id = $detail->submission_id;
+      $print_section = Section::where('form_id', $detail->form_id)->get();
+      $print_question = Question::where('form_id', $detail->form_id)->get();
+      $print_answers = Answer::where('form_id',$detail->form_id)->where('submission_id',$submission_id)->get();
+      $comment = $detail->comment;
+      $company = $user->company;
+      $name = $user->name;
+      $company_details = $detail->company;
+      $located = $detail->located;
+      $Primary = $detail->Primary;
+      $business_goals = $detail->business_goals;
+      $drivers = $detail->drivers;
+      // dd($drivers);
 
     }
     $pillarData = [];
@@ -421,7 +435,8 @@ class ChartController extends Controller
       'StackedData',
       'sections',
       'questions',
-      'answers'
+      'answers','print_section','print_question','print_answers','comment','name','company',
+      'company_details','located','Primary','business_goals','drivers','detail'
     ));
   }
 
