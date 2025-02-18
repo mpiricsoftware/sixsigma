@@ -80,7 +80,7 @@
               <div class="text-center mb-6">
                   <h4 class="title mb-2" id="addformModalLabel">Add form</h4>
               </div>
-              <form id="addformForm" class="row g-4" method="POST">
+              <form id="addformForm" class="row g-4" method="POST" enctype="multipart/form-data">
                 @csrf
                    <!-- Form Name Input -->
                    <div class="col-12 col-md-6">

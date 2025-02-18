@@ -9,10 +9,16 @@
 @section('vendor-script')
     @vite(['resources/assets/vendor/libs/moment/moment.js', 'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js', 'resources/assets/vendor/libs/select2/select2.js', 'resources/assets/vendor/libs/@form-validation/popular.js', 'resources/assets/vendor/libs/@form-validation/bootstrap5.js', 'resources/assets/vendor/libs/@form-validation/auto-focus.js', 'resources/assets/vendor/libs/cleavejs/cleave.js', 'resources/assets/vendor/libs/cleavejs/cleave-phone.js', 'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'])
 @endsection
+@section('page-script')
+@vite(['resources/assets/js/forms-selects.js'])
+@endsection
+
+
 @section('content')
 <div class="container mt-5">
   <form id="form-id" method="POST" action="{{ route('details-list.store') }}">
     @csrf
+
     <div class="card mx-10 mb-md-5" style="margin: 0 auto;">
         <div class="card-header">
             <h5>Assessment Details</h5>
@@ -50,8 +56,8 @@
             <div class="row">
                 <div class="col-md-3 mb-5">
                     <div class="form-floating form-floating-outline">
-                        <input type="datetime-local" class="form-control" name="date_time" id="date_time" >
-                        <label for="date_time">PreFor Date & Time</label>
+                        <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Your Designation" value="{{$user->designation}}">
+                        <label for="designation">Designation</label>
                     </div>
                 </div>
 
@@ -73,35 +79,100 @@
                 </div>
 
             </div>
-            <div class="row mb-5">
-                <div class="col-md-7">
-                    <div class="form-floating form-floating-outline">
-                        <select name="company_size" id="company_size" class="form-control">
-                          <option value="Select Size">Select Size</option>
+            <div class="row">
+            <div class="col-md-3 mb-5">
+              <div class="form-floating form-floating-outline">
+              <input type="text" class="form-control" name="located" id="located" placeholder="Enter Your Located Area">
+              <label for="located">Where is your company located?</label>
+              </div>
+            </div>
 
-                          <option value="0-100">0-100</option>
-                          <option value="100-500">100-500</option>
-                          <option value="500-2000">500-2000</option>
-                          <option value="2000+">2000+</option>
-                        </select>
-                        <label for="company_size">Company Size</label>
-                    </div>
+            <div class="col-md-4 mb-5">
+              <div class="form-floating form-floating-outline">
+                <select name="consultant" id="consultant" class="form-control">
+                  <option value="Select consultant">Select consultant</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              <label for="consultant">Are you a consultant?</label>
+              </div>
+            </div>
+              <div class="col-md-5 mb-5">
+                <div class="form-floating form-floating-outline">
+                  <select name="Primary" id="Primary" class="form-control">
+                    <option value="Select Group">Select Group</option>
+                    <option value="Aerospace">Aerospace</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Electronics / Electrical">Electronics / Electrical</option>
+                    <option value="Energy & Chemical (Downstream)">Energy & Chemical (Downstream)</option>
+                    <option value="Food & Beverage">Food & Beverage</option>
+                    <option value="General Manufacturing">General Manufacturing</option>
+                    <option value="Logistic">Logistic</option>
+                    <option value="Oil & Gass (Upstream)">Oil & Gass (Upstream)</option>
+                    <option value="Machinery & Equipment">Machinery & Equipment</option>
+                    <option value="Medical Technology">Medical Technology</option>
+                    <option value="Pharmaceuticals">Pharmaceuticals</option>
+                    <option value="Precision Parts">Precision Parts</option>
+                    <option value="Semiconductors">Semiconductors</option>
+                    <option value="Textile (Clothing, Leather & Footwear)">Textile (Clothing, Leather & Footwear)</option>
+
+                  </select>
+                  <label for="Primary Industry Group">Primary Industry Group</label>
                 </div>
+              </div>
+            </div>
 
-                <div class="col-md-5">
-                    <div class="form-floating form-floating-outline">
-                        <input type="text" class="form-control" id="form_name" name="form_name"
-                             placeholder="Form Name" value="{{$form->name}}">
-                        <label for="form_name">Form Name</label>
-                    </div>
+            <div class="row">
+              <div class="col-md-6 mb-6">
+                <div class="form-floating form-floating-outline">
+                  <div class="select2-info ">
+                    <select id="business_goals" name ="business_goals[]" class="select2 form-select" multiple>
+                      <option value="Asset & Equipment Efficiency" selected>Asset & Equipment Efficiency</option>
+                      <option value="Inventory Efficiency">Inventory Efficiency</option>
+                      <option value="Materials Efficiency" >Materials Efficiency</option>
+                      <option value="Utilities Efficiency">Utilities Efficiency</option>
+                      <option value="Workforce Efficiency">Workforce Efficiency</option>
+                      <option value="Planning & Scheduling Effectiveness">Planning & Scheduling Effectiveness</option>
+                      <option value="Production Flexibility">Production Flexibility</option>
+                      <option value="Workforce Flexibility">Workforce Flexibility</option>
+                      <option value="Time to Market">Time to Market</option>
+                      <option value="Time to Delivery">Time to Delivery</option>
+                      <option value="Product Quality">Product Quality</option>
+                      <option value="Process Quality">Process Quality</option>
+                      <option value="Safety">Safety</option>
+                      <option value="Security of Data">Security of Data</option>
+                    </select>
+                  </div>
+                  <label for="select2Primary">What are your organization’s current top
+                    three Business Goals?</label>
                 </div>
+              </div>
+               <div class="col-md-6 mb-6">
+                <div class="form-floating form-floating-outline">
+                  <div class="select2-info ">
+                    <select id="drivers" name="drivers[]" class="select2 form-select" multiple>
+                      <option value="Raw Materials & Consumables cost" selected>Raw Materials & Consumables cost</option>
+                      <option value="Labour cost">Labour cost</option>
+                      <option value="Utilities">Utilities</option>
+                      <option value="Selling, General & Administrative Expense (“SG&A”)">Selling, General & Administrative Expense (“SG&A”)</option>
+                      <option value="Transportation & Distribution">Transportation & Distribution</option>
+                      <option value="Aftermarket Services/Warranty">Aftermarket Services/Warranty</option>
+                      <option value="Depreciation cost">Depreciation cost</option>
+                      <option value="Maintenance & Repair cost">Maintenance & Repair cost</option>
+                      <option value="Rental & Operating Lease cost">Rental & Operating Lease cost</option>
+                      <option value="Research & Development (“R&D”)">Research & Development (“R&D”)</option>
+                    </select>
 
-
-
+                    </div>
+                    <label for="select2Primary">Which are your organization’s top three cost
+                      drivers?</label>
+                  </div>
+                </div>
+               </div>
             </div>
             <button type="submit" id="hidden-submit" style="display: none;"></button>
             <div class="text-center mb-5">
-              <a href="{{ url('/home',['slug' => $form->slug]) }}" class="btn btn-dark rounded-0" id="go-to-questions">
+              <a href="{{ url('/img',['slug' => $form->slug]) }}" class="btn btn-dark rounded-0" id="go-to-questions">
                   Go to Questions
               </a>
           </div>
@@ -120,7 +191,7 @@
 
     // Wait for form submission and then redirect
     setTimeout(() => {
-        window.location.href = "{{ url('/home', ['slug' => $form->slug]) }}";
+        window.location.href = "{{ url('/img', ['slug' => $form->slug]) }}";
     }, 1000); // Delay to allow form submission
 });
 

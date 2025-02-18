@@ -18,7 +18,13 @@ class Details extends Model
       'email',
       'Phone_no',
       'company_size',
-      'form_name'
+      'form_name',
+      'drivers',
+      'business_goals',
+      'Primary',
+      'consultant',
+      'located',
+      'designation'
     ];
 
     public function user()

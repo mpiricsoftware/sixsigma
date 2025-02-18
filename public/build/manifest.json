@@ -3384,7 +3384,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/cleavejs/cleave-phone.js": {
-    "file": "assets/cleave-phone-Buvvjjnc.js",
+    "file": "assets/cleave-phone-DRZWSJE_.js",
     "name": "cleave-phone",
     "src": "resources/assets/vendor/libs/cleavejs/cleave-phone.js",
     "isEntry": true,
@@ -3402,7 +3402,7 @@
     ]
   },
   "resources/assets/vendor/libs/clipboard/clipboard.js": {
-    "file": "assets/clipboard-eqGyHGvh.js",
+    "file": "assets/clipboard-uSX7hnuA.js",
     "name": "clipboard",
     "src": "resources/assets/vendor/libs/clipboard/clipboard.js",
     "isEntry": true,
@@ -3411,7 +3411,7 @@
     ]
   },
   "resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js": {
-    "file": "assets/datatables-bootstrap5-CSvy9NcK.js",
+    "file": "assets/datatables-bootstrap5-APQrx3vs.js",
     "name": "datatables-bootstrap5",
     "src": "resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js",
     "isEntry": true,
@@ -3463,7 +3463,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/dropzone/dropzone.js": {
-    "file": "assets/dropzone-DNvOoGc3.js",
+    "file": "assets/dropzone-796O8KZ3.js",
     "name": "dropzone",
     "src": "resources/assets/vendor/libs/dropzone/dropzone.js",
     "isEntry": true,
@@ -3491,7 +3491,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/fullcalendar/fullcalendar.js": {
-    "file": "assets/fullcalendar-BBF0f3SN.js",
+    "file": "assets/fullcalendar-BWAouJ1K.js",
     "name": "fullcalendar",
     "src": "resources/assets/vendor/libs/fullcalendar/fullcalendar.js",
     "isEntry": true
@@ -3564,7 +3564,7 @@
     ]
   },
   "resources/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js": {
-    "file": "assets/jquery-timepicker-B-RbRvAG.js",
+    "file": "assets/jquery-timepicker-BIZlPFEF.js",
     "name": "jquery-timepicker",
     "src": "resources/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js",
     "isEntry": true,
@@ -3648,7 +3648,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/mapbox-gl/mapbox-gl.js": {
-    "file": "assets/mapbox-gl-LOFEHQNP.js",
+    "file": "assets/mapbox-gl-t21XUnI6.js",
     "name": "mapbox-gl",
     "src": "resources/assets/vendor/libs/mapbox-gl/mapbox-gl.js",
     "isEntry": true,
@@ -3706,7 +3706,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/numeral/numeral.js": {
-    "file": "assets/numeral-P4k51J7T.js",
+    "file": "assets/numeral-CDEz25Q-.js",
     "name": "numeral",
     "src": "resources/assets/vendor/libs/numeral/numeral.js",
     "isEntry": true,
@@ -3743,7 +3743,7 @@
     ]
   },
   "resources/assets/vendor/libs/plyr/plyr.js": {
-    "file": "assets/plyr-BGSM-mVO.js",
+    "file": "assets/plyr-FcMVHU1S.js",
     "name": "plyr",
     "src": "resources/assets/vendor/libs/plyr/plyr.js",
     "isEntry": true
@@ -3804,7 +3804,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/select2/select2.js": {
-    "file": "assets/select2-CRCBtHGs.js",
+    "file": "assets/select2-Cg3gXliv.js",
     "name": "select2",
     "src": "resources/assets/vendor/libs/select2/select2.js",
     "isEntry": true,
@@ -3861,7 +3861,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/swiper/swiper.js": {
-    "file": "assets/swiper-DKZh8Haz.js",
+    "file": "assets/swiper-CY5T_L6i.js",
     "name": "swiper",
     "src": "resources/assets/vendor/libs/swiper/swiper.js",
     "isEntry": true
@@ -4202,8 +4202,14 @@
     "src": "resources/js/details.js",
     "isEntry": true
   },
+  "resources/js/form-select.js": {
+    "file": "assets/form-select-0AnFj0hj.js",
+    "name": "form-select",
+    "src": "resources/js/form-select.js",
+    "isEntry": true
+  },
   "resources/js/form.js": {
-    "file": "assets/form-pULi5DRc.js",
+    "file": "assets/form-4r65fPVg.js",
     "name": "form",
     "src": "resources/js/form.js",
     "isEntry": true

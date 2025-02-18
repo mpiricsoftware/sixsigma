@@ -255,10 +255,13 @@ $(function () {
         }
     }).on('core.form.valid', function () {
         // adding or updating form when form successfully validate
+        const formData = new FormData(addformForm);
         $.ajax({
-            data: $('#addformForm').serialize(),
             url: `${baseUrl}form-list`,
             type: 'POST',
+            data: formData,
+            processData: false,  // Prevents jQuery from processing data
+            contentType: false,
             success: function (status) {
                 dt_form.draw();
                 offModalForm.modal('hide');

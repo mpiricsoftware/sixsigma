@@ -18,7 +18,7 @@
     {{-- <div class="container"> --}}
         <form class="add-new-vendor" method="POST" action="{{ route('answer-list.store') }}" id="id" name="id">
             @csrf
-
+            <input type="hidden" name="submission_id" value="{{ $submissionId }}">
             @foreach ($sections as $index => $section)
                 <div class="card mb-4" id="section-card-{{ $section->id }}"
                     style="display: {{ $index == 0 ? 'block' : 'none' }};">

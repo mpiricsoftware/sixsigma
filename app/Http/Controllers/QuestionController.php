@@ -92,21 +92,30 @@ class QuestionController extends Controller
     $userID =  auth()->user()->id;
      $user = User::find($userID);
      $form = Form::where('slug', $slug)->firstOrFail();
-    // dd($form);
     $sections = Section::where('form_id',$form->id)->get();
-    // dd($sections);
     $questions = Question::where('form_id',$form->id)->get();
     $totalQuestions = Question::where('form_id', $form->id)->count();
+    $submissionId = $user->submission_id;
+    // dd($submissionId);
 
-    return view('panel.question.show',compact('questions','sections','form','totalQuestions','user'));
+    return view('panel.question.show',compact('questions','sections','form','totalQuestions','user','submissionId'));
   }
 public function info(Request $request,$slug)
 {
   $userID =  auth()->user()->id;
      $user = User::find($userID);
      $form = Form::where('slug', $slug)->firstOrFail();
+
+    //  dd($submissionId);
      return view('panel.question.info',compact('user','form'));
 
+}
+public function img(Request $request,$slug)
+{
+  $form = Form::where('slug', $slug)->firstOrFail();
+
+  // dd($submissionId);
+  return view('panel.question.img',compact('form'));
 }
   public function print($id, $user_id)
   {
@@ -127,16 +136,21 @@ public function info(Request $request,$slug)
 
   public function dprint($id)
   {
-      $detail = Details::find($id);
 
+      $detail = Details::find($id);
+      $user_id = auth()->user()->id;
+      // dd($detail->submission_id);
       if ($detail) {
         $sections = Section::where('form_id', $detail->form_id)->get();
         $questions = Question::where('form_id', $detail->form_id)->get();
           //  dd($questions);
-          $answers = Answer::where('submission_id', $detail->submission_id)
-          ->where('form_id',$detail->form_id)->get();
+          // $answers = Answer::where('submission_id', $detail->submission_id)
+          // ->where('form_id',$detail->form_id)
+          // ->where('user_id',$detail->user_id)->get();
+          $answers = Answer::where('form_id',$detail->form_id)->where('submission_id',$detail->submission_id)->get();
+        //  dd($answer);
           $comment = $detail->comment;
-          // dd($comment);
+
 
       } else {
           echo "No detail found with the provided id.";

@@ -14,8 +14,6 @@
 
 
 @section('content')
-
-<a href="{{url('demo')}}">next</a>
     <h4 style="text-align:center; margin-bottom:20px;"><strong>All Over Average Performance</strong></h4>
 
     <div id="pie-chart" style="height: 350px; width: 40%; margin:0 auto;"></div><br>
@@ -708,7 +706,7 @@ document.addEventListener("DOMContentLoaded", function() {
           var piechartHTML = `
 
                  <h3 style="text-align:center"><strong>All Over Sections Average</strong></h3>
-                  <div id="bar-chart">${document.querySelector('#pie-chart').outerHTML}</div>
+                  <div id="pie-chart">${document.querySelector('#pie-chart').outerHTML}</div>
 
           `;
           // Opening print window

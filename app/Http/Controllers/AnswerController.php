@@ -42,7 +42,12 @@ class AnswerController extends Controller
     $form = null;
 
     // Generate unique submission ID for each form submission
-    $submissionId = now()->timestamp . '-' . $user->id;
+    $submissionId = $request->input('submission_id');
+// dd($submissionId);
+    // Ensure that the submission_id exists
+    if (!$submissionId) {
+        return back()->with('error', 'Submission ID not found.');
+    }
 
     foreach ($answers as $sectionId => $questions) {
         foreach ($questions as $index => $answer) {
@@ -67,6 +72,7 @@ class AnswerController extends Controller
             ]);
         }
     }
+    // dd($request->all());
 // dd($request->all());
     // Store submission details
     // if ($form) {

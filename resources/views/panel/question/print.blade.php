@@ -17,6 +17,8 @@
                                 ->where('user_id', auth()->user()->id)
                                 ->isNotEmpty();
                         });
+
+                        // dd($answeredQuestions);
                 @endphp
 
                 @if ($answeredQuestions->isNotEmpty())
@@ -54,6 +56,7 @@
                                             ->where('question_id', $q->id)
                                             ->where('section_id', $s->id)
                                             ->where('user_id', auth()->user()->id);
+                                            // dd($answeredQuestions);
                                     @endphp
 
                                     @if ($userAnswers->isNotEmpty())
@@ -166,6 +169,7 @@
                                                                 <div class="progress-value"
                                                                     style="left: calc(({{ array_search($userAnswer->answer, json_decode($q->options)) }} / 5) * 100%);">
                                                                     {{ 'Current Level' }}
+
                                                                 </div>
                                                                 <div class="progress-ansvalue"
                                                                     style="left: calc(({{ array_search($userAnswer->answers_future, json_decode($q->options)) }} / 5) * 100%);">
