@@ -1,26 +1,44 @@
 name: Deploy website on push
-# Controls when the workflow will run
+
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+      - main-2
   pull_request:
     branches:
       - main
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+      - main-2
+
 jobs:
-  # This workflow contains a single job called "build"
-  web-deploy:
-    name: Deploy
-    # The type of runner that the job will run on
+  deploy-main:
+    name: Deploy to sat.mpiric.us
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    if: github.ref == 'refs/heads/main'
     steps:
-    - name: Get latest code
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      uses: actions/checkout@v3
-    - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ftp.mpiric.us
-        username: sat@sat.mpiric.us
-        password: "${{ secrets.FTP_PASS }}"
-        server-dir: /
+      - name: Get latest code
+        uses: actions/checkout@v3
+
+      - name: Sync files to sat.mpiric.us
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.mpiric.us
+          username: sat@sat.mpiric.us
+          password: "${{ secrets.FTP_PASS }}"
+          server-dir: /
+
+  deploy-main-2:
+    name: Deploy to newdomain.com
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main-2'
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v3
+
+      - name: Sync files to newdomain.com
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.sixsigmaconcept.com  # Replace with actual FTP server
+          username: cbepl@cbepl.com  # Replace with actual FTP username
+          password: "${{ secrets.NEW_FTP_PASS }}"  # Store this in GitHub Secrets
+          server-dir: /
