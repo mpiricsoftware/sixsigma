@@ -109,7 +109,7 @@
                     <tr>
                         <td style="width: 600px; vertical-align: top; padding-left: 0; padding-right: 0; padding-top: 0px; padding-bottom: 0px;" width="600">
                             <!-- Your logo  is here -->
-                            <img style="width: 200px; max-width: 200px; height: 100px; max-height: 100px; text-align: center; color: #ffffff;" alt="Logo" src="{{ asset('assets/img/logo/logo.jpeg') }}" alt="zh-artfunding-title.jpeg" align="center" width="600" height="170">
+                            <img style="width: 200px; max-width: 200px; height: 100px; max-height: 100px; text-align: center; color: #ffffff;" alt="Logo" src="{{ asset('assets\img\print\omm logo.png') }}" alt="zh-artfunding-title.jpeg" align="center" width="600" height="170">
                         </td>
                     </tr>
                 </tbody>

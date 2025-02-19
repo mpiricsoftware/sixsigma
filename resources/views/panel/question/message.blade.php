@@ -1,7 +1,7 @@
 
 @extends('layouts.layoutMaster')
 
-@section('title', 'Message')
+@section('title', 'OMM-Message')
 @section('content')
 
 <div class="container">
