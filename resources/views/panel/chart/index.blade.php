@@ -1028,13 +1028,13 @@
             var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
 
             var basicchartstHTML = `
-      <div style="width: 50%; margin-bottom: 20px;">
+      <div class ="chart-containers" style="width: 50%; margin-bottom: 20px;">
         <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
       </div>
     `;
 
             var PillarChartHTML = `
-      <div style="width: 50%; margin-bottom: 20px;">
+      <div class="chart-containers" style="width: 50%; margin-bottom: 20px;">
         <div id="PillarChart">${document.querySelector('#PillarChart').outerHTML}</div>
       </div>
     `;
@@ -1239,6 +1239,12 @@
         display: inline-block;
 
       }
+        .chart-containers {
+    width: 45%; /* Slightly less than 50% to avoid any overflow */
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden; /* Adjust as necessary to handle overflowing content */
+}
 
       h2 {
         color: #00a6d5;
