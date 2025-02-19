@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Forms')
+@section('title', 'OMM-Forms')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body:not(.modal-open) .select2-container--open{

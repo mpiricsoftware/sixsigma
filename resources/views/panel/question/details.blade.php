@@ -1,6 +1,6 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Details')
+@section('title', 'OMM-Inquiry')
 @section('content')
 
 
