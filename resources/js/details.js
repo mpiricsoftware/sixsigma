@@ -62,7 +62,7 @@ $(function () {
                   searchable: false,
                   orderable: false,
                   render: function (data, type, full) {
-                      var urls = printRoute.replace(':id', full.id);
+                      var urls = printRoute.replace(':id', full.id).replace(':user_id',full.user_id);
                       var chartsd = chart.replace(':id', full.form_id).replace(':user_id', full.user_id).replace(':details_id', full.id);
                       return (
                           '<div class="d-flex align-items-center gap-50">' +

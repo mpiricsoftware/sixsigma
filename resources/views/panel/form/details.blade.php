@@ -84,6 +84,6 @@
 @endsection
 <script>
 
-  var printRoute = "{{ route('dprint', ['id' => ':id']) }}";
+  var printRoute = "{{ route('dprint', ['id' => ':id','user_id' => ':user_id']) }}";
   var chart = "{{ route('avg', ['id' => ':id', 'user_id' => ':user_id', 'details_id' => ':details_id']) }}";
 </script>

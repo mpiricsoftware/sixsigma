@@ -141,6 +141,7 @@ class ChartController extends Controller
       $print_section = Section::where('form_id', $detail->form_id)->get();
       $print_question = Question::where('form_id', $detail->form_id)->get();
       $print_answers = Answer::where('form_id',$detail->form_id)->where('submission_id',$submission_id)->get();
+      // dd($print_answers);
       $comment = $detail->comment;
       $company = $user->company;
       $name = $user->name;

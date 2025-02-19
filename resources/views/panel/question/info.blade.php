@@ -173,7 +173,7 @@
             <button type="submit" id="hidden-submit" style="display: none;"></button>
             <div class="text-center mb-5">
               <a href="{{ url('/img',['slug' => $form->slug]) }}" class="btn btn-dark rounded-0" id="go-to-questions">
-                  Go to Questions
+                  Go to Assessment
               </a>
           </div>
 

@@ -10,7 +10,7 @@ $configData = Helper::appClasses();
   <div class="app-brand demo">
     <a href="{{url('/')}}" class="app-brand-link">
       <span class="app-brand-logo demo">
-        <img src="{{ asset('assets/img/logo/logo.jpeg') }}" alt="Logo" width="70">
+        <img src="{{ asset('assets\img\print\omm logo.png') }}" alt="Logo" width="70">
 
     </span>
       <span class="app-brand-text demo menu-text fw-semibold ms-2">{{config('variables.templateName')}}</span>
