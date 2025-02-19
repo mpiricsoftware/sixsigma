@@ -34,8 +34,8 @@
             <div
                 class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg position-relative py-sm-12 px-12 py-6">
                 <div class="w-px-400 mx-auto pt-5 pt-lg-0">
-                    <h4 class="mb-1">Adventure starts here 🚀</h4>
-                    <p class="mb-5">Make your app management easy and fun!</p>
+                    {{-- <h4 class="mb-1">Adventure starts here 🚀</h4>
+                    <p class="mb-5">Make your app management easy and fun!</p> --}}
 
                     <form id="formAuthentication" class="mb-5" action="{{ route('register') }}" method="POST">
                         @csrf
