@@ -1,5 +1,5 @@
 @extends('layouts/layoutMaster')
-@section('title', 'Forms-Details')
+@section('title', 'OMM : Forms-Details')
 @section('vendor-style')
 @vite([
     'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',

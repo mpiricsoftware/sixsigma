@@ -1,6 +1,6 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Dashboard-Business Excellence')
+@section('title', 'OMM-DashBoard')
 @section('content')
 
 @if($inquiry->isNotEmpty() && $inquiry->first()->type == 'Online')

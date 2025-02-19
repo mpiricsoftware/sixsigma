@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'form stages')
+@section('title', 'OMM-Form')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     body:not(.modal-open) .select2-container--open {
@@ -36,8 +36,6 @@
                         <div class="col-md-12">
                             @foreach ($form as $form)
                                 <input type="hidden" name="id" id="id" value="{{ $form->id }}">
-
-
                                 <div class="card shadow-sm rounded">
                                     <div class="card-body">
                                         @if ($form)

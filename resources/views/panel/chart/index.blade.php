@@ -1,6 +1,6 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Chart')
+@section('title', 'OMM-Reports')
 
 @section('vendor-style')
     @vite(['resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss', 'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss', 'resources/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.scss', 'resources/assets/vendor/libs/select2/select2.scss', 'resources/assets/vendor/libs/@form-validation/form-validation.scss', 'resources/assets/vendor/libs/animate-css/animate.scss', 'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'])
@@ -1028,13 +1028,13 @@
             var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
 
             var basicchartstHTML = `
-      <div class ="chart-containers" style="width: 50%; margin-bottom: 20px;">
+      <div class ="chart-containers" style="width: 50%; display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px; margin-bottom: 20px;">
         <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
       </div>
     `;
 
             var PillarChartHTML = `
-      <div class="chart-containers" style="width: 50%; margin-bottom: 20px;">
+      <div class="chart-containers" style="width: 50%; display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px; margin-bottom: 20px;">
         <div id="PillarChart">${document.querySelector('#PillarChart').outerHTML}</div>
       </div>
     `;
@@ -1242,7 +1242,6 @@
         .chart-containers {
     width: 45%; /* Slightly less than 50% to avoid any overflow */
     box-sizing: border-box;
-    padding: 10px;
     overflow: hidden; /* Adjust as necessary to handle overflowing content */
 }
 
@@ -1256,7 +1255,7 @@
         justify-content: space-around;
         align-items: flex-start;
         margin-top: 20px;
-        width:100%;
+
 
       }
 

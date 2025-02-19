@@ -1,6 +1,6 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Print')
+@section('title', 'OMM-Print')
 
 
 @section('content')
