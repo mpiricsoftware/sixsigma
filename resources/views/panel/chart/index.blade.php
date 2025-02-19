@@ -1250,6 +1250,8 @@
         justify-content: space-around;
         align-items: flex-start;
         margin-top: 20px;
+        width:100%;
+
       }
 
       #questioncharts-container > div {
