@@ -91,6 +91,7 @@ class QuestionController extends Controller
   {
     $userID =  auth()->user()->id;
      $user = User::find($userID);
+    //  dd($user);
      $form = Form::where('slug', $slug)->firstOrFail();
     $sections = Section::where('form_id',$form->id)->get();
     $questions = Question::where('form_id',$form->id)->get();
@@ -134,29 +135,25 @@ public function img(Request $request,$slug)
       return view('panel.question.print', compact('sections', 'questions', 'answers', 'user_id', 'submissionId'));
   }
 
-  public function dprint($id)
+  public function dprint($id, $user_id)
   {
-
       $detail = Details::find($id);
-      $user_id = auth()->user()->id;
-      // dd($detail->submission_id);
+
       if ($detail) {
-        $sections = Section::where('form_id', $detail->form_id)->get();
-        $questions = Question::where('form_id', $detail->form_id)->get();
-          //  dd($questions);
-          // $answers = Answer::where('submission_id', $detail->submission_id)
-          // ->where('form_id',$detail->form_id)
-          // ->where('user_id',$detail->user_id)->get();
-          $answers = Answer::where('form_id',$detail->form_id)->where('submission_id',$detail->submission_id)->get();
-        //  dd($answer);
+          $sections = Section::where('form_id', $detail->form_id)->get();
+          $questions = Question::where('form_id', $detail->form_id)->get();
+          $answers = Answer::where('form_id', $detail->form_id)
+                            ->where('submission_id', $detail->submission_id)
+                            ->where('user_id', $user_id)
+                            ->get();
           $comment = $detail->comment;
-
-
       } else {
           echo "No detail found with the provided id.";
       }
-      return view('panel.question.print', compact('answers','sections','questions','comment'));
+
+      return view('panel.question.print', compact('answers', 'sections', 'questions', 'comment'));
   }
+
 
 
 

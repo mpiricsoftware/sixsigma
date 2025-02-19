@@ -14,11 +14,11 @@
 
 @section('content')
 
-    <h4 style="text-align:center; margin-bottom:20px;"><strong>All Over Average Performance</strong></h4>
+    {{-- <h4 style="text-align:center; margin-bottom:20px;"><strong>All Over Average Performance</strong></h4> --}}
 
-    <div id="pie-chart" style="height: 350px; width: 40%; margin:0 auto;"></div><br>
+    {{-- <div id="pie-chart" style="height: 350px; width: 40%; margin:0 auto;"></div><br> --}}
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const chartLabel = {!! json_encode($chartLabel[0] ?? 'Filled') !!};
             const chartData = {!! json_encode([$chartDatas[0], 100 - $chartDatas[0]]) !!};
@@ -79,10 +79,10 @@
                 }
             };
 
-            var pieChart = new ApexCharts(document.querySelector("#pie-chart"), pieOptions);
+            var pieChart = new ApexCharts(document.querySelector(""), pieOptions);
             pieChart.render(); // Render the pie chart
         });
-    </script>
+    </script> --}}
 
 
 
@@ -241,10 +241,10 @@
     </style>
 
 
-    <h4 style="text-align:center; margin-bottom=20px; font-family:'Arial', sans-serif;"><strong>Section Performance
-            Levels</strong></h4>
+    {{-- <h4 style="text-align:center; margin-bottom=20px; font-family:'Arial', sans-serif;"><strong>Section Performance
+            Levels</strong></h4> --}}
 
-    @foreach ($sectionData as $sectionId => $data)
+    {{-- @foreach ($sectionData as $sectionId => $data)
         <div style="display:flex; align-items:center; margin-bottom:40px;">
             <div id="chart-{{ $sectionId }}" data-section-name="{{ $data['name'] }}"
                 data-section-description="{{ $data['description'] }}" style="height:400px; width:70%;"></div>
@@ -308,7 +308,7 @@
             </script>
 
         </div>
-    @endforeach
+    @endforeach --}}
 
 
     <h4 style="text-align:center; margin-bottom:20px;"><strong>Average Performance Scores by Section</strong></h4>
@@ -611,7 +611,7 @@
             }
         };
 
-        var chart = new ApexCharts(document.querySelector("#StackedCharts"), options);
+        var chart = new ApexCharts(document.querySelector(""), options);
         chart.render();
     </script>
     <style>
@@ -630,32 +630,24 @@
                             return $print_answers
                                 ->where('question_id', $print_question->id)
                                 ->where('section_id', $s->id)
-                                ->where('user_id', auth()->user()->id)
+                                // ->where('user_id', auth()->user()->id)
                                 ->isNotEmpty();
                         });
-
-                    // dd($answeredQuestions);
-
                 @endphp
-
-                @if ($answeredQuestions->isNotEmpty())
-                    <h5 class="card-title" style="color: #0d003d; text-align:left">
-                        {{ $s->pillar->name }}
-                    </h5>
+                <h5 class="card-title" style="color: #0d003d; text-align:left">
+                    Block - {{ $s->pillar->name }}
+                </h5>
+                @foreach ($answeredQuestions as $q)
                     <div class="section mb-4">
                         <h5 class="card-title"
                             style="color: #00a6d5; background-color: #f1f1f1; padding: 7px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                            {{ $s->section_name }}
+                            {{ $s->section_name }} - {{ $q->question_text }}
                         </h5>
                         <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                             <thead>
                                 <tr>
-                                    {{-- <th style="padding: 10px; font-weight: bold;">Question</th> --}}
-                                    {{-- <th style="color: #00a6d5; padding: 10px; font-weight: bold; text-align: center;">Level
-                                    </th> --}}
                                     <th style="color: #5cb85c; padding: 10px; font-weight: bold; text-align: center;">
-                                        Nascent
-                                    </th>
+                                        Nascent</th>
                                     <th style="color: #f0ad4e; padding: 10px; font-weight: bold; text-align: center;">Stable
                                     </th>
                                     <th style="color: #f04ef0; padding: 10px; font-weight: bold; text-align: center;">
@@ -667,111 +659,62 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($answeredQuestions as $q)
+                                <tr>
                                     @php
                                         $userAnswers = $print_answers
                                             ->where('question_id', $q->id)
                                             ->where('section_id', $s->id)
-                                            ->where('user_id', auth()->user()->id);
-                                        // dd($answeredQuestions);
+                                            // ->where('user_id', auth()->user()->id);
                                     @endphp
 
-                                    @if ($userAnswers->isNotEmpty())
-                                        <tr>
-                                            {{-- <td style="padding: 10px; text-align: left;">
-                                                <strong>{{ $q->question_text }}</strong>
-                                            </td> --}}
-                                            @foreach ($userAnswers as $userAnswer)
-                                                @if ($q->type == 'radio')
-                                                    @foreach (json_decode($q->options) as $option)
-                                                        <td style="text-align: center;"
-                                                            name="answers[{{ $s->id }}][{{ $q->id }}]"
-                                                            value="{{ $option }}"
-                                                            class="@if ($userAnswer->answer == $option) selected @endif">
-                                                            {{ $option }}
-                                                        </td>
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
-
-                                            @if ($q->type == 'checkbox')
-                                                @foreach (json_decode($q->options) as $option)
-                                                    <td style="text-align: center;"
-                                                        name="answers[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ $option }}">
-                                                        {{ $option }}
-                                                    </td>
-                                                @endforeach
-                                            @endif
-                                        </tr>
-
-                                        @foreach ($userAnswers as $userAnswer)
-                                            <tr>
-                                                <td colspan="6" style="padding: 10px;">
-                                                    @if ($q->type === 'text' || $q->type === 'textarea')
-                                                        <p><span style="font-size: 25px; color: #000708;">&#8594;</span>
-                                                            <span
-                                                                style="color: #555;">{{ $userAnswer->answer ?? 'No Answer' }}</span>
-                                                        </p>
-
-
-
-                                                        <p>
-                                                        <div class="progress-bar-container">
-                                                            <div class="progress-bar-checkbox">
-                                                                @php
-                                                                    $options = json_decode($q->options);
-                                                                    $selectedOptions = json_decode($userAnswer->answer);
-                                                                @endphp
-
-                                                                @foreach ($options as $index => $option)
-                                                                    <div class="progress-value-checkbox"
-                                                                        style="left: calc(({{ $index }} / {{ count($options) - 1 }}) * 100%);">
-                                                                        @if (in_array($option, $selectedOptions))
-                                                                            {{ 'Current Level' }}
-                                                                        @endif
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-
-                                                        </p>
-
-
-
-                                                        {{-- </p> --}}
-                                                    @elseif ($q->type === 'radio')
-                                                        <div class="progress-bar-container">
-                                                            <div class="progress-bar">
-                                                                <div class="progress-value"
-                                                                    style="left: calc(({{ array_search($userAnswer->answer, json_decode($q->options)) }} / 5) * 100%);">
-                                                                    {{ 'Current Level' }}
-
-                                                                </div>
-                                                                <div class="progress-ansvalue"
-                                                                    style="left: calc(({{ array_search($userAnswer->answers_future, json_decode($q->options)) }} / 5) * 100%);">
-                                                                    {{ 'After Three Year' }}
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <!-- Optional: Display selected option number here -->
-                                                                {{-- Option: {{ $userAnswer->answer }} --}}
-                                                    @endif
+                                    @foreach ($userAnswers as $userAnswer)
+                                        @if ($q->type == 'radio')
+                                            @foreach (json_decode($q->options) as $option)
+                                                <td style="text-align: center;"
+                                                    name="answers[{{ $s->id }}][{{ $q->id }}]"
+                                                    value="{{ $option }}"
+                                                    class="@if ($userAnswer->answer == $option) selected @endif">
+                                                    {{ $option }}
                                                 </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                @endforeach
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                </tr>
 
+                                @foreach ($userAnswers as $userAnswer)
+                                    <tr>
+                                        <td colspan="5" style="padding: 10px;">
+                                            @if ($q->type === 'text' || $q->type === 'textarea')
+                                                <p><span style="font-size: 25px; color: #000708;">&#8594;</span>
+                                                    <span
+                                                        style="color: #555;">{{ $userAnswer->answer ?? 'No Answer' }}</span>
+                                                </p>
+                                            @elseif ($q->type === 'radio')
+                                                <div class="progress-bar-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-value"
+                                                            style="left: calc(({{ array_search($userAnswer->answer, json_decode($q->options)) }} / 5) * 100%);">
+                                                            {{ 'Current Level' }}
+                                                        </div>
+                                                        <div class="progress-ansvalue"
+                                                            style="left: calc(({{ array_search($userAnswer->answers_future, json_decode($q->options)) }} / 5) * 100%);">
+                                                            {{ 'After Three Years' }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
-
-
-
                     </div>
-                @endif
-
+                @endforeach
             @endforeach
+
+
+
+
             <div class="comment">
                 <h3>Assessment Comments: </h3>
                 <p>{{ $comment ?? '' }}</p>
@@ -820,10 +763,12 @@
                     width: 100%;
                     margin-bottom: 15px;
                 }
-                .table-container th{
-                  color: #030303;
+
+                .table-container th {
+                    color: #030303;
                     font-size: 12pt;
                 }
+
                 .progress-bar {
                     width: 100%;
                     height: 20px;
@@ -851,8 +796,9 @@
                 }
 
                 .assessment-table-container {
-            margin-bottom: 20px; /* Spacing between tables */
-        }
+                    margin-bottom: 20px;
+                    /* Spacing between tables */
+                }
 
 
 
@@ -937,80 +883,87 @@
 
         </div>
         <div class="table-data" style="width: 100%; height: 100%; margin: 0 auto; padding: 20px; box-sizing: border-box;">
-          <h4 style="color: #00a6d5; text-align: left;">Scope of Assessment</h4>
-          <p style="font-size: 16px; font-family: sans-serif; text-align: left; color: black;">
-              This OMM Assessment was conducted by {{ $name }}. The Assessment Record number, and the dates are listed as follows.
-          </p>
+            <h4 style="color: #00a6d5; text-align: left;">Scope of Assessment</h4>
+            <p style="font-size: 16px; font-family: sans-serif; text-align: left; color: black;">
+                This OMM Assessment was conducted by {{ $name }}. The Assessment Record number, and the dates are
+                listed as follows.
+            </p>
 
-          <div class="table-container" style="margin-bottom: 20px; height: 33%;">
-              <table style="width: 100%; height: 100%; border: 3px solid #504e4e; border-collapse: collapse;">
-                  <thead>
-                      @php
-                      $date = \Carbon\Carbon::now()->format('d/m/Y');
-                      @endphp
-                      <tr style="background-color:#00a6d5; color:white;">
-                          <th colspan="2" style="padding: 10px; text-align:left;">ASSESSMENT DETAILS</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <th style="padding: 10px; text-align:left; border: 1px solid #000;">Date of Assessment</th>
-                          <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">{{ $date }}</td>
-                      </tr>
-                      <tr>
-                          <th style="padding: 10px; text-align:left; border: 1px solid #000;">Company Name</th>
-                          <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">{{ $company_details }}</td>
-                      </tr>
-                      <tr>
-                          <th style="padding: 10px; text-align:left; border: 1px solid #000;">Location</th>
-                          <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">{{ $located }}</td>
-                      </tr>
-                      <tr>
-                          <th style="padding: 10px; text-align:left; border: 1px solid #000;">Industry Group</th>
-                          <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">{{ $Primary }}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+            <div class="table-container" style="margin-bottom: 20px; height: 33%;">
+                <table style="width: 100%; height: 100%; border: 3px solid #504e4e; border-collapse: collapse;">
+                    <thead>
+                        @php
+                            $date = \Carbon\Carbon::now()->format('d/m/Y');
+                        @endphp
+                        <tr style="background-color:#00a6d5; color:white;">
+                            <th colspan="2" style="padding: 10px; text-align:left;">ASSESSMENT DETAILS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th style="padding: 10px; text-align:left; border: 1px solid #000;">Date of Assessment</th>
+                            <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                {{ $date }}</td>
+                        </tr>
+                        <tr>
+                            <th style="padding: 10px; text-align:left; border: 1px solid #000;">Company Name</th>
+                            <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                {{ $company_details }}</td>
+                        </tr>
+                        <tr>
+                            <th style="padding: 10px; text-align:left; border: 1px solid #000;">Location</th>
+                            <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                {{ $located }}</td>
+                        </tr>
+                        <tr>
+                            <th style="padding: 10px; text-align:left; border: 1px solid #000;">Industry Group</th>
+                            <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                {{ $Primary }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-          <div class="table-container" style="margin-bottom: 20px; height: 30%;">
-              <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
-                  <thead>
-                      <tr style="background-color:#00a6d5; color:white;">
-                          <th style="padding: 10px; text-align:left;">KPI</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      @if($business_goals)
-                      @foreach(json_decode($business_goals) as $kpi)
-                      <tr>
-                          <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">{{ $kpi }}</td>
-                      </tr>
-                      @endforeach
-                      @endif
-                  </tbody>
-              </table>
-          </div>
+            <div class="table-container" style="margin-bottom: 20px; height: 30%;">
+                <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
+                    <thead>
+                        <tr style="background-color:#00a6d5; color:white;">
+                            <th style="padding: 10px; text-align:left;">KPI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($business_goals)
+                            @foreach (json_decode($business_goals) as $kpi)
+                                <tr>
+                                    <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                        {{ $kpi }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
 
-          <div class="table-container" style="height: 30%;">
-              <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
-                  <thead>
-                      <tr style="background-color:#00a6d5; color:white;">
-                          <th style="padding: 10px; text-align:left;">Cost Driver</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      @if($drivers)
-                      @foreach(json_decode($drivers) as $driver)
-                      <tr>
-                          <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">{{ $driver }}</td>
-                      </tr>
-                      @endforeach
-                      @endif
-                  </tbody>
-              </table>
-          </div>
-      </div>
+            <div class="table-container" style="height: 30%;">
+                <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
+                    <thead>
+                        <tr style="background-color:#00a6d5; color:white;">
+                            <th style="padding: 10px; text-align:left;">Cost Driver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($drivers)
+                            @foreach (json_decode($drivers) as $driver)
+                                <tr>
+                                    <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                        {{ $driver }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
 
@@ -1020,13 +973,13 @@
     </div>
     <script>
         function printPage() {
-          var printWindow = window.open('', '', 'height=1000,width=1200');
+            var printWindow = window.open('', '', 'height=1000,width=1200');
             var printContent = document.querySelector('.card-body').innerHTML;
-            var companyName = "{{$company}}"; // Example company name
+            var companyName = "{{ $company }}"; // Example company name
             var date = new Date().toLocaleDateString('en-GB');
-    var preparedBy = "{{$name}}"; // Example user name
-    var dynamicImageSrc = "/assets/img/print/1.jpg";
-    var firstpage = `<div class="dynamic-image-container" style="page-break-after: always;">
+            var preparedBy = "{{ $name }}"; // Example user name
+            var dynamicImageSrc = "/assets/img/print/1.jpg";
+            var firstpage = `<div class="dynamic-image-container" style="page-break-after: always;">
     <img src="${dynamicImageSrc}" alt="Dynamic Image" class="dynamic-image">
     <div class="company-name">
          <h3>COMPANY:</h3><p>${companyName}</p>
@@ -1038,8 +991,8 @@
         <h3>PREPARED BY:</h3><p>${preparedBy}</p>
     </div>
 </div>`;
-var tablepage = document.querySelector('.table-data').innerHTML;
-    var headerImage = `
+            var tablepage = document.querySelector('.table-data').innerHTML;
+            var headerImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
         <img src="/assets/img/print/2.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/3.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
@@ -1047,7 +1000,7 @@ var tablepage = document.querySelector('.table-data').innerHTML;
         <img src="/assets/img/print/5.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/6.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/7.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-s
+
 
       </div>
     `;
@@ -1099,7 +1052,7 @@ s
             <div class="card-body">${printContent}</div>
         </div>
     `;
-    var tablecontent = `
+            var tablecontent = `
   <div style="page-break-after: always; width: 100%; height: 80%; margin: 0 auto; padding-bottom: 10px; box-sizing: border-box;">
     <div class="card-body" style="height: 80%;">${tablepage}</div>
   </div>
@@ -1110,7 +1063,7 @@ s
       <div class="card-footer" style="margin-top: 20px; padding: 10px;">
         <h3><strong>Assessment Comments: </strong></h3>
         <p>${'{{ $comment ?? '' }}'}</p>
-      </div>
+</div>
     `;
             printWindow.document.write('<html><head><title>Six Sigma Report</title>');
 
@@ -1124,10 +1077,16 @@ s
         background-color: #fff;
       }
 
-      @page {
-        size: A4;
-        margin: 5mm;
-      }
+       @page {
+                size: A4;
+                margin: 5mm;
+             }
+                @page :first {
+                margin: 0.5mm;
+             }
+
+
+
 
       .image-page {
         width: 100%;
@@ -1462,9 +1421,9 @@ s
 
             // Wait for content to load and trigger print
             printWindow.onload = function() {
-                printWindow.print();
-                printWindow.close();
-            };
+        printWindow.print();
+        printWindow.close();
+    };
         }
     </script>
 

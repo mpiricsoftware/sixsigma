@@ -14,7 +14,7 @@
                             return $answers
                                 ->where('question_id', $question->id)
                                 ->where('section_id', $s->id)
-                                ->where('user_id', auth()->user()->id)
+                                // ->where('user_id', auth()->user()->id)
                                 ->isNotEmpty();
                         });
 
@@ -55,7 +55,7 @@
                                         $userAnswers = $answers
                                             ->where('question_id', $q->id)
                                             ->where('section_id', $s->id)
-                                            ->where('user_id', auth()->user()->id);
+                                            // ->where('user_id', auth()->user()->id);
                                             // dd($answeredQuestions);
                                     @endphp
 

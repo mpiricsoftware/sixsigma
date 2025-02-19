@@ -41,6 +41,7 @@ $(function () {
         ajax: {
           url: ajexUrl
         },
+        order: [[1, "desc"]],
         columns: [
           // columns according to JSON
           { data: '' },
