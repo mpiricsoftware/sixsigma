@@ -86,7 +86,8 @@ class UserManagement extends Controller
             $totalData = $query->count();
 
 
-            $query->offset($start)
+            $query->orderBy('id', 'DESC')
+                  ->offset($start)
                   ->limit($length);
             if ($request->has('order.0.column') && $request->has('order.0.dir')) {
                 $orderColumn = $request->input('order.0.column');
@@ -96,6 +97,7 @@ class UserManagement extends Controller
                 $orderByColumn = $columns[$orderColumn] ?? 'id'; // Default to 'id' if not found
                 $query->orderBy($orderByColumn, $orderDirection);
             }
+
 
             // Get the filtered users
             $users = $query->get();

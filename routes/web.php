@@ -230,7 +230,7 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::get('/info/{slug}',[QuestionController::class,'info'])->name('dashboard-analytics');
     Route::get('/img/{slug}',[QuestionController::class,'img'])->name('img');
     Route::get('/print/{id}/{user_id}',[QuestionController::class,'print'])->name('print');
-    Route::get('/dprint/{id}',[QuestionController::class,'dprint'])->name('dprint');
+    Route::get('/dprint/{id}/{user_id}',[QuestionController::class,'dprint'])->name('dprint');
     Route::get('inquiry',[InquiryController::class,'index']);
     Route::resource('inquiry-list',InquiryController::class);
     Route::get('message',[InquiryController::class,'message'])->name('message');

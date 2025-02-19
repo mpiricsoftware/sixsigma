@@ -20,7 +20,7 @@
 </div>
 <div class="text-center mb-5" style="padding: 20px;">
   <a href="{{ url('/home',['slug' => $form->slug]) }}" class="btn btn-dark rounded-0" id="go-to-questions">
-      Go to Questions
+      Go to Assessment
   </a>
 </div>
 <style>
