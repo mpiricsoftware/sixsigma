@@ -9,13 +9,15 @@ $(function () {
           ajax: {
               url: baseUrl + 'details-list'
           },
+          order: [[1, "desc"]],
           columns: [
               { data: '' }, // Responsive
               { data: 'id' }, // Form ID
               { data: 'user_name' }, // User name
               { data: 'user_email' }, // User email
               { data: 'form_name' }, // Form name
-              { data: 'form_description' }, // Form description
+              { data: 'form_description' },
+              { data: 'date' }, // Form description
               { data: 'action' } // Action buttons
           ],
           columnDefs: [
@@ -56,6 +58,13 @@ $(function () {
                       return `<span>${full.form_description}</span>`;
                   }
               },
+              {
+                target: 6,
+                render: function (data, type, full) {
+                    return `<span style="white-space: nowrap;">${full.date}</span>`;
+                }
+            },
+
               {
                   targets: -1,
                   title: 'Actions',

@@ -1039,12 +1039,23 @@ var PillarChartHTML = `
     </div>
 `;
 
-            // Modified questionchartsHTML
-            var questionchartsHTML = `
-      <div id="questioncharts-container" style="width: 100%; display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px; margin-bottom: 20px;">
-        ${document.querySelector('#questioncharts').innerHTML}
-      </div>
-    `;
+var charts = document.querySelectorAll('#questioncharts .chart-container');
+var questionchartsHTML = "";
+
+// Group charts into rows of two
+for (let i = 0; i < charts.length; i += 2) {
+    questionchartsHTML += `<div class="chart-row side-by-side-charts">`;
+
+    // First chart in row
+    questionchartsHTML += `<div class="chart-wrapper">${charts[i].outerHTML}</div>`;
+
+    // Second chart in row (if exists)
+    if (charts[i + 1]) {
+        questionchartsHTML += `<div class="chart-wrapper">${charts[i + 1].outerHTML}</div>`;
+    }
+
+    questionchartsHTML += `</div>`;
+}
 
             //This is the CRITICAL change: removed the page-break-before: always;
             var titleAndContent = `
@@ -1294,10 +1305,12 @@ var PillarChartHTML = `
         color: #00a6d5;
         font-weight: bold;
         font-size: 12pt;
+
       }
 
       .section {
         margin-bottom: 30px;
+
       }
 
       .section h5 {
@@ -1307,6 +1320,7 @@ var PillarChartHTML = `
         border-radius: 8px;
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
+
       }
 
       .section-table {
@@ -1328,6 +1342,7 @@ var PillarChartHTML = `
 
       .section-table td:last-child {
         padding-right: 20px;
+         page-break-inside: avoid;
       }
 
       .progress-bar-container {
@@ -1416,9 +1431,9 @@ var PillarChartHTML = `
       </div>
     `);
             printWindow.document.write(`
-      <div class="side-by-side-charts">
+
         ${questionchartsHTML}
-      </div>
+
     `);
             printWindow.document.write('</div>');
             printWindow.document.write(titleAndContent);
