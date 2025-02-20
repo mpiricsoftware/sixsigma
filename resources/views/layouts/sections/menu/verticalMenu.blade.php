@@ -13,7 +13,7 @@ $configData = Helper::appClasses();
         <img src="{{ asset('assets\img\print\omm logo.png') }}" alt="Logo" width="70">
 
     </span>
-      <span class="app-brand-text demo menu-text fw-semibold ms-2">{{config('variables.templateName')}}</span>
+      {{-- <span class="app-brand-text demo menu-text fw-semibold ms-2">{{config('variables.templateName')}}</span> --}}
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

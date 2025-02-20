@@ -411,18 +411,6 @@
     const globalOptionIndex = {};
     let questionCounter = {};
 
-    // // Function to get the maximum question ID for a given section
-    // function getMaxQuestionId(sectionId) {
-    //     const questionIds = $(`#dynamicFields_${sectionId} .choice-field, input[name^="question_id[${sectionId}]"]`)
-    //         .map(function() {
-    //             const id = $(this).attr('id') || $(this).val();
-    //             const parts = id.split('_');
-    //             return parseInt(parts[2] || parts[0]);
-    //         }).get();
-    //     return Math.max(0, ...questionIds);
-    // }
-
-    // Function to add a new choice field to a section
     function addChoiceField(sectionId) {
         const container = $(`#dynamicFields_${sectionId}`);
 
@@ -473,33 +461,6 @@ globalOptionIndex[sectionId] = existingOptionsCount;
 
         addChoiceOption(sectionId, questionId);
     }
-
-//     function getMaxOptionIndex(sectionId, questionId) {
-//     const choiceOptionsContainer = $(`#${questionId} .choice-options`);
-
-//     if (choiceOptionsContainer.length === 0) {
-//         console.error(`No .choice-options container found for questionId: ${questionId}`);
-//         return -1;
-//     }
-//     const optionElements = choiceOptionsContainer.find('.option-value');
-
-//     if (optionElements.length === 0) {
-//         console.warn("No .option-value elements found inside .choice-options");
-//         return -1;
-//     }
-
-//     const optionIndices = optionElements.map(function() {
-//         const index = $(this).data('option-index');
-//         console.log("Found option-index:", index);
-//         return index !== undefined ? parseInt(index, 10) : 0;
-//     }).get();
-
-//     console.log("Option Indices Array:", optionIndices);
-
-//     return optionIndices.length > 0 ? Math.max(...optionIndices) : -1;
-// }
-
-
     function addChoiceOption(sectionId, questionId) {
       const container = $(`#${questionId} .choice-options`);
         const choiceType = $(`#${questionId} .choice-type-hidden`).val();
