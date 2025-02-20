@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\form;
 use App\Models\Details;
+use Carbon\Carbon;
+
 
 class DetailsController extends Controller
 {
@@ -54,7 +56,7 @@ $details = $query->get();
           $totalData = $query->count();
 
 
-          $query->offset($start)
+          $query->orderBy('id', 'DESC')->offset($start)
                 ->limit($length);
           if ($request->has('order.0.column') && $request->has('order.0.dir')) {
               $orderColumn = $request->input('order.0.column');
@@ -80,6 +82,7 @@ $details = $query->get();
             $nestedData['form_description'] = $i->form_description;
             $nestedData['user_name'] = $i->user_name;
             $nestedData['user_email'] = $i->user_email;
+            $nestedData['date'] = $i->date;
             $data[] = $nestedData;
             $fackid++;
         }
@@ -115,6 +118,8 @@ $details = $query->get();
         $user->save();
         $business_goals = json_encode($request->business_goals);
         $drivers = json_encode($request->drivers);
+        $date =  Carbon::now()->format('d-m-Y');
+        // dd($date);
         if ($request->has('details_id')) {
             $details = Details::find($request->details_id);
             if ($details) {
@@ -146,15 +151,21 @@ $details = $query->get();
                 'consultant' => $request->consultant,
                 'Primary' => $request->Primary,
                 'business_goals' => $business_goals,
-                'drivers' => $drivers
+                'drivers' => $drivers,
+                'date' => $date
             ]);
         }
         if ($form) {
-            $formData = Form::find($form);
-            if ($formData) {
-                return redirect()->route('img', ['slug' => $formData->slug]);
-            }
-        }
+          $formData = Form::find($form);
+
+          if ($formData) {
+              if (!empty($formData->img)) {
+                  return redirect()->route('img', ['slug' => $formData->slug]);
+              } else {
+                  return redirect()->route('home',['slug' => $formData->slug]);
+              }
+          }
+      }
 
         return back()->with('error', 'Form not found');
     }

@@ -24,7 +24,8 @@ class Details extends Model
       'Primary',
       'consultant',
       'located',
-      'designation'
+      'designation',
+      'date'
     ];
 
     public function user()
