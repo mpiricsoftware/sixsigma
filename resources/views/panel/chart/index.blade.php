@@ -1028,13 +1028,13 @@
             var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
 
             var basicchartstHTML = `
-      <div class ="chart-containers" style="margin-top: 20px; margin-bottom: 20px;">
+      <div id="basicchartstHTML" style="width: 50%; margin-top: 20px;">
         <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
       </div>
     `;
 
             var PillarChartHTML = `
-      <div style="width: 50%; display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px; margin-bottom: 20px;">
+      <div style="width:50%;margin-top: 20px;">
         <div id="PillarChart">${document.querySelector('#PillarChart').outerHTML}</div>
       </div>
     `;
@@ -1101,7 +1101,7 @@
         justify-content: space-around;
         align-items: flex-start;
         padding: 30px;
-        width: 100%;
+
       }
 
       .apexcharts-toolbar {
@@ -1239,12 +1239,12 @@
         display: inline-block;
 
       }
-        .chart-containers {
-    width: 40%; /* Slightly less than 50% to avoid any overflow */
-    box-sizing: border-box;
-justify-content: center;
-    padding-right:60px;
-}
+//         .chart-containers {
+//     width: 40%; /* Slightly less than 50% to avoid any overflow */
+//     box-sizing: border-box;
+// justify-content: center;
+//     padding-right:60px;
+// }
 
       h2 {
         color: #00a6d5;
@@ -1253,7 +1253,6 @@ justify-content: center;
 
       .side-by-side-charts {
         display: flex;
-
         align-items: flex-start;
         margin-top: 20px;
 
@@ -1264,6 +1263,11 @@ justify-content: center;
         width: 48%;
         box-sizing: border-box;
       }
+      #basicchartstHTML > div{
+        width: 40%;
+        box-sizing: border-box;
+        padding-right:100%;
+        }
 
       .card-body {
         padding: 40px;
