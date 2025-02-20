@@ -1412,12 +1412,7 @@
             printWindow.document.write(barchartHtml);
 
             printWindow.document.write('<div class="chart-container">');
-            printWindow.document.write(`
-      <div class="side-by-side-charts">
-        ${basicchartstHTML}
-        ${PillarChartHTML}
-      </div>
-    `);
+
             printWindow.document.write(`
       <div class="side-by-side-charts">
         ${questionchartsHTML}
