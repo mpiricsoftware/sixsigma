@@ -1028,16 +1028,16 @@
             var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
 
             var basicchartstHTML = `
-      <div id="basicchartstHTML" style="width: 50%; margin-top: 20px;">
+    <div class="chart-wrapper">
         <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
-      </div>
-    `;
+    </div>
+`;
 
-            var PillarChartHTML = `
-      <div style="width:50%;margin-top: 20px;">
+var PillarChartHTML = `
+    <div class="chart-wrapper">
         <div id="PillarChart">${document.querySelector('#PillarChart').outerHTML}</div>
-      </div>
-    `;
+    </div>
+`;
 
             // Modified questionchartsHTML
             var questionchartsHTML = `
@@ -1239,36 +1239,33 @@
         display: inline-block;
 
       }
-//         .chart-containers {
-//     width: 40%; /* Slightly less than 50% to avoid any overflow */
-//     box-sizing: border-box;
-// justify-content: center;
-//     padding-right:60px;
-// }
 
       h2 {
         color: #00a6d5;
         text-align: center;
       }
 
-      .side-by-side-charts {
-        display: flex;
-        align-items: flex-start;
-        margin-top: 20px;
+    .side-by-side-charts {
+    display: flex;
+    justify-content: center;
+   align-items: flex-start;
+    width: 100%;
+    gap: 30px;s
+    margin-top: 20px;
+}
 
+.chart-wrapper {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
 
-      }
 
       #questioncharts-container > div {
         width: 48%;
         box-sizing: border-box;
       }
-      #basicchartstHTML > div{
-        width: 40%;
-        box-sizing: border-box;
-        padding-right:100%;
-        }
-
       .card-body {
         padding: 40px;
         line-height: 1.6;
@@ -1412,7 +1409,12 @@
             printWindow.document.write(barchartHtml);
 
             printWindow.document.write('<div class="chart-container">');
-
+            printWindow.document.write(`
+      <div class="side-by-side-charts">
+        ${basicchartstHTML}
+        ${PillarChartHTML}
+      </div>
+    `);
             printWindow.document.write(`
       <div class="side-by-side-charts">
         ${questionchartsHTML}
