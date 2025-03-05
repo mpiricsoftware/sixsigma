@@ -119,6 +119,7 @@
                                 <option value="Semiconductors">Semiconductors</option>
                                 <option value="Textile (Clothing, Leather & Footwear)">Textile (Clothing, Leather &
                                     Footwear)</option>
+                                <option value="Others">Others</option>
 
                             </select>
                             <label for="Primary Industry Group">Primary Industry Group</label>
