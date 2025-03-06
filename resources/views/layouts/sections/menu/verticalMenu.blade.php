@@ -8,11 +8,10 @@ $configData = Helper::appClasses();
   <!-- ! Hide app brand if navbar-full -->
   @if(!isset($navbarFull))
   <div class="app-brand demo">
-    <a href="{{url('/')}}" class="app-brand-link">
+    <a href="{{url('/')}}" class="app-brand-link" style="padding-left:15x;">
       <span class="app-brand-logo demo">
         <img src="{{ asset('assets\img\print\omm logo.png') }}" alt="Logo" width="70">
-
-    </span>
+      </span>
       {{-- <span class="app-brand-text demo menu-text fw-semibold ms-2">{{config('variables.templateName')}}</span> --}}
     </a>
 
@@ -22,11 +21,10 @@ $configData = Helper::appClasses();
         <path d="M14.3584 11.8336C14.0654 12.1266 14.0654 12.6014 14.3584 12.8944L18.071 16.607C18.4615 16.9975 18.4615 17.6305 18.071 18.021C17.6805 18.4115 17.0475 18.4115 16.657 18.021L11.6819 13.0459C11.3053 12.6693 11.3053 12.0587 11.6819 11.6821L16.657 6.707C17.0475 6.31653 17.6805 6.31653 18.071 6.707C18.4615 7.09747 18.4615 7.73053 18.071 8.121L14.3584 11.8336Z" fill-opacity="0.4" />
       </svg>
     </a>
-  </div>
-  @endif
+</div>
+@endif
 
   <div class="menu-inner-shadow"></div>
-
   <ul class="menu-inner py-1">
     @foreach ($menuData[0]->menu as $menu)
       {{-- @if (isset($menu->role) && in_array(auth()->user()->roles[0]->name, $menu->role)) --}}

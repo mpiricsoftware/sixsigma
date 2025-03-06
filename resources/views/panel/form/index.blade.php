@@ -82,7 +82,7 @@
               </div>
               <form id="addformForm" class="row g-4" method="POST" enctype="multipart/form-data">
                 @csrf
-                   <!-- Form Name Input -->
+                <input type="hidden" value="" name="id" id="form_id">
                    <div class="col-12 col-md-6">
                      <div class="form-floating form-floating-outline">
                        <input type="text" class="form-control" id="name" placeholder="Form Name" name="name" required />
@@ -119,6 +119,7 @@
 
 <script>
      var showUrl = @json(route('form-list.show', ':id'));
+     var editUrl = @json(route('form-list.edit', ':id'));
 
   </script>
 

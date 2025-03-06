@@ -138,7 +138,10 @@ class FormController extends Controller
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(String $id) {}
+  public function edit(String $id) {
+    $form = form::findOrFail($id);
+     return response()->json($form);
+  }
 
   /**
    * Update the specified resource in storage.

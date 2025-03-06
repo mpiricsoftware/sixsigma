@@ -1,3 +1,5 @@
+
+
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -5,6 +7,23 @@ $.ajaxSetup({
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+  // const submitButtons = document.querySelectorAll('[id^="submit-btn"]'); // Select all submit buttons dynamically
+  //   const statusCard = document.getElementById('status-card');
+
+  //   if (submitButtons.length > 0) {
+  //       submitButtons.forEach(button => {
+  //           button.addEventListener('click', function () {
+  //               console.log("Completion card submit button clicked...");
+  //               if (statusCard) {
+  //                   console.log("Displaying status card...");
+  //                   setTimeout(() => {
+  //                   statusCard.style.display = 'block';
+  //                   });// Show status card
+  //               }
+  //           });
+  //       });
+  //   }
+
 
   let isTransitioning = false;
   let totalQuestions = document.querySelectorAll('.question[data-question-id]').length;
@@ -132,6 +151,7 @@ checkAnsweredQuestions();
       } else {
           console.log('No more sections. Quiz completed!');
           showCompletionCard();
+          showStatusCard();
           isTransitioning = false;
       }
   }
@@ -248,6 +268,15 @@ function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
       }
   }
 
+  function showStatusCard() {
+
+    const statusCard = document.getElementById('questionTable');
+    if (statusCard) {
+        console.log("Displaying status card...");
+        statusCard.style.display = 'block';
+    }
+}
+
   document.querySelectorAll('input[type="date"]').forEach(input => {
       input.addEventListener('change', function() {
           const selectedDate = this.value;
@@ -309,10 +338,41 @@ document.querySelectorAll('.star').forEach(star => {
     resetStars(questionId);
   });
 });
-window.startQuiz = startQuiz;
-window.showQuestion = showQuestion;
-window.finishSection = finishSection;
-window.showNextSection = showNextSection;
+
+
+
+  const radioButtons = document.querySelectorAll("input[type='radio']");
+
+  radioButtons.forEach(radio => {
+      radio.addEventListener("change", function () {
+          let questionId = this.getAttribute("data-question-id"); // Get the question ID
+          let sectionId = this.closest("form")?.getAttribute("data-section-id"); // Get section ID (optional)
+
+          console.log(`Selected Question ID: ${questionId}, Section ID: ${sectionId}`);
+
+          if (!questionId) {
+              console.error("❌ Failed to retrieve question ID.");
+              return;
+          }
+
+          // Find the corresponding table cell
+          let questionCell = document.getElementById(`question-${questionId}`);
+
+          if (questionCell) {
+              questionCell.style.backgroundColor = "rgb(73, 138, 73)"; // Change background color
+              questionCell.style.color = "white"; // Ensure text is readable
+          } else {
+              console.warn(`⚠️ No table cell found for question ID: ${questionId}`);
+          }
+      });
+  });
+
+
+
+  window.startQuiz = startQuiz;
+  window.showQuestion = showQuestion;
+  window.finishSection = finishSection;
+  window.showNextSection = showNextSection;
 });
 
 

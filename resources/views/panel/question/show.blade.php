@@ -112,8 +112,8 @@
                                                                              margin-right: 10px;">
                                                                       <input type="radio"
                                                                           name="answers[{{ $section->id }}][{{ $qIndex }}]"
-                                                                          value="{{ $options[$index] }}"
-                                                                          {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);">
+                                                                          value="{{ $options[$index] }}" data-question-id="{{ $q->id }}"
+                                                                          {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);" >
                                                                   </div>
                                                                   <div class="p-3 rounded text-left"
                                                                       style="background-color: #{{ $backgroundColors[$index] }};
@@ -205,15 +205,55 @@
                     </div>
                 </div>
             @endforeach
+
             <div id="completion-card" class="card mb-4" style="display: none; width: 100%;">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
                     <p class="card-text">You have completed the quiz. Well done!</p>
-                    <button type="submit" class="btn btn-dark rounded" id="submit-btn{{ $section->id }}">Save your
+                    <button type="submit" class="btn btn-dark rounded" id="submit-btn{{ $section->id }}" >Save your
                         response</button>
                 </div>
             </div>
+
+
         </form>
+
+        <div class="card mt-4"style="width:70%;margin:12%;">
+
+
+         <div class="card-body" id="questionTable" style="display:none">
+          <table class="table table-bordered"
+    style=" border-collapse: collapse; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+    <tbody>
+        @foreach ($sections as $section)
+            @php
+                $questionCount = $questions->where('section_id', $section->id)->count();
+            @endphp
+            <tr>
+                <td colspan="{{ $questionCount ?: 1 }}" class="text-center"
+                    style=" font-size: 18px; padding: 12px;"
+                    data-section-id="{{ $section->id }}">
+                    <strong>{{ $section->section_name }}</strong>
+                </td>
+            </tr>
+
+            <!-- Questions Row -->
+            <tr id="row-{{ $section->id }}">
+                @foreach ($questions->where('section_id', $section->id) as $question)
+                    <td id="question-{{ $question->id }}" class="text-center question-cell"
+                        style="background-color: rgb(255, 107, 107);
+                        ; color: white; font-weight: bold; padding: 15px; transition: background-color 0.3s ease-in-out;">
+                        {{ $question->question_text }}
+                    </td>
+                @endforeach
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
+      </div>
+
+    </div>
 
 
     {{-- </div> --}}

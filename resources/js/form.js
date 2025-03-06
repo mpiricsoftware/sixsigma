@@ -82,8 +82,10 @@ $(function () {
             orderable: false,
             render: function (data, type, full, meta) {
               let showpage = showUrl.replace(':id', full['id']);
+              let editpage = editUrl.replace(':id', full['id']);
               return (
                 '<div class="d-flex align-items-center">' +
+                `<span class="text-nowrap"><button data-id="${editpage}" class="btn btn-sm btn-icon btn-text-secondary edit-record text-body rounded-pill waves-effect waves-light" data-bs-target="#addformModal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="ri-edit-box-line ri-20px"></i></button></span>` +
                 `<a href="${showpage}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Preview"><i class="ri-eye-line ri-20px"></i></a>`+
                 `<button data-id="${full['id']}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill delete-record text-body waves-effect waves-light me-1"><i class="ri-delete-bin-7-line ri-20px"></i></button>` +
                 '</div>'
@@ -304,7 +306,7 @@ $(function () {
         dtrModal.modal('hide');
       }
       // get data
-      $.get(`${baseUrl}form_-list\/${form_id}\/edit`, function (data) {
+      $.get(`${baseUrl}form-list\/${form_id}\/edit`, function (data) {
         // alert(data.form__name);
         $('#form_id').val(data.val['id']);
         $('#name').val(data.val['name']);
