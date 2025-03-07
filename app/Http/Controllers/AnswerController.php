@@ -72,6 +72,8 @@ class AnswerController extends Controller
             ]);
         }
     }
+    $details = Details::where('submission_id',$submissionId)->first();
+
     // dd($request->all());
 // dd($request->all());
     // Store submission details
@@ -84,7 +86,7 @@ class AnswerController extends Controller
     //     ]);
     // }
 
-    return view("panel.question.view", compact('form', 'user'));
+    return view("panel.question.view", compact('form', 'user','details'));
 }
 
 

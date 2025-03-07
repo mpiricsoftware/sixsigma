@@ -214,6 +214,8 @@ Route::group(['middleware' => ['auth','verified']], function ($request)
     Route::resource('input-list',InputController::class);
     Route::get('form',[FormController::class,'index'])->name('dashboard-form');
     Route::resource('form-list',FormController::class);
+    Route::put('updatenew/{id}',[FormController::class, 'updatenew'])->name('updatenew');
+
     Route::get('getInputFields',[FormController::class,'getInputFields'])->name('getInputFields');
     Route::get('stages',[StagesController::class,'index']);
     Route::resource('stages-list',StagesController::class);

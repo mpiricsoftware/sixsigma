@@ -138,23 +138,46 @@ class FormController extends Controller
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(String $id) {}
+  public function edit(String $id) {
+    $form = form::findOrFail($id);
+     return response()->json($form);
+  }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(Request $request, $id)
   {
-    //
+
   }
 
-  /**
-   * Remove the specified resource from storage.
-   */
+
+  public function updatenew(Request $request, $id)
+{
+
+    $form = Form::findOrFail($id);
+    $data = [
+      'name' => $request->name,
+      'slug' => $request->slug,
+      'description' => $request->description,
+  ];
+
+  if ($request->hasFile('file')) {
+      $data['file'] = $request->file('file')->store('uploads', 'public');
+  }
+
+  $form->update($data);
+
+// dd($data);
+    return response()->json(['message' => 'Form updated successfully']);
+}
+
+
   public function destroy(string $id)
   {
     $form = Form::where('id', $id)->delete();
   }
+
   public function getInputFields(Request $request)
   {
     // Fetch all input fields from the 'inputs' table (adjust the table name as per your model)
