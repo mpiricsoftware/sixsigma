@@ -1,5 +1,3 @@
-
-
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -7,23 +5,6 @@ $.ajaxSetup({
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  // const submitButtons = document.querySelectorAll('[id^="submit-btn"]'); // Select all submit buttons dynamically
-  //   const statusCard = document.getElementById('status-card');
-
-  //   if (submitButtons.length > 0) {
-  //       submitButtons.forEach(button => {
-  //           button.addEventListener('click', function () {
-  //               console.log("Completion card submit button clicked...");
-  //               if (statusCard) {
-  //                   console.log("Displaying status card...");
-  //                   setTimeout(() => {
-  //                   statusCard.style.display = 'block';
-  //                   });// Show status card
-  //               }
-  //           });
-  //       });
-  //   }
-
 
   let isTransitioning = false;
   let totalQuestions = document.querySelectorAll('.question[data-question-id]').length;

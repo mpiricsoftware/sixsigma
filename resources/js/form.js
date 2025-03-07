@@ -82,10 +82,15 @@ $(function () {
             orderable: false,
             render: function (data, type, full, meta) {
               let showpage = showUrl.replace(':id', full['id']);
-              let editpage = editUrl.replace(':id', full['id']);
+              let editpage = editUrl.replace(':id', full.id);
+
               return (
                 '<div class="d-flex align-items-center">' +
-                `<span class="text-nowrap"><button data-id="${editpage}" class="btn btn-sm btn-icon btn-text-secondary edit-record text-body rounded-pill waves-effect waves-light" data-bs-target="#addformModal" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="ri-edit-box-line ri-20px"></i></button></span>` +
+             `<span class="text-nowrap">
+                <button data-id="${full.id}" class="btn btn-sm btn-icon btn-text-secondary edit-record text-body rounded-pill waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#editformModal">
+                    <i class="ri-edit-box-line ri-20px"></i>
+                </button>
+            </span>` +
                 `<a href="${showpage}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Preview"><i class="ri-eye-line ri-20px"></i></a>`+
                 `<button data-id="${full['id']}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill delete-record text-body waves-effect waves-light me-1"><i class="ri-delete-bin-7-line ri-20px"></i></button>` +
                 '</div>'
@@ -297,75 +302,96 @@ $(function () {
         fa.resetForm(true);
     });
 
-    // edit record
+
     $(document).on('click', '.edit-record', function () {
-      var form_id = $(this).data('id'),
-        dtrModal = $('.dtr-bs-modal.show');
-      // hide responsive modal in small screen
-      if (dtrModal.length) {
-        dtrModal.modal('hide');
-      }
-      // get data
-      $.get(`${baseUrl}form-list\/${form_id}\/edit`, function (data) {
-        // alert(data.form__name);
-        $('#form_id').val(data.val['id']);
-        $('#name').val(data.val['name']);
+      let form_id = $(this).data('id');
+      let editFormUrl = editUrl.replace(':id', form_id);
 
+      console.log("Fetching data from:", editFormUrl);
 
+      $.get(editFormUrl, function (data) {
+          $('#edit_form_id').val(data.id);
+          $('#edit_name').val(data.name);
+          $('#edit_slug').val(data.slug);
+          $('#edit_description').val(data.description);
+
+          // Reset file input (fix file re-upload issue)
+          $('#edit_file').val('');
+
+          $('#editformModal').modal('show');
+      }).fail(function (xhr) {
+          console.error("Error fetching form data:", xhr.responseText);
+          alert('Failed to load form details.');
       });
-    });
+  });
 
-    const fe = FormValidation.formValidation(document.getElementById('editformForm'), {
+  // Form Validation and Submission
+  const fe = FormValidation.formValidation(document.getElementById('editformForm'), {
       fields: {
-        name: {
-          validators: {
-            notEmpty: {
-              message: 'Please enter form name'
-            }
+          name: {
+              validators: {
+                  notEmpty: {
+                      message: 'Please enter form name'
+                  }
+              }
           }
-        }
       },
       plugins: {
-        trigger: new FormValidation.plugins.Trigger(),
-        bootstrap5: new FormValidation.plugins.Bootstrap5({
-          // Use this for enabling/changing valid/invalid class
-          // eleInvalidClass: '',
-          eleValidClass: '',
-          rowSelector: '.form-floating'
-        }),
-        submitButton: new FormValidation.plugins.SubmitButton(),
-        // Submit the form when all fields are valid
-        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-        autoFocus: new FormValidation.plugins.AutoFocus()
+          trigger: new FormValidation.plugins.Trigger(),
+          bootstrap5: new FormValidation.plugins.Bootstrap5({
+              eleValidClass: '',
+              rowSelector: '.form-floating'
+          }),
+          submitButton: new FormValidation.plugins.SubmitButton(),
+          autoFocus: new FormValidation.plugins.AutoFocus()
       }
-    }).on('core.form.valid', function () {
-      // adding or updating user when form successfully validate
+  }).on('core.form.valid', function () {
+      let formData = new FormData($('#editformForm')[0]);
+      let form_id = $('#edit_form_id').val();
+      let updateUrl = updatenewUrl.replace(':id', form_id);
+
+      console.log("Updating via:", updateUrl);
+
       $.ajax({
-        data: $('#editformForm').serialize(),
-        url: `${baseUrl}form-list`,
-        type: 'POST',
-        success: function (status) {
-          dt_form.draw();
-          offModalEditForm.modal('hide');
-
-          // sweetalert
-          Swal.fire({
-            icon: 'success',
-            title: `Successfully Stored!`,
-            text: `form Stored Successfully.`,
-            customClass: {
-              confirmButton: 'btn btn-success'
-            }
-          });
-        }
-
+          url: updateUrl,
+          type: 'POST', // Laravel treats this as PUT due to _method
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+              console.log('Success:', response);
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Successfully Updated!',
+                  text: response.message,
+                  customClass: {
+                      confirmButton: 'btn btn-success'
+                  }
+              });
+              $('#editformModal').modal('hide'); // Close modal
+              dt_form.draw(); // Refresh DataTable
+          },
+          error: function (xhr) {
+              console.error('Error:', xhr.responseText);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Update Failed!',
+                  text: 'There was an issue updating the form.',
+                  customClass: {
+                      confirmButton: 'btn btn-danger'
+                  }
+              });
+          }
       });
-    });
+  });
 
-    // clearing form data when offcanvas hidden
-    offModalEditForm.on('hide.bs.modal', function () {
+  // Reset Form When Modal is Closed
+  $('#editformModal').on('hide.bs.modal', function () {
       fe.resetForm(true);
-    });
+  });
 
 });
 $('#addSection').on('click', function() {
