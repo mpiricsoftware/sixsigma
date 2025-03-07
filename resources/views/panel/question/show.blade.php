@@ -209,12 +209,12 @@
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
                     <p class="card-text">You have completed the quiz. Well done!</p>
-                    <button type="button" class="btn btn-white rounded-0"
+                    <button type="button" class="btn btn-dark rounded"
                     id="prev-btn{{ $section->id }}"
                     onclick="showQuestion('{{ $section->id }}')">Back</button>
 
 
-                    <button type="submit" class="btn btn-dark rounded" id="submit-btn{{ $section->id }}" >Save your
+                    <button type="submit" class="btn rounded" style="background-color: #00a6d5;color: white;" id="submit-btn{{ $section->id }}" >Save your
                         response</button>
                 </div>
                 <div style="width:100%;">
@@ -230,8 +230,8 @@
                               <!-- Pillar Name Row -->
                               <tr>
                                   <td rowspan="1" class="text-center"
-                                      style="color: rgb(77, 73, 73); font-size: 18px; padding: 8px; width: 10%; border: none;">
-                                      <strong>{{ $pillar->name }}</strong>
+                                      style="color: black; padding: 8px; width: 10%; border: none;text-align:center">
+                                      <h5 style="text-align: center">{{ $pillar->name }}</h5>
                                   </td>
 
                                   <!-- Questions in Remaining Columns -->
