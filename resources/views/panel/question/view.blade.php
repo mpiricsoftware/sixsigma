@@ -29,8 +29,26 @@
 @endsection
 @section('content')
 
+
+
 <div class="container">
   <form method="GET">
+    {{-- @foreach ($questionIds as $sectionId => $questions)
+    <div class="section">
+        <h3>Section {{ $sectionId }}</h3>
+        <ul>
+            @foreach ($questions as $questionId)
+                <li>
+                    <strong>Question:</strong> {{ $questionTexts[$questionId] ?? 'Question not found' }}
+                    <strong>Answers:</strong> {{ $answer}}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endforeach --}}
+
+
+
       <div class="text-center mt-5">
         <input type="hidden" id="id" name="id" value="{{ $form }}">
           <div class="card" style="margin: 5%; padding-top: 5%; padding-bottom: 5%">
@@ -40,12 +58,13 @@
 
                   <a href="/" class="btn btn-dark rounded-0">Go to Home</a>
 
-                  <a href="{{ route('print', ['id' => $form, 'user_id' => $user->id] ) }}" class="btn btn-white rounded-0" id="print-btn">Print</a>
+                  <a href="{{ route('avg', ['id' => $form, 'user_id' => $user->id ,'details_id' => $details->id] ) }}" class="btn btn-white rounded-0" id="print-btn">Print</a>
 
 
               </div>
           </div>
       </div>
+
   </form>
 </div>
 

@@ -19,6 +19,7 @@ $navbarDetached = ($navbarDetached ?? '');
         <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-6">
           <a href="{{url('/')}}" class="app-brand-link gap-2">
             <span class="app-brand-logo demo">
+
               <img src="{{ asset('assets\img\print\omm logo.png') }}" alt="Logo" width="120" style="background-color: var(--bs-primary);">
           </span>
             {{-- <span class="app-brand-text demo menu-text fw-semibold">{{config('variables.templateName')}}</span> --}}

@@ -110,3 +110,14 @@
   text-align: center;
   margin-top: 1.25rem;
 }
+
+@media (min-width: 1200px) {
+  .layout-menu-collapsed:not(.layout-menu-hover):not(.layout-menu-offcanvas):not(.layout-menu-fixed-offcanvas) .layout-menu .menu-vertical, .layout-menu-collapsed:not(.layout-menu-hover):not(.layout-menu-offcanvas):not(.layout-menu-fixed-offcanvas) .layout-menu.menu-vertical {
+    width: 6.375rem;
+  }
+}
+@media (min-width: 1200px) {
+  .layout-menu-collapsed:not(.layout-menu-hover):not(.layout-menu-offcanvas):not(.layout-menu-fixed-offcanvas) .layout-menu .app-brand {
+    width: 6.375rem;
+  }
+}

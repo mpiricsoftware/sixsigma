@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
           bar.style.width = progressPercentage + "%";
       });
 
-
   }
 
   function checkAnsweredQuestions() {
@@ -132,6 +131,7 @@ checkAnsweredQuestions();
       } else {
           console.log('No more sections. Quiz completed!');
           showCompletionCard();
+          showStatusCard();
           isTransitioning = false;
       }
   }
@@ -140,6 +140,7 @@ checkAnsweredQuestions();
     const questionsContainer = document.querySelector(`#questions-container-${sectionId}`);
     const sectionCard = document.querySelector(`#question-card-${sectionId}`);
     const questionNumberDisplay = document.querySelector(`#current-question-number-${sectionId}`);
+    const completionCard = document.getElementById("completion-card");
 
     if (!questionsContainer || !sectionCard) {
         console.error(`Missing elements for Section ID: ${sectionId}`);
@@ -168,8 +169,12 @@ checkAnsweredQuestions();
         } else if (direction === 'prev' && currentQuestionIndex > 0) {
             currentQuestionIndex--;
             }
+
         }
     }
+    if (completionCard) {
+      completionCard.style.display = "none";
+  }
 
     questions.forEach(q => q.style.display = 'none');
     if (currentQuestionIndex >= 0) {
@@ -185,8 +190,52 @@ checkAnsweredQuestions();
     });
     console.log(`Current Question Index: ${currentQuestionGlobalIndex} / ${allQuestions.length}`);
     sectionCard.style.display = 'block';
+
     toggleButtons(sectionId, currentQuestionIndex, questions.length);
 }
+function showLastQuestion(sectionId) {
+  console.log("Returning to last question of section:", sectionId);
+
+  // Hide the completion card
+  let completionCard = document.getElementById("completion-card");
+  if (completionCard) {
+      completionCard.style.display = "none";
+  }
+
+  // Find the last question in the section
+  let questionsContainer = document.querySelector(`#questions-container-${sectionId}`);
+  if (!questionsContainer) {
+      console.error("Questions container not found!");
+      return;
+  }
+
+  let questions = questionsContainer.querySelectorAll('.question');
+  if (questions.length === 0) {
+      console.error("No questions found in the section!");
+      return;
+  }
+
+  let lastQuestionIndex = questions.length - 1;
+
+  // Hide all questions
+  questions.forEach(q => q.style.display = "none");
+
+  // Show the last question
+  let lastQuestion = questions[lastQuestionIndex];
+  if (lastQuestion) {
+      lastQuestion.style.display = "block";
+  }
+
+  // Ensure the correct question card is visible
+  let questionCard = document.querySelector(`#question-card-${sectionId}`);
+  if (questionCard) {
+      questionCard.style.display = "block";
+  }
+
+  // Update navigation buttons
+  toggleButtons(sectionId, lastQuestionIndex, questions.length);
+}
+
 
 function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
   const prevBtn = document.getElementById(`prev-btn${sectionId}`);
@@ -231,6 +280,8 @@ function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
       };
 }
 
+
+
   function finishSection(sectionId) {
       console.log(`Finishing Section ID: ${sectionId}`);
       const sectionCard = document.getElementById(`section-card-${sectionId}`);
@@ -247,6 +298,15 @@ function toggleButtons(sectionId, currentQuestionIndex, totalQuestions) {
           completionCard.style.display = 'block';
       }
   }
+
+  function showStatusCard() {
+
+    const statusCard = document.getElementById('questionTable');
+    if (statusCard) {
+        console.log("Displaying status card...");
+        statusCard.style.display = 'block';
+    }
+}
 
   document.querySelectorAll('input[type="date"]').forEach(input => {
       input.addEventListener('change', function() {
@@ -309,10 +369,42 @@ document.querySelectorAll('.star').forEach(star => {
     resetStars(questionId);
   });
 });
-window.startQuiz = startQuiz;
-window.showQuestion = showQuestion;
-window.finishSection = finishSection;
-window.showNextSection = showNextSection;
+
+
+
+  const radioButtons = document.querySelectorAll("input[type='radio']");
+
+  radioButtons.forEach(radio => {
+      radio.addEventListener("change", function () {
+          let questionId = this.getAttribute("data-question-id"); // Get the question ID
+          let sectionId = this.closest("form")?.getAttribute("data-section-id"); // Get section ID (optional)
+
+          console.log(`Selected Question ID: ${questionId}, Section ID: ${sectionId}`);
+
+          if (!questionId) {
+              console.error("❌ Failed to retrieve question ID.");
+              return;
+          }
+
+          // Find the corresponding table cell
+          let questionCell = document.getElementById(`question-${questionId}`);
+
+          if (questionCell) {
+              questionCell.style.backgroundColor = "rgb(73, 138, 73)"; // Change background color
+              questionCell.style.color = "white"; // Ensure text is readable
+          } else {
+              console.warn(`⚠️ No table cell found for question ID: ${questionId}`);
+          }
+      });
+  });
+
+
+
+  window.startQuiz = startQuiz;
+  window.showQuestion = showQuestion;
+  Window.showLastQuestion = showLastQuestion;
+  window.finishSection = finishSection;
+  window.showNextSection = showNextSection;
 });
 
 

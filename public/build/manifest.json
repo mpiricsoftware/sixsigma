@@ -339,7 +339,7 @@
     "src": "resources/assets/vendor/fonts/remixicon/remixicon.woff2"
   },
   "resources/assets/css/demo.css": {
-    "file": "assets/demo-CQni_ElP.css",
+    "file": "assets/demo-B4WUiIuh.css",
     "src": "resources/assets/css/demo.css",
     "isEntry": true
   },
@@ -4209,7 +4209,7 @@
     "isEntry": true
   },
   "resources/js/form.js": {
-    "file": "assets/form-4r65fPVg.js",
+    "file": "assets/form-8y00lF3s.js",
     "name": "form",
     "src": "resources/js/form.js",
     "isEntry": true
@@ -4239,7 +4239,7 @@
     "isEntry": true
   },
   "resources/js/question.js": {
-    "file": "assets/question-Aa6wGgPL.js",
+    "file": "assets/question-46tu0FiU.js",
     "name": "question",
     "src": "resources/js/question.js",
     "isEntry": true

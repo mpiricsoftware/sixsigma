@@ -82,7 +82,7 @@
               </div>
               <form id="addformForm" class="row g-4" method="POST" enctype="multipart/form-data">
                 @csrf
-                   <!-- Form Name Input -->
+                <input type="hidden" value="" name="id" id="form_id">
                    <div class="col-12 col-md-6">
                      <div class="form-floating form-floating-outline">
                        <input type="text" class="form-control" id="name" placeholder="Form Name" name="name" required />
@@ -116,10 +116,56 @@
       </div>
   </div>
 </div>
-
+{{-- Edit  --}}
+<div class="modal fade" id="editformModal" tabindex="-1" aria-modal="true" aria-labelledby="editformModalLabel" role="dialog">
+  <div class="modal-dialog modal-lg modal-simple">
+      <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-body p-0">
+              <div class="text-center mb-6">
+                  <h4 class="title mb-2" id="editformModalLabel">Edit Form</h4>
+              </div>
+              <form id="editformForm" class="row g-4" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" value="" name="form_id" id="edit_form_id">
+                <div class="col-12 col-md-6">
+                  <div class="form-floating form-floating-outline">
+                    <input type="text" class="form-control" id="edit_name" placeholder="Form Name" name="name" required />
+                    <label for="edit_name">Form Name</label>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-floating form-floating-outline">
+                    <input type="text" class="form-control" id="edit_slug" name="slug" placeholder="Enter Slug">
+                    <label for="edit_slug">Slug</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating form-floating-outline">
+                    <textarea name="description" id="edit_description" class="form-control" cols="30" rows="10" placeholder="Enter Your Form Description"></textarea>
+                    <label for="edit_description">Description</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating form-floating-outline">
+                    <input type="file" class="form-control" id="edit_file" name="file">
+                    <label for="edit_file">Image</label>
+                  </div>
+                </div>
+                <div class="col-12 text-end">
+                  <button type="submit" class="btn btn-dark rounded-0">Update</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
 <script>
      var showUrl = @json(route('form-list.show', ':id'));
+     var editUrl = "{{ route('form-list.edit', ':id') }}";
+     var updatenewUrl = "{{ route('updatenew', ':id') }}"
 
-  </script>
+</script>
 
 @endsection
