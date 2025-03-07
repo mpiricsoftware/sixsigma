@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\form;
 use Illuminate\Http\Request;
 use App\Models\Details;
-
+use App\Models\pillar;
 class QuestionController extends Controller
 {
   /**
@@ -97,9 +97,12 @@ class QuestionController extends Controller
     $questions = Question::where('form_id',$form->id)->get();
     $totalQuestions = Question::where('form_id', $form->id)->count();
     $submissionId = $user->submission_id;
-    // dd($submissionId);
+    $pillars = $sections->pluck('pillar')->unique();
 
-    return view('panel.question.show',compact('questions','sections','form','totalQuestions','user','submissionId'));
+
+
+
+    return view('panel.question.show',compact('questions','sections','form','totalQuestions','user','submissionId','pillars'));
   }
 public function info(Request $request,$slug)
 {

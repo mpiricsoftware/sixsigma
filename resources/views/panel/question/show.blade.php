@@ -43,7 +43,6 @@
                             {{ $section->section_name }}
                         </h5>
 
-
                         <div id="questions-container-{{ $section->id }}" class="question">
                             @foreach ($questions->where('section_id', $section->id) as $qIndex => $q)
                                 <input type="hidden" name="question_ids[{{ $section->id }}][{{ $qIndex }}]"
@@ -206,54 +205,55 @@
                 </div>
             @endforeach
 
-            <div id="completion-card" class="card mb-4" style="display: none; width: 100%;">
+            <div id="completion-card" class="card mb-4" style="display:none;width: 100%;">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
                     <p class="card-text">You have completed the quiz. Well done!</p>
+                    <button type="button" class="btn btn-white rounded-0"
+                    id="prev-btn{{ $section->id }}"
+                    onclick="showQuestion('{{ $section->id }}')">Back</button>
+
+
                     <button type="submit" class="btn btn-dark rounded" id="submit-btn{{ $section->id }}" >Save your
                         response</button>
                 </div>
-            </div>
+                <div style="width:100%;">
+                  <table class="table"
+                      style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); width: 100%; border-spacing: 0px; border-collapse: collapse;">
+                      <tbody>
+                          @foreach ($pillars as $pillar)
+                              @php
+                                  $pillarQuestions = $questions->whereIn('section_id', $sections->where('pillar_id', $pillar->id)->pluck('id'));
+                                  $questionCount = $pillarQuestions->count();
+                              @endphp
 
+                              <!-- Pillar Name Row -->
+                              <tr>
+                                  <td rowspan="1" class="text-center"
+                                      style="color: rgb(77, 73, 73); font-size: 18px; padding: 8px; width: 10%; border: none;">
+                                      <strong>{{ $pillar->name }}</strong>
+                                  </td>
 
+                                  <!-- Questions in Remaining Columns -->
+                                  @foreach ($pillarQuestions as $question)
+                                      <td id="question-{{ $question->id }}" class="text-center question-cell"
+                                          style="background-color: rgb(255, 107, 107); color: white; font-weight: bold; padding: 8px; transition: background-color 0.3s ease-in-out;">
+                                          {{ $question->question_text }}
+                                      </td>
+                                  @endforeach
+                              </tr>
+
+                              <!-- Optional Spacer Row: Reduce height or remove -->
+                              <tr style="height: 5px; border: none;">
+                                  <td colspan="{{ $questionCount + 1 }}" style="background-color: #ffffff; border: none;"></td>
+                              </tr>
+
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
         </form>
 
-        <div class="card mt-4"style="width:70%;margin:12%;">
-
-
-         <div class="card-body" id="questionTable" style="display:none">
-          <table class="table table-bordered"
-    style=" border-collapse: collapse; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-    <tbody>
-        @foreach ($sections as $section)
-            @php
-                $questionCount = $questions->where('section_id', $section->id)->count();
-            @endphp
-            <tr>
-                <td colspan="{{ $questionCount ?: 1 }}" class="text-center"
-                    style=" font-size: 18px; padding: 12px;"
-                    data-section-id="{{ $section->id }}">
-                    <strong>{{ $section->section_name }}</strong>
-                </td>
-            </tr>
-
-            <!-- Questions Row -->
-            <tr id="row-{{ $section->id }}">
-                @foreach ($questions->where('section_id', $section->id) as $question)
-                    <td id="question-{{ $question->id }}" class="text-center question-cell"
-                        style="background-color: rgb(255, 107, 107);
-                        ; color: white; font-weight: bold; padding: 15px; transition: background-color 0.3s ease-in-out;">
-                        {{ $question->question_text }}
-                    </td>
-                @endforeach
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-
-      </div>
-
-    </div>
 
 
     {{-- </div> --}}
