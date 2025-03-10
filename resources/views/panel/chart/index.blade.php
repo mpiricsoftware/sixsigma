@@ -670,7 +670,7 @@
                                     @foreach ($userAnswers as $userAnswer)
                                         @if ($q->type == 'radio')
                                             @foreach (json_decode($q->options) as $option)
-                                                <td style="text-align: center;"
+                                                <td style="text-align: center;width:15px;justify-content: space-around;"
                                                     name="answers[{{ $s->id }}][{{ $q->id }}]"
                                                     value="{{ $option }}"
                                                     class="@if ($userAnswer->answer == $option) selected @endif">
@@ -944,7 +944,7 @@
                 </table>
             </div>
 
-            <div class="table-container" style="height: 30%;">
+            <div class="table-container" style="margin-bottom: 20px;height: 30%;">
                 <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
                     <thead>
                         <tr style="background-color:#00a6d5; color:white;">
@@ -963,6 +963,26 @@
                     </tbody>
                 </table>
             </div>
+            <div class="table-container" style="height: 30%;">
+              <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
+                  <thead>
+                      <tr style="background-color:#00a6d5; color:white;">
+                          <th style="padding: 10px; text-align:left;">Tools & Concepts</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @if ($tools)
+                          @foreach (json_decode($tools) as $tool)
+                              <tr>
+                                  <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                      {{ $tool }}</td>
+                              </tr>
+                          @endforeach
+                      @endif
+                  </tbody>
+              </table>
+          </div>
+
         </div>
 
 
@@ -994,7 +1014,7 @@
             var tablepage = document.querySelector('.table-data').innerHTML;
             var headerImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/2.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/2.png" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/3.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/4.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/5.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
@@ -1007,13 +1027,11 @@
             var FooterImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
         <img src="/assets/img/print/11.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-
       </div>
     `;
             var ContactImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
         <img src="/assets/img/print/13.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-
       </div>
     `;
 
@@ -1073,7 +1091,8 @@ for (let i = 0; i < charts.length; i += 2) {
             var commentSection = `
       <div class="card-footer" style="margin-top: 20px; padding: 10px;">
         <h3><strong>Assessment Comments: </strong></h3>
-        <p>${'{{ $comment ?? '' }}'}</p>
+        <p>${'{{ $comment ?? '  The assessor `s comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.'
+ }}'}</p>
 </div>
     `;
             printWindow.document.write('<html><head><title>Six Sigma Report</title>');
@@ -1112,7 +1131,6 @@ for (let i = 0; i < charts.length; i += 2) {
         justify-content: space-around;
         align-items: flex-start;
         padding: 30px;
-
       }
 
       .apexcharts-toolbar {

@@ -45,13 +45,20 @@
                 </div>
 
                 <div class="row mb-5">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="form-floating form-floating-outline">
                             <input type="text" class="form-control" name="company" id="company"
                                 placeholder="Enter Company" value="{{ $user->company }}">
                             <label for="company">Company</label>
                         </div>
                     </div>
+                    <div class="col-md-8">
+                      <div class="form-floating form-floating-outline">
+                          <input type="text" class="form-control" name="located" id="located"
+                              placeholder="Enter Your Located Area">
+                          <label for="located">Where is your company located?</label>
+                      </div>
+                  </div>
                 </div>
 
                 <div class="row">
@@ -82,17 +89,38 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-md-3 mb-5">
+                    <div class="col-md-4 mb-5">
                         <div class="form-floating form-floating-outline">
-                            <input type="text" class="form-control" name="located" id="located"
-                                placeholder="Enter Your Located Area">
-                            <label for="located">Where is your company located?</label>
+                          <div class="select2-info">
+                            <select name="tools[]" id="tools" class="select2 form-select" multiple>
+                                    <option value="Select Tools & Concept">Select Tools & Concept</option>
+                                    <option value="Lean">Lean</option>
+                                    <option value="Six Sigma">Six Sigma</option>
+                                    <option value="TPM">TPM</option>
+                                    <option value="5S">5S</option>
+                                    <option value="QC Circle">QC Circle</option>
+                                    <option value="Daily Management">Daily Management</option>
+                                    <option value="DOE">DOE</option>
+                                    <option value="Digital Transformation">Digital Transformation</option>
+                                    <option value="Time and Motion Study">Time and Motion Study</option>
+                                    <option value="VAVE">VAVE</option>
+                                    <option value="7 QC">7 QC</option>
+                                    <option value="Kaizen">Kaizen</option>
+                                    <option value="JIT">JIT</option>
+                                    <option value="VSM">VSM</option>
+                                    <option value="Policy Deployment">Policy Deployment</option>
+                                    <option value="Other">Other</option>
+
+                            </select>
+                          </div>
+                            <label for="tools">Which of following Tools / concepts / are your implementing currently in OpEx?</label>
+
                         </div>
                     </div>
 
-                    <div class="col-md-4 mb-5">
+                    <div class="col-md-3 mb-5">
                         <div class="form-floating form-floating-outline">
-                            <select name="consultant" id="consultant" class="form-control">
+                            <select name="consultant" id="consultant" class="select2 form-select">
                                 <option value="Select consultant">Select consultant</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
@@ -102,7 +130,7 @@
                     </div>
                     <div class="col-md-5 mb-5">
                         <div class="form-floating form-floating-outline">
-                            <select name="Primary" id="Primary" class="form-control">
+                            <select name="Primary" id="Primary" class="select2 form-select">
                                 <option value="Select Group">Select Group</option>
                                 <option value="Aerospace">Aerospace</option>
                                 <option value="Automotive">Automotive</option>
@@ -130,7 +158,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-6">
                         <div class="form-floating form-floating-outline">
-                            <div class="select2-info ">
+                            <div class="select2-info">
                                 <select id="business_goals" name ="business_goals[]" class="select2 form-select"
                                     multiple>
                                     <option value="Asset & Equipment Efficiency" selected>Asset & Equipment Efficiency
@@ -235,6 +263,7 @@
             let primary = document.getElementById('Primary');
             let drivers = document.getElementById('drivers');
             let business_goals = document.getElementById('business_goals');
+            let tools = document.getElementById('tools');
 
             // Name validation
             if (name.value.trim() === '') {
@@ -286,6 +315,10 @@
 
             if (drivers.selectedOptions.length < 3) {
                 showError(drivers, "Please select at least 3 Cost Drivers.");
+            }
+            if(tools.value === "")
+            {
+              showError(tools, "Please Select a Tools & Concept. ");
             }
 
             return isValid;

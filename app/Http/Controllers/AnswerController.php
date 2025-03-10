@@ -58,7 +58,7 @@ class AnswerController extends Controller
             if (!$question) continue;
 
             $form = $question->form_id;
-            $answers_future = $request->answers_future[$sectionId][$index] ?? null;
+            $answers_future = $request->ans_future[$sectionId][$index] ?? null;
             // dd($answers_future);
             $answersd = Answer::create([
                 'section_id' => $sectionId,
@@ -74,7 +74,7 @@ class AnswerController extends Controller
     }
     $details = Details::where('submission_id',$submissionId)->first();
 
-    // dd($request->all());
+    // dd($answersd);
 // dd($request->all());
     // Store submission details
     // if ($form) {
