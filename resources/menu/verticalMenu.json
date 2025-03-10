@@ -31,27 +31,27 @@
           "url": "app/academy/dashboard",
           "name": "Academy",
           "slug": "app-academy-dashboard"
-        }        
+        }
       ]
     },
     {
       "url": "/",
       "name": "Dashboards",
-      "icon": "menu-icon tf-icons ri-home-smile-line",
+      "icon": "menu-icon tf-icons ri-dashboard-line",
       "slug": "dashboard-analytics",
       "role": ["Super Admin","Admin"]
     },
     {
       "url":"user-management",
       "name":"User-management",
-      "icon": "menu-icon tf-icons ri-mail-open-line",
+      "icon": "menu-icon tf-icons ri-user-settings-line",
       "slug":"dashboard-user-management",
       "role":["Super Admin","Admin"]
     },
     {
       "url": "inquiry",
       "name": "Inquiry",
-      "icon": "menu-icon tf-icons ri-mail-open-line",
+      "icon": "menu-icon tf-icons ri-question-answer-line",
       "slug": "inquiry",
       "role": ["Admin","Super Admin"]
 
@@ -59,14 +59,14 @@
     {
       "url": "details",
       "name": "Form Details",
-      "icon": "menu-icon tf-icons ri-mail-open-line",
+      "icon": "menu-icon tf-icons ri-file-list-line",
       "slug": "details",
       "role": ["Admin","Super Admin"]
 
     },
     {
       "name": "Form Management",
-      "icon": "menu-icon tf-icons ri-layout-2-line",
+      "icon": "menu-icon tf-icons ri-file-settings-line",
       "slug": "layouts",
       "role":["Super Admin","Admin"],
       "submenu": [

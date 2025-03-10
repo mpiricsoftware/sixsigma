@@ -109,10 +109,10 @@
                                                                              justify-content: center;
                                                                              align-items: center;
                                                                              margin-right: 10px;">
-                                                                      <input type="radio"
+                                                                      <input type="radio" id="answers"
                                                                           name="answers[{{ $section->id }}][{{ $qIndex }}]"
                                                                           value="{{ $options[$index] }}" data-question-id="{{ $q->id }}"
-                                                                          {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);" >
+                                                                          {{ old('answers.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);" required>
                                                                   </div>
                                                                   <div class="p-3 rounded text-left"
                                                                       style="background-color: #{{ $backgroundColors[$index] }};
@@ -136,14 +136,15 @@
                                                                              justify-content: center;
                                                                              align-items: center;">
                                                                       <input type="radio"
-                                                                          name="answers_future[{{ $section->id }}][{{ $qIndex }}]"
+                                                                          name="ans_future[{{ $section->id }}][{{ $qIndex }}]" id='ans_future'
                                                                           value="{{ $options[$index] }}"
-                                                                          {{ old('answers_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);">
+                                                                          {{ old('ans_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);">
                                                                   </div>
                                                               </label>
                                                           @else
                                                               <span class="text-muted">N/A</span>
                                                           @endif
+
                                                       </div>
                                                   </div>
                                               @endforeach
@@ -255,9 +256,13 @@
         </form>
 
 
+        <style>
+          .radio-error {
+              border: 2px solid rgb(255, 47, 47) !important;
+          }
+          </style>
 
-    {{-- </div> --}}
+
 @endsection
-
 
 

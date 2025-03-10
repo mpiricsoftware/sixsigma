@@ -150,6 +150,7 @@ class ChartController extends Controller
       $Primary = $detail->Primary;
       $business_goals = $detail->business_goals;
       $drivers = $detail->drivers;
+      $tools = $detail->tools;
       // dd($drivers);
 
     }
@@ -437,7 +438,7 @@ class ChartController extends Controller
       'sections',
       'questions',
       'answers','print_section','print_question','print_answers','comment','name','company',
-      'company_details','located','Primary','business_goals','drivers','detail'
+      'company_details','located','Primary','business_goals','drivers','detail','tools'
     ));
   }
 

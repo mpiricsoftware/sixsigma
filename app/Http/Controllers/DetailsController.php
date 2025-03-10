@@ -118,7 +118,9 @@ $details = $query->get();
         $user->save();
         $business_goals = json_encode($request->business_goals);
         $drivers = json_encode($request->drivers);
+        $tools = json_encode($request->tools);
         $date =  Carbon::now()->format('d-m-Y');
+        // dd($tools);
         // dd($date);
         if ($request->has('details_id')) {
             $details = Details::find($request->details_id);
@@ -152,9 +154,11 @@ $details = $query->get();
                 'Primary' => $request->Primary,
                 'business_goals' => $business_goals,
                 'drivers' => $drivers,
-                'date' => $date
+                'date' => $date,
+                'tools' => $tools
             ]);
         }
+        // dd($details);
         if ($form) {
           $formData = Form::find($form);
 
