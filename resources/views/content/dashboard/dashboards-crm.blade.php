@@ -46,6 +46,7 @@
           </div>
       @endforeach
   </div>
+  <img src="assets/img/print/a.png" alt="Six Sigma" width="100%">
 </div>
 
 @endsection
