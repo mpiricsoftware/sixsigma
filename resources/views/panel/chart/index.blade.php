@@ -1127,7 +1127,7 @@ function printPage() {
     var commentSection = `
       <div class="card-footer" style="margin-top: 20px; padding: 10px;">
         <h3><strong>Assessment Comments: </strong></h3>
-        <p>${'{{ $comment ?? '  The assessor 's comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.'
+        <p>${'{{ $comment ?? '  The assessor `s comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.'
  }}'}</p>
       </div>
     `;
