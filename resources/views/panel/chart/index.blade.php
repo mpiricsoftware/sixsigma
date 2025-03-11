@@ -496,7 +496,7 @@
                     chart: {
                         type: 'radar',
                         height: 500,
-                        width: 500
+                        width: 800
                     },
                     series: [{
                         name: 'Average Score',
@@ -539,12 +539,15 @@
                         }
                     },
                     xaxis: {
-                        labels: {
-                            style: {
-                                fontSize: '14px'
-                            }
-                        }
-                    },
+                          labels: {
+                              rotate: -30, // Rotate at an angle
+                              style: {
+                                  fontSize: '14px',
+                                  whiteSpace: 'normal', // Maintain readability
+                              }
+                          }
+                      },
+
                 };
 
                 // Render the chart for each pillar in a separate div
@@ -569,7 +572,15 @@
         .chart-container {
             margin-top: 0px;
             margin-bottom: 15px;
+            max-width: 600%;
+
         }
+        .apexcharts-xaxis-label {
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: center;
+        }
+
     </style>
 
 
@@ -670,7 +681,7 @@
                                     @foreach ($userAnswers as $userAnswer)
                                         @if ($q->type == 'radio')
                                             @foreach (json_decode($q->options) as $option)
-                                                <td style="text-align: center;width:15px;justify-content: space-around;"
+                                                <td style="text-align: center;width:15px;justify-content: space-around;text-align:justify;"
                                                     name="answers[{{ $s->id }}][{{ $q->id }}]"
                                                     value="{{ $option }}"
                                                     class="@if ($userAnswer->answer == $option) selected @endif">
@@ -734,6 +745,11 @@
                     text-align: center;
                 }
 
+                 .selected{
+                  background-color: #d3d3d3;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                 }
+
                 .comment {
                     display: none;
                 }
@@ -783,7 +799,7 @@
                     top: 0;
                     left: 0;
                     height: 20px;
-                    transform: translateX(20%);
+                    transform: translateX(-5%);
                     background-color: #b63881;
                     border-radius: 12px;
                     text-align: center;
@@ -868,7 +884,7 @@
                     top: 0;
                     left: 0;
                     height: 20px;
-                    transform: translateX(40%);
+                    transform: translateX(0%);
                     background-color: #244ed8;
                     border-radius: 12px;
                     text-align: center;
@@ -1278,9 +1294,9 @@ for (let i = 0; i < charts.length; i += 2) {
     display: flex;
     justify-content: center;
    align-items: flex-start;
-    width: 100%;
-    gap: 30px;s
-    margin-top: 20px;
+    width: 110%;
+    gap: 40px;
+    margin-top: 30px;
 }
 
 .chart-wrapper {
@@ -1383,7 +1399,7 @@ for (let i = 0; i < charts.length; i += 2) {
         top: 0;
         left: 0;
         height: 20px;
-        transform: translateX(30%);
+        transform: translateX(25%);
         background-color: #b63881;
         border-radius: 12px;
         text-align: center;
@@ -1419,7 +1435,7 @@ for (let i = 0; i < charts.length; i += 2) {
         top: 0;
         left: 0;
         height: 20px;
-        transform: translateX(10%);
+        transform: translateX(18%);
         background-color: #244ed8;
         border-radius: 12px;
         text-align: center;
@@ -1430,6 +1446,10 @@ for (let i = 0; i < charts.length; i += 2) {
         padding: 0px 30px 0px 30px;
         transition: left 0.3s ease;
       }
+        .selected{
+                  background-color: #d3d3d3;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                 }
 
     </style>
   `);
