@@ -691,7 +691,7 @@
                                         @foreach ($userAnswers as $userAnswer)
                                             @if ($q->type == 'radio')
                                                 @foreach (json_decode($q->options) as $option)
-                                                    <td style="text-align: center;width:15px;justify-content: space-around;text-align:justify;"
+                                                    <td style="text-align: center;width:15px;justify-content: space-around;text-align:left;"
                                                         name="answers[{{ $s->id }}][{{ $q->id }}]"
                                                         value="{{ $option }}"
                                                         class="@if ($userAnswer->answer == $option) selected @endif">
@@ -919,8 +919,8 @@
                     listed as follows.
                 </p>
 
-                <div class="table-container" style="margin-bottom: 20px; height: 33%;">
-                    <table style="width: 100%; height: 100%; border: 3px solid #504e4e; border-collapse: collapse;">
+                <div class="table-container" style="margin-bottom: 20px; height: 23%;">
+                    <table style="width: 100%; height: 100%; border: 1px solid #504e4e; border-collapse: collapse; border-radius: 10px;">
                         <thead>
                             @php
                                 $date = \Carbon\Carbon::now()->format('d/m/Y');
@@ -953,9 +953,10 @@
                         </tbody>
                     </table>
                 </div>
+                <br>
 
-                <div class="table-container" style="margin-bottom: 20px; height: 30%;">
-                    <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
+                <div class="table-container" style="margin-bottom: 20px; height: 20%;">
+                    <table style="width: 100%; height: 100%; border-collapse: collapse; border: 1px solid #504e4e; border-radius: 10px;">
                         <thead>
                             <tr style="background-color:#00a6d5; color:white;">
                                 <th style="padding: 10px; text-align:left;">KPI</th>
@@ -974,8 +975,8 @@
                     </table>
                 </div>
 
-                <div class="table-container" style="margin-bottom: 20px;height: 30%;">
-                    <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
+                <div class="table-container" style="margin-bottom: 20px;height: 20%;">
+                    <table style="width: 100%; height: 100%; border-collapse: collapse; border: 1px solid #504e4e; border-radius: 10px;">
                         <thead>
                             <tr style="background-color:#00a6d5; color:white;">
                                 <th style="padding: 10px; text-align:left;">Cost Driver</th>
@@ -993,8 +994,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-container" style="height: 30%;">
-                <table style="width: 100%; height: 100%; border-collapse: collapse; border: 3px solid #504e4e;">
+                <div class="table-container" style="height: 20%;">
+                <table style="width: 100%; height: 100%; border-collapse: collapse; border: 1px solid #504e4e; border-radius: 10px;">
                     <thead>
                         <tr style="background-color:#00a6d5; color:white;">
                             <th style="padding: 10px; text-align:left;">Tools & Concepts</th>
@@ -1002,14 +1003,14 @@
                     </thead>
                     <tbody>
                         @if ($tools)
-                            @foreach (json_decode($tools) as $tool)
-                                <tr>
-                                    <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
-                                        {{ $tool }}</td>
-                                </tr>
-                            @endforeach
+                            <tr>
+                                <td style="padding: 10px; text-align:left; border: 1px solid #000; color:#000;">
+                                    {{ implode(', ', json_decode($tools)) }}
+                                </td>
+                            </tr>
                         @endif
                     </tbody>
+                    
                 </table>
             </div>
 
@@ -1145,7 +1146,7 @@ function printPage() {
       }
 
       @page {
-        size: A4;
+        size: A3;
         margin: 5mm;
       }
       
