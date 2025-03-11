@@ -93,8 +93,8 @@
                         <div class="form-floating form-floating-outline">
                           <div class="select2-info">
                             <select name="tools[]" id="tools" class="select2 form-select" multiple>
-                                    <option value="Select Tools & Concept">Select Tools & Concept</option>
-                                    <option value="Lean">Lean</option>
+
+                                    <option value="Lean" selected>Lean</option>
                                     <option value="Six Sigma">Six Sigma</option>
                                     <option value="TPM">TPM</option>
                                     <option value="5S">5S</option>

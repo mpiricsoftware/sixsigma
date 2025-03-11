@@ -11,9 +11,9 @@
     "file": "assets/_commonjsHelpers-BosuxZz1.js",
     "name": "_commonjsHelpers"
   },
-  "_axios-mH-cpkvd.js": {
-    "file": "assets/axios-mH-cpkvd.js",
-    "name": "axios"
+  "_index-BU24bGhS.js": {
+    "file": "assets/index-BU24bGhS.js",
+    "name": "index"
   },
   "_index-D_6hAncj.js": {
     "file": "assets/index-D_6hAncj.js",
@@ -500,13 +500,13 @@
     "isEntry": true
   },
   "resources/assets/js/app-logistics-dashboard.js": {
-    "file": "assets/app-logistics-dashboard-zVSyNTK2.js",
+    "file": "assets/app-logistics-dashboard-D-3Ta5B0.js",
     "name": "app-logistics-dashboard",
     "src": "resources/assets/js/app-logistics-dashboard.js",
     "isEntry": true
   },
   "resources/assets/js/app-logistics-fleet.js": {
-    "file": "assets/app-logistics-fleet-C_qdL32p.js",
+    "file": "assets/app-logistics-fleet-BF1An6_e.js",
     "name": "app-logistics-fleet",
     "src": "resources/assets/js/app-logistics-fleet.js",
     "isEntry": true
@@ -554,7 +554,7 @@
     "isEntry": true
   },
   "resources/assets/js/cards-analytics.js": {
-    "file": "assets/cards-analytics-BdfiW1q7.js",
+    "file": "assets/cards-analytics-Ds9MV_Vi.js",
     "name": "cards-analytics",
     "src": "resources/assets/js/cards-analytics.js",
     "isEntry": true
@@ -3182,7 +3182,7 @@
     "src": "resources/assets/vendor/fonts/remixicon/remixicon.woff2"
   },
   "resources/assets/vendor/js/bootstrap.js": {
-    "file": "assets/bootstrap-B-W6M1Y3.js",
+    "file": "assets/bootstrap-BqFZZLXP.js",
     "name": "bootstrap",
     "src": "resources/assets/vendor/js/bootstrap.js",
     "isEntry": true
@@ -3221,7 +3221,7 @@
     ]
   },
   "resources/assets/vendor/libs/@form-validation/auto-focus.js": {
-    "file": "assets/auto-focus-BizrJr_R.js",
+    "file": "assets/auto-focus-DQFs5rhr.js",
     "name": "auto-focus",
     "src": "resources/assets/vendor/libs/@form-validation/auto-focus.js",
     "isEntry": true,
@@ -3230,7 +3230,7 @@
     ]
   },
   "resources/assets/vendor/libs/@form-validation/bootstrap5.js": {
-    "file": "assets/bootstrap5-DjMKukTX.js",
+    "file": "assets/bootstrap5-GPxv84Av.js",
     "name": "bootstrap5",
     "src": "resources/assets/vendor/libs/@form-validation/bootstrap5.js",
     "isEntry": true,
@@ -3258,7 +3258,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/animate-on-scroll/animate-on-scroll.js": {
-    "file": "assets/animate-on-scroll-C6s87dA7.js",
+    "file": "assets/animate-on-scroll-kSEW1YFn.js",
     "name": "animate-on-scroll",
     "src": "resources/assets/vendor/libs/animate-on-scroll/animate-on-scroll.js",
     "isEntry": true,
@@ -3277,7 +3277,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/apex-charts/apexcharts.js": {
-    "file": "assets/apexcharts-CP_VfLCH.js",
+    "file": "assets/apexcharts-B0NIoEb0.js",
     "name": "apexcharts",
     "src": "resources/assets/vendor/libs/apex-charts/apexcharts.js",
     "isEntry": true,
@@ -3286,7 +3286,7 @@
     ]
   },
   "resources/assets/vendor/libs/autosize/autosize.js": {
-    "file": "assets/autosize-B_yujxLV.js",
+    "file": "assets/autosize-WyPVVt3G.js",
     "name": "autosize",
     "src": "resources/assets/vendor/libs/autosize/autosize.js",
     "isEntry": true
@@ -3378,13 +3378,13 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/chartjs/chartjs.js": {
-    "file": "assets/chartjs-CqNFJ-Eg.js",
+    "file": "assets/chartjs-BMCAlAjM.js",
     "name": "chartjs",
     "src": "resources/assets/vendor/libs/chartjs/chartjs.js",
     "isEntry": true
   },
   "resources/assets/vendor/libs/cleavejs/cleave-phone.js": {
-    "file": "assets/cleave-phone-Buvvjjnc.js",
+    "file": "assets/cleave-phone-ISED2JIh.js",
     "name": "cleave-phone",
     "src": "resources/assets/vendor/libs/cleavejs/cleave-phone.js",
     "isEntry": true,
@@ -3402,7 +3402,7 @@
     ]
   },
   "resources/assets/vendor/libs/clipboard/clipboard.js": {
-    "file": "assets/clipboard-eqGyHGvh.js",
+    "file": "assets/clipboard-uSX7hnuA.js",
     "name": "clipboard",
     "src": "resources/assets/vendor/libs/clipboard/clipboard.js",
     "isEntry": true,
@@ -3411,7 +3411,7 @@
     ]
   },
   "resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js": {
-    "file": "assets/datatables-bootstrap5-CSvy9NcK.js",
+    "file": "assets/datatables-bootstrap5-COVYdYwu.js",
     "name": "datatables-bootstrap5",
     "src": "resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js",
     "isEntry": true,
@@ -3463,7 +3463,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/dropzone/dropzone.js": {
-    "file": "assets/dropzone-DNvOoGc3.js",
+    "file": "assets/dropzone-796O8KZ3.js",
     "name": "dropzone",
     "src": "resources/assets/vendor/libs/dropzone/dropzone.js",
     "isEntry": true,
@@ -3491,7 +3491,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/fullcalendar/fullcalendar.js": {
-    "file": "assets/fullcalendar-BBF0f3SN.js",
+    "file": "assets/fullcalendar-DtxyGqc5.js",
     "name": "fullcalendar",
     "src": "resources/assets/vendor/libs/fullcalendar/fullcalendar.js",
     "isEntry": true
@@ -3513,7 +3513,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/highlight/highlight.js": {
-    "file": "assets/highlight-DEcLmaz4.js",
+    "file": "assets/highlight-sTfP49hR.js",
     "name": "highlight",
     "src": "resources/assets/vendor/libs/highlight/highlight.js",
     "isEntry": true,
@@ -3564,7 +3564,7 @@
     ]
   },
   "resources/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js": {
-    "file": "assets/jquery-timepicker-B-RbRvAG.js",
+    "file": "assets/jquery-timepicker-BIZlPFEF.js",
     "name": "jquery-timepicker",
     "src": "resources/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js",
     "isEntry": true,
@@ -3648,7 +3648,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/mapbox-gl/mapbox-gl.js": {
-    "file": "assets/mapbox-gl-LOFEHQNP.js",
+    "file": "assets/mapbox-gl-CYa6P4pO.js",
     "name": "mapbox-gl",
     "src": "resources/assets/vendor/libs/mapbox-gl/mapbox-gl.js",
     "isEntry": true,
@@ -3706,7 +3706,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/numeral/numeral.js": {
-    "file": "assets/numeral-P4k51J7T.js",
+    "file": "assets/numeral-BCnviesb.js",
     "name": "numeral",
     "src": "resources/assets/vendor/libs/numeral/numeral.js",
     "isEntry": true,
@@ -3734,7 +3734,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/pickr/pickr.js": {
-    "file": "assets/pickr-BuhU8evt.js",
+    "file": "assets/pickr-CW9TcyKb.js",
     "name": "pickr",
     "src": "resources/assets/vendor/libs/pickr/pickr.js",
     "isEntry": true,
@@ -3743,7 +3743,7 @@
     ]
   },
   "resources/assets/vendor/libs/plyr/plyr.js": {
-    "file": "assets/plyr-BGSM-mVO.js",
+    "file": "assets/plyr-MHpkrsI2.js",
     "name": "plyr",
     "src": "resources/assets/vendor/libs/plyr/plyr.js",
     "isEntry": true
@@ -3754,7 +3754,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/popper/popper.js": {
-    "file": "assets/popper-DNZnuk_L.js",
+    "file": "assets/popper-CjuU2q1_.js",
     "name": "popper",
     "src": "resources/assets/vendor/libs/popper/popper.js",
     "isEntry": true,
@@ -3804,7 +3804,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/select2/select2.js": {
-    "file": "assets/select2-CRCBtHGs.js",
+    "file": "assets/select2-Cg3gXliv.js",
     "name": "select2",
     "src": "resources/assets/vendor/libs/select2/select2.js",
     "isEntry": true,
@@ -3861,7 +3861,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/swiper/swiper.js": {
-    "file": "assets/swiper-DKZh8Haz.js",
+    "file": "assets/swiper-DsDvhY6v.js",
     "name": "swiper",
     "src": "resources/assets/vendor/libs/swiper/swiper.js",
     "isEntry": true
@@ -3872,7 +3872,7 @@
     "isEntry": true
   },
   "resources/assets/vendor/libs/tagify/tagify.js": {
-    "file": "assets/tagify-D6IG1b0s.js",
+    "file": "assets/tagify-Dh6WBWwB.js",
     "name": "tagify",
     "src": "resources/assets/vendor/libs/tagify/tagify.js",
     "isEntry": true,
@@ -4173,21 +4173,21 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-r6AfJgzH.js",
+    "file": "assets/app-B0-gt_tc.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_axios-mH-cpkvd.js"
+      "_index-BU24bGhS.js"
     ]
   },
   "resources/js/bootstrap.js": {
-    "file": "assets/bootstrap-r6AfJgzH.js",
+    "file": "assets/bootstrap-B0-gt_tc.js",
     "name": "bootstrap",
     "src": "resources/js/bootstrap.js",
     "isEntry": true,
     "imports": [
-      "_axios-mH-cpkvd.js"
+      "_index-BU24bGhS.js"
     ]
   },
   "resources/js/company-manage.js": {
