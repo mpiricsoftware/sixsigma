@@ -745,10 +745,12 @@
                     text-align: center;
                 }
 
-                 .selected{
-                  background-color: #d3d3d3;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                 }
+                .selected {
+                    background-color: #d3d3d3;
+                    border: 2px solid #d3d3d3;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                    transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+                }
 
                 .comment {
                     display: none;
@@ -1107,7 +1109,7 @@ for (let i = 0; i < charts.length; i += 2) {
             var commentSection = `
       <div class="card-footer" style="margin-top: 20px; padding: 10px;">
         <h3><strong>Assessment Comments: </strong></h3>
-        <p>${'{{ $comment ?? '  The assessor `s comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.'
+        <p>${'{{ $comment ?? '  The assessor 's comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.'
  }}'}</p>
 </div>
     `;
@@ -1446,10 +1448,13 @@ for (let i = 0; i < charts.length; i += 2) {
         padding: 0px 30px 0px 30px;
         transition: left 0.3s ease;
       }
-        .selected{
-                  background-color: #d3d3d3;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                 }
+       .selected {
+    background-color: #d3d3d3;
+    border: 2px solid #d3d3d3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+
+}
 
     </style>
   `);
