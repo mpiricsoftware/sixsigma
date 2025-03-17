@@ -310,6 +310,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return true;
 }
+// Add this after your radio buttons are loaded in the DOM
+document.querySelectorAll('input[type="radio"][name^="answers"]').forEach(radio => {
+  radio.addEventListener('click', function() {
+    const sectionId = this.getAttribute('name').match(/answers\[(\d+)\]/)[1];
+    const questionContainer = this.closest('.question');
+    const questionsContainer = questionContainer.parentElement;
+    const allQuestions = Array.from(questionsContainer.querySelectorAll('.question'));
+    const currentQuestionIndex = allQuestions.indexOf(questionContainer);
+    
+    validateCurrentQuestion(sectionId, currentQuestionIndex);
+  });
+});
 document.querySelectorAll('input[type="radio"]').forEach(radio => {
     radio.addEventListener('change', (event) => {
         event.target.parentElement.classList.remove("radio-error");
