@@ -1076,7 +1076,7 @@ function printPage() {
     var barchartHtml = `
       <div style="margin-bottom: 10px; width: 100%; text-align: center;">
         <h2>Results</h2>
-        <div id="bar-chart" style="width: 100%;">${document.querySelector('#bar-chart').outerHTML}</div>
+        <div id="bar-chart" style="width: 100%; display: flex; justify-content: center;">${document.querySelector('#bar-chart').outerHTML}</div>
       </div>
     `;
 
@@ -1084,33 +1084,42 @@ function printPage() {
     var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
 
     var basicchartsHTML = `
-      <div class="chart-wrapper" style="width: 80%; margin: 0 auto 30px auto;">
-        <div id="basiccharts">${document.querySelector('#basiccharts').outerHTML}</div>
+      <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+        <div id="basiccharts" style="display: inline-block;">${document.querySelector('#basiccharts').outerHTML}</div>
       </div>
     `;
 
     var PillarChartHTML = `
-      <div class="chart-wrapper" style="width: 80%; margin: 0 auto 30px auto;">
-        <div id="PillarChart">${document.querySelector('#PillarChart').outerHTML}</div>
+      <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+        <div id="PillarChart" style="display: inline-block;">${document.querySelector('#PillarChart').outerHTML}</div>
       </div>
     `;
 
-    // Modified to display charts one per line (vertically)
+    // Get all charts and structure them two per page
     var charts = document.querySelectorAll('#questioncharts .chart-container');
     var questionchartsHTML = "";
-
-    // Display each chart on its own line
-    for (let i = 0; i < charts.length; i++) {
+    
+    // Group charts in pairs (two per page) with proper centering
+    for (let i = 0; i < charts.length; i += 2) {
+        questionchartsHTML += `<div style="page-break-after: always;">`;
+        
+        // First chart
         questionchartsHTML += `
-            <div class="chart-wrapper" style="width: 85%; margin: 0 auto 30px auto;">
-                ${charts[i].outerHTML}
+            <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+                <div style="display: inline-block;">${charts[i].outerHTML}</div>
             </div>
         `;
         
-        // Add page break after every 2 charts
-        if ((i + 1) % 2 === 0 && i < charts.length - 1) {
-            questionchartsHTML += `<div style="page-break-after: always;"></div>`;
+        // Second chart (if available)
+        if (i + 1 < charts.length) {
+            questionchartsHTML += `
+                <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+                    <div style="display: inline-block;">${charts[i+1].outerHTML}</div>
+                </div>
+            `;
         }
+        
+        questionchartsHTML += `</div>`;
     }
 
     var titleAndContent = `
@@ -1174,6 +1183,7 @@ function printPage() {
         display: block;
         margin-bottom: 30px;
         page-break-inside: avoid;
+        text-align: center;
       }
 
       .apexcharts-toolbar {
@@ -1303,6 +1313,13 @@ function printPage() {
         /* Ensure the comment section is visible when printing, even if it's hidden normally */
         .card-footer {
           display: block !important;
+        }
+        
+        /* Center charts on their own pages */
+        .chart-wrapper {
+          display: flex;
+          justify-content: center;
+          margin: 0 auto;
         }
       }
       
@@ -1459,30 +1476,28 @@ function printPage() {
       }
       
       .selected {
-            background-color: #d3d3d3;
-            border: 2px solid #d3d3d3;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
-
-        }
+        background-color: #d3d3d3;
+        border: 2px solid #d3d3d3;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+      }
     </style>
     `);
 
-    // Add header image and bar chart HTML
+    // Add content
     printWindow.document.write('</head><body>');
     printWindow.document.write(firstpage);
     printWindow.document.write(headerImage);
     printWindow.document.write(tablecontent);
     printWindow.document.write(barchartHtml);
 
-    // FIXED: Remove the page break between charts by removing the wrapping div with page-break-after
-    // Place the first two charts vertically without forcing a page break after
-    printWindow.document.write('<div>');
+    // Place the first two charts on their own page
+    printWindow.document.write('<div style="page-break-after: always;">');
     printWindow.document.write(basicchartsHTML);
     printWindow.document.write(PillarChartHTML);
     printWindow.document.write('</div>');
     
-    // Add the question charts (vertically arranged)
+    // Add the question charts (vertically arranged, two per page)
     printWindow.document.write(questionchartsHTML);
     
     printWindow.document.write(titleAndContent);

@@ -15,6 +15,7 @@
 
 
 @section('content')
+
     {{-- <div class="container mt-5"> --}}
     <form id="form-id" method="POST" action="{{ route('details-list.store') }}">
         @csrf
@@ -28,68 +29,76 @@
             <div class="card-body pt-1"style="height:100%;">
                 <div class="row">
                     <div class="col-md-6 mb-5">
+                        <label for="name" class="form-label">First Name</label>
                         <div class="form-floating form-floating-outline">
                             <input type="text" class="form-control" name="name" id="name"
                                 placeholder="Enter First Name" value="{{ $user->name }}">
-                            <label for="name">First Name</label>
+                            {{-- <label for="name">First Name</label> --}}
                         </div>
                     </div>
 
                     <div class="col-md-6 mb-5">
+                        <label for="lastname" class="form-label">Last Name</label>
                         <div class="form-floating form-floating-outline">
                             <input type="text" class="form-control" name="lastname" id="lastname"
                                 placeholder="Enter Last Name" value="{{ $user->lastname }}">
-                            <label for="lastname">Last Name</label>
+                            
                         </div>
                     </div>
                 </div>
 
                 <div class="row mb-5">
                     <div class="col-md-4">
+                        <label for="company" class="form-label">Company</label>
                         <div class="form-floating form-floating-outline">
                             <input type="text" class="form-control" name="company" id="company"
                                 placeholder="Enter Company" value="{{ $user->company }}">
-                            <label for="company">Company</label>
+                            
                         </div>
                     </div>
                     <div class="col-md-8">
+                    <label for="located" class="form-label">Where is your company located?</label>
                       <div class="form-floating form-floating-outline">
                           <input type="text" class="form-control" name="located" id="located"
                               placeholder="Enter Your Located Area">
-                          <label for="located">Where is your company located?</label>
+                          
                       </div>
                   </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3 mb-5">
+                        <label for="designation" class="form-label">Designation</label>
                         <div class="form-floating form-floating-outline">
                             <input type="text" class="form-control" name="designation" id="designation"
                                 placeholder="Enter Your Designation" value="{{ $user->designation }}">
-                            <label for="designation">Designation</label>
+                            {{-- <label for="designation">Designation</label> --}}
                         </div>
                     </div>
 
                     <div class="col-md-5 mb-5">
+                        <label for="email" class="form-label">Contact Person Email</label>
                         <div class="form-floating form-floating-outline">
                             <input type="email" class="form-control" name="email" id="email"
                                 placeholder="Enter Email" value="{{ $user->email }}">
-                            <label for="email">Contact Person Email</label>
+                            
                         </div>
                     </div>
 
                     <div class="col-md-4 mb-5">
+                        <label for="Phone_" class="form-label">Contact Person PhoneNo:</label>
                         <div class="form-floating form-floating-outline">
                             <input type="text" class="form-control" name="Phone_no" id="Phone_" required
                                 pattern="^[0-9]{10}$" title="Please enter a valid 10-digit phone number"
                                 placeholder="Enter phone number" value="{{ $user->office_no }}">
-                            <label for="Phone_">Contact Person PhoneNo:</label>
+                            
                         </div>
                     </div>
 
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-5">
+                        <label for="tools" class="form-label">Which of following Tools / concepts / are your implementing currently in OpEx?</label>
                         <div class="form-floating form-floating-outline">
                           <div class="select2-info">
                             <select name="tools[]" id="tools" class="select2 form-select" multiple>
@@ -113,22 +122,23 @@
 
                             </select>
                           </div>
-                            <label for="tools">Which of following Tools / concepts / are your implementing currently in OpEx?</label>
-
+                        
                         </div>
                     </div>
 
                     <div class="col-md-3 mb-5">
+                        <label for="consultant" class="form-label">Are you a consultant?</label>
                         <div class="form-floating form-floating-outline">
                             <select name="consultant" id="consultant" class="select2 form-select">
                                 <option value="Select consultant">Select consultant</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
-                            <label for="consultant">Are you a consultant?</label>
+                            
                         </div>
                     </div>
                     <div class="col-md-5 mb-5">
+                        <label for="Primary Industry Group" class="form-label">Primary Industry Group</label>
                         <div class="form-floating form-floating-outline">
                             <select name="Primary" id="Primary" class="select2 form-select">
                                 <option value="Select Group">Select Group</option>
@@ -150,13 +160,15 @@
                                 <option value="Others">Others</option>
 
                             </select>
-                            <label for="Primary Industry Group">Primary Industry Group</label>
+                            
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-6">
+                        <label for="select2Primary" class="form-label">What are your organization’s current top
+                            three Business Goals?</label>
                         <div class="form-floating form-floating-outline">
                             <div class="select2-info">
                                 <select id="business_goals" name ="business_goals[]" class="select2 form-select"
@@ -179,11 +191,12 @@
                                     <option value="Security of Data">Security of Data</option>
                                 </select>
                             </div>
-                            <label for="select2Primary">What are your organization’s current top
-                                three Business Goals?</label>
+                            
                         </div>
                     </div>
                     <div class="col-md-6 mb-6">
+                        <label for="select2Primary" class="form-label">Which are your organization’s top three cost
+                            drivers?</label>
                         <div class="form-floating form-floating-outline">
                             <div class="select2-info ">
                                 <select id="drivers" name="drivers[]" class="select2 form-select" multiple>
@@ -202,8 +215,7 @@
                                 </select>
 
                             </div>
-                            <label for="select2Primary">Which are your organization’s top three cost
-                                drivers?</label>
+                            
                         </div>
                     </div>
                 </div>

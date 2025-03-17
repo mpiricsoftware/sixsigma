@@ -53,16 +53,10 @@
                                     data-question-id="{{ $q->id }}"
                                     style="display: {{ $qIndex == 0 ? 'block' : 'none' }};">
 
-                                    <h6 class="font-weight-bold text-dark">{{ $q->question_text }}</h6>
+                                    <h6 class="font-weight-bold text-dark">{{ $q->question_text }} <i class="ri-question-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $q->question_description }}"></i></h6>
 
                                     <div>
-                                        <a href="#guidance_{{ $section->id }}_{{ $qIndex }}"
-                                            data-bs-toggle="collapse" class="text-primary" style="cursor: pointer;">&#9650;
-                                            Click to see guidance</a>
-                                        <div id="guidance_{{ $section->id }}_{{ $qIndex }}"
-                                            class="collapse show mt-2">
-                                            <p class="text-muted">{{ $q->question_description }}</p>
-                                        </div>
+                                        
                                     </div>
                                     @if ($q->type == 'text')
                                         <input type="text" name="answers[{{ $section->id }}][{{ $qIndex }}]"
@@ -83,9 +77,9 @@
 
                                         <!-- Today Section -->
                                         <div class="today-section">
-                                          <label class="font-weight-bold" style="padding-right:1%"><strong>Today</strong></label>
+                                          <label class="font-weight-bold" style="padding-right:1%"><strong>Today</strong><i class="ri-arrow-down-fill"></i></label>
                                           <label class="font-weight-bold text-end" style="position: absolute;right: 30px;">
-                                            <strong>Next Three Year</strong>
+                                            <strong>Next Three Year</strong><i class="ri-arrow-down-fill"></i>
                                         </label>
                                           <div class="options-container mt-2">
                                               @foreach ($predefinedLabels as $index => $label)
@@ -135,10 +129,10 @@
                                                                              display: flex;
                                                                              justify-content: center;
                                                                              align-items: center;">
-                                                                      <input type="radio"
-                                                                          name="ans_future[{{ $section->id }}][{{ $qIndex }}]" id='ans_future'
-                                                                          value="{{ $options[$index] }}"
-                                                                          {{ old('ans_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} style="transform: scale(1.3);">
+                                                                      <input type="radio" name="ans_future[{{ $section->id }}][{{ $qIndex }}]" id='ans_future'
+                                                                      value="{{ $options[$index] }}" data-question-id="{{ $q->id }}"
+                                                                      {{ old('ans_future.' . $section->id . '.' . $qIndex) == $options[$index] ? 'checked' : '' }} 
+                                                                      style="transform: scale(1.3);">
                                                                   </div>
                                                               </label>
                                                           @else
@@ -209,7 +203,7 @@
             <div id="completion-card" class="card mb-4" style="display:none;width: 100%;">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="color: #00a6d5;">Congratulations!</h5>
-                    <p class="card-text">You have completed the quiz. Well done!</p>
+                    <p class="card-text">You have completed the assesement. Well done!</p>
                     <button type="button" class="btn btn-dark rounded"
                     id="prev-btn{{ $section->id }}"
                     onclick="showQuestion('{{ $section->id }}')">Back</button>
@@ -263,6 +257,41 @@
           </style>
 
 
+<script>
+    // Add this JavaScript function to your page
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all radio buttons for "Today" section
+    const todayRadios = document.querySelectorAll('input[id="answers"]');
+    
+    // Add event listeners to all "Today" radio buttons
+    todayRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const sectionId = this.closest('.question').dataset.sectionId;
+            const questionId = this.closest('.question').dataset.questionId;
+            const selectedIndex = getSelectedIndex(this);
+            
+            // Disable options in "Next Three Year" that are below the selected "Today" option
+            const futureRadios = document.querySelectorAll(`input[id="ans_future"][data-question-id="${questionId}"]`);
+            
+            futureRadios.forEach((futureRadio, index) => {
+                if (index < selectedIndex) {
+                    futureRadio.disabled = true;
+                    futureRadio.closest('.radio-box').style.opacity = '0.5';
+                } else {
+                    futureRadio.disabled = false;
+                    futureRadio.closest('.radio-box').style.opacity = '1';
+                }
+            });
+        });
+    });
+    
+    // Helper function to get the index of the selected radio button
+    function getSelectedIndex(radio) {
+        const allOptions = Array.from(document.querySelectorAll(`input[name="${radio.name}"]`));
+        return allOptions.indexOf(radio);
+    }
+});
+</script>
 @endsection
 
 
