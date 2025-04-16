@@ -117,6 +117,7 @@ class FormController extends Controller
    */
   public function show(string $id)
   {
+    // dd($id);
     $pillar = pillar::all();
       $form = form::where('id',$id)->get();
       $sections = Section::where('form_id', $id)
@@ -154,7 +155,7 @@ class FormController extends Controller
 
   public function updatenew(Request $request, $id)
 {
-
+    // dd($request->all());
     $form = Form::findOrFail($id);
     $data = [
       'name' => $request->name,

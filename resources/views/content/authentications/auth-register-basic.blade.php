@@ -76,7 +76,7 @@ $customizerHidden = 'customizer-hide';
                 <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">
                 <label class="form-check-label" for="terms-conditions">
                   I agree to
-                  <a href="javascript:void(0);">privacy policy & terms</a>
+                  <a href="https://www.sixsigmaconcept.com/privacy-policy/" target="_blank">privacy policy & terms</a>
                 </label>
               </div>
             </div>

@@ -157,7 +157,7 @@ class SectionController extends Controller
 
    public function updateNew(Request $request)
 {
-
+    // dd($request->all());
     $request->validate([
         'pillar_id.*' => 'required|exists:pillar,id',
         'section_id.*' => 'nullable|integer|exists:section,id',
@@ -172,6 +172,7 @@ class SectionController extends Controller
         'type.*' => 'nullable|array',
         'type.*.*' => 'required|string',
         'options.*' => 'nullable|array',
+        'option_text.*.*.*' => 'nullable|string',
     ]);
 
     $formId = $request->id;
@@ -216,6 +217,24 @@ class SectionController extends Controller
                     $options = json_encode($request->options["rating_{$sectionId}"] ?? []);
                 }
 
+                $options_text = null;
+                if ($type === 'radio' || $type === 'checkbox') {
+                  if (isset($request->option_text[$sectionId][$questionIndex]) && 
+                        is_array($request->option_text[$sectionId][$questionIndex])) {
+                        // Filter out any empty option values
+                        $optionValues = array_filter(
+                            $request->option_text[$sectionId][$questionIndex], 
+                            function($value) { return !empty(trim($value)); }
+                        );
+                        
+                        // Convert options to JSON
+                        $options_text = json_encode(array_values($optionValues));
+                    }
+                } elseif ($type === 'rating') {
+                    // Handle rating options if needed
+                    $options_text = json_encode([1, 2, 3, 4, 5]); // Default rating options
+                }
+
                 if ($questionId) {
                     $question = Question::find($questionId);
                     if ($question) {
@@ -225,11 +244,13 @@ class SectionController extends Controller
                             'question_text' => $questionText,
                             'question_description' => $description,
                             'type' => $type,
+                            'options' => $options_text,
                           ],
-                            [
-                            'options' => $options,
+                        //     [
+                        //     'options' => $options,
 
-                        ]);
+                        // ]
+                      );
                     }
 
                 } else {

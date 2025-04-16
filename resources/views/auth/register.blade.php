@@ -198,11 +198,11 @@
                                 <div class="form-check mt-2 @error('terms') is-invalid @enderror">
                                     <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox"
                                         id="terms" name="terms" />
-                                    <label class="form-check-label" for="terms" style="color:#2129bd">
-                                        I agree to
-                                        <a href="#" style="color: #2129bd">privacy policy</a> &
-                                        <a href="#" style="color: #2129bd">terms</a>
-                                    </label>
+                                        <label class="form-check-label" for="terms" style="color:#2129bd">
+                                            I agree to
+                                            <a href="https://www.sixsigmaconcept.com/privacy-policy/" target="_blank" style="color: #2129bd">privacy policy</a> &
+                                            <a href="https://www.sixsigmaconcept.com/privacy-policy/" target="_blank" style="color: #2129bd">terms</a>
+                                        </label>                                        
                                 </div>
                                 @error('terms')
                                     <div class="invalid-feedback" role="alert">
