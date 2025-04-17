@@ -119,18 +119,18 @@ class FormController extends Controller
   {
     // dd($id);
     $pillar = pillar::all();
-      $form = form::where('id',$id)->get();
-      $sections = Section::where('form_id', $id)
-    ->with(['question' => function ($query) use ($id) {
-        $query->where('form_id', $id);
-    }])
-    ->get();
+    $form = form::where('id', $id)->get();
+    $sections = Section::where('form_id', $id)
+        ->with(['question' => function ($query) use ($id) {
+            $query->where('form_id', $id);
+        }])
+        ->orderBy('order_no', 'asc')  // Add this line to sort by order_no
+        ->get();
     foreach ($sections as $section) {
-      foreach ($section->question as $question) {
-          $question->options = $question->options ? json_decode($question->options, true) : [];
-      }
-
-  }
+        foreach ($section->question as $question) {
+            $question->options = $question->options ? json_decode($question->options, true) : [];
+        }
+    }
 
 // dd($sections);
       return view('panel.form.show',compact('form','sections','pillar'));
