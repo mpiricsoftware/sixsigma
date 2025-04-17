@@ -11,7 +11,8 @@ class section extends Model
       'form_id',
       'section_name',
       'section_description',
-      'pillar_id'
+      'pillar_id',
+      'order_no'
     ];
     public function form()
     {
