@@ -89,116 +89,144 @@
                                             </div>
                                         </div>
 
-                                        @foreach ($s->question as $q)
-                                            <div class="card-body">
-                                                <input type="hidden"
-                                                    name="question_id[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ $q->id }}">
-                                                <input type="hidden"
-                                                    name="type[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
-                                                <input type="hidden"
-                                                    name="options[{{ $s->id }}][{{ $q->id }}]"
-                                                    value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
+                                        
+@foreach ($s->question as $q)
+<div class="card-body">
+    <input type="hidden"
+        name="question_id[{{ $s->id }}][{{ $q->id }}]"
+        value="{{ $q->id }}">
+    <input type="hidden"
+        name="type[{{ $s->id }}][{{ $q->id }}]"
+        value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
+    <input type="hidden"
+        name="options[{{ $s->id }}][{{ $q->id }}]"
+        value="{{ old('type.' . $s->id . '.' . $q->id, $q->type) }}">
 
-                                                @if ($q->type === 'text')
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-                                                @elseif($q->type === 'date')
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-                                                @elseif($q->type === 'file')
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-                                                @elseif($q->type == 'rating')
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
-                                                    <div id="rating_{{ $q->id }}" class="rating"
-                                                        data-question-id="{{ $q->id }}">
-                                                        <input type="hidden"
-                                                            name="answers[{{ $s->id }}][{{ $q->id }}]"
-                                                            id="selectedRating_{{ $q->id }}">
-                                                        <span class="star" data-index="1"
-                                                            onclick="setRating({{ $q->id }}, 1)"
-                                                            onmouseover="highlightStars({{ $q->id }}, 1)"
-                                                            onmouseout="resetStars({{ $q->id }}, 1)"
-                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="2"
-                                                            onclick="setRating({{ $q->id }}, 2)"
-                                                            onmouseover="highlightStars({{ $q->id }}, 2)"
-                                                            onmouseout="resetStars({{ $q->id }}, 2)"
-                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="3"
-                                                            onclick="setRating({{ $q->id }}, 3)"
-                                                            onmouseover="highlightStars({{ $q->id }}, 3)"
-                                                            onmouseout="resetStars({{ $q->id }}, 3)"
-                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="4"
-                                                            onclick="setRating({{ $q->id }}, 4)"
-                                                            onmouseover="highlightStars({{ $q->id }}, 4)"
-                                                            onmouseout="resetStars({{ $q->id }}, 4)"
-                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                        <span class="star" data-index="5"
-                                                            onclick="setRating({{ $q->id }}, 5)"
-                                                            onmouseover="highlightStars({{ $q->id }}, 5)"
-                                                            onmouseout="resetStars({{ $q->id }}, 5)"
-                                                            style="font-size: 30px; cursor: pointer;">&#9733;</span>
-                                                    </div>
-                                                @elseif($q->type === 'radio')
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}"><br>
+    @if ($q->type === 'text')
+        <input type="text" class="form-control mt-2"
+            name="question_text[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+        <input type="text" class="form-control mt-2"
+            name="question_description[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+    @elseif($q->type === 'date')
+        <input type="text" class="form-control mt-2"
+            name="question_text[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+        <input type="text" class="form-control mt-2"
+            name="question_description[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+    @elseif($q->type === 'file')
+        <input type="text" class="form-control mt-2"
+            name="question_text[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+        <input type="text" class="form-control mt-2"
+            name="question_description[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+    @elseif($q->type == 'rating')
+        <input type="text" class="form-control mt-2"
+            name="question_text[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+        <input type="text" class="form-control mt-2"
+            name="question_description[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+        <div id="rating_{{ $q->id }}" class="rating"
+            data-question-id="{{ $q->id }}">
+            <input type="hidden"
+                name="answers[{{ $s->id }}][{{ $q->id }}]"
+                id="selectedRating_{{ $q->id }}">
+            <span class="star" data-index="1"
+                onclick="setRating({{ $q->id }}, 1)"
+                onmouseover="highlightStars({{ $q->id }}, 1)"
+                onmouseout="resetStars({{ $q->id }}, 1)"
+                style="font-size: 30px; cursor: pointer;">&#9733;</span>
+            <span class="star" data-index="2"
+                onclick="setRating({{ $q->id }}, 2)"
+                onmouseover="highlightStars({{ $q->id }}, 2)"
+                onmouseout="resetStars({{ $q->id }}, 2)"
+                style="font-size: 30px; cursor: pointer;">&#9733;</span>
+            <span class="star" data-index="3"
+                onclick="setRating({{ $q->id }}, 3)"
+                onmouseover="highlightStars({{ $q->id }}, 3)"
+                onmouseout="resetStars({{ $q->id }}, 3)"
+                style="font-size: 30px; cursor: pointer;">&#9733;</span>
+            <span class="star" data-index="4"
+                onclick="setRating({{ $q->id }}, 4)"
+                onmouseover="highlightStars({{ $q->id }}, 4)"
+                onmouseout="resetStars({{ $q->id }}, 4)"
+                style="font-size: 30px; cursor: pointer;">&#9733;</span>
+            <span class="star" data-index="5"
+                onclick="setRating({{ $q->id }}, 5)"
+                onmouseover="highlightStars({{ $q->id }}, 5)"
+                onmouseout="resetStars({{ $q->id }}, 5)"
+                style="font-size: 30px; cursor: pointer;">&#9733;</span>
+        </div>
+    @elseif($q->type === 'radio')
+        <input type="text" class="form-control mt-2"
+            name="question_text[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+        <input type="text" class="form-control mt-2"
+            name="question_description[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}"><br>
 
-                                                    @foreach ($q->options as $index => $option)
-                                                        <div class="form-check">
-                                                            <input type="radio" name="choice[{{ $q->id }}]"
-                                                                value="{{ $option }}"
-                                                                data-option-index="{{ $index }}"
-                                                                {{ isset($q->choice) && $option == $q->choice ? 'checked' : '' }}
-                                                                class="form-check-input">
-                                                            <label class="form-check-label">{{ $option }}</label>
-                                                        </div>
-                                                    @endforeach
-                                                @elseif($q->type === 'checkbox')
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_text[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
-                                                    <input type="text" class="form-control mt-2"
-                                                        name="question_description[{{ $s->id }}][{{ $q->id }}]"
-                                                        value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
+        <div class="option-container">
+            @foreach ($q->options as $index => $option)
+                <div class="form-check d-flex align-items-center mb-2">
+                    <input type="radio" name="choice[{{ $q->id }}]"
+                        value="{{ $option }}"
+                        data-option-index="{{ $index }}"
+                        {{ isset($q->choice) && $option == $q->choice ? 'checked' : '' }}
+                        class="form-check-input">
+                    <input type="text" class="form-control mx-2" style="width: 80%;"
+                        name="option_text[{{ $s->id }}][{{ $q->id }}][{{ $index }}]"
+                        value="{{ $option }}">
+                    {{-- <button type="button" class="btn btn-danger btn-sm remove-option">
+                        <i class="fas fa-times"></i> Remove
+                    </button> --}}
+                </div>
+            @endforeach
+        </div>
+        {{-- <button type="button" class="btn btn-primary btn-sm add-option mt-2" 
+            data-section-id="{{ $s->id }}" 
+            data-question-id="{{ $q->id }}" 
+            data-type="radio">
+            <i class="fas fa-plus"></i> Add Option
+        </button> --}}
+        
+    @elseif($q->type === 'checkbox')
+        <input type="text" class="form-control mt-2"
+            name="question_text[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_text.' . $s->id . '.' . $q->id, $q->question_text) }}">
+        <input type="text" class="form-control mt-2"
+            name="question_description[{{ $s->id }}][{{ $q->id }}]"
+            value="{{ old('question_description.' . $s->id . '.' . $q->id, $q->question_description) }}">
 
-                                                    @foreach ($q->options as $option)
-                                                        <div class="form-check">
-                                                            <input type="checkbox"
-                                                                name="selected_option[{{ $q->id }}][]"
-                                                                value="{{ $option }}"
-                                                                {{ isset($q->selected_options) && in_array($option, $q->selected_options) ? 'checked' : '' }}
-                                                                class="form-check-input">
-                                                            <label class="form-check-label">{{ $option }}</label>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        @endforeach
+        <div class="option-container">
+            @foreach ($q->options as $index => $option)
+                <div class="form-check d-flex align-items-center mb-2">
+                    <input type="checkbox"
+                        name="selected_option[{{ $q->id }}][]"
+                        value="{{ $option }}"
+                        {{ isset($q->selected_options) && in_array($option, $q->selected_options) ? 'checked' : '' }}
+                        class="form-check-input">
+                    <input type="text" class="form-control mx-2" style="width: 80%;"
+                        name="option_text[{{ $s->id }}][{{ $q->id }}][{{ $index }}]"
+                        value="{{ $option }}">
+                    {{-- <button type="button" class="btn btn-danger btn-sm remove-option">
+                        <i class="fas fa-times"></i> Remove
+                    </button> --}}
+                </div>
+            @endforeach
+        </div>
+        {{-- <button type="button" class="btn btn-primary btn-sm add-option mt-2" 
+            data-section-id="{{ $s->id }}" 
+            data-question-id="{{ $q->id }}" 
+            data-type="checkbox">
+            <i class="fas fa-plus"></i> Add Option
+        </button> --}}
+    @endif
+</div>
+@endforeach
 
                                         <div class="card-body">
                                             <button type="button" class="btn btn-dark rounded-0"

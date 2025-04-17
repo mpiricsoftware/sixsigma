@@ -73,76 +73,80 @@ class SectionController extends Controller
   /**
    * Store a newly created resource in storage.
    */
-    public function store(Request $request)
-    {
-      $user_id =  auth()->user()->id;
+  public function store(Request $request)
+  {
+    // dd($request->all());
+    $user_id =  auth()->user()->id;
 
-      $request->validate([
-        'pillar_id.*' => 'required|exists:pillar,id',
-        'section_name.*' => 'required|string|max:255',
-        'section_description.*' => 'nullable|string|max:10000',
-        'question_text.*' => 'nullable|array',
-        'question_text.*.*' => 'nullable|string|max:255',
-        'question_description.*' => 'nullable|array',
-        'question_description.*.*' => 'nullable|string|max:5000',
-        'type.*' => 'required|array',
-        'type.*.*' => 'required|string',
-        'options.*' => 'nullable|array',
-      ]);
-      $form = $request->all();
-      // dd($form);
-      $createdSections = [];
-      $i = 1;
-      if (is_array($request->section_name) && is_array($request->section_description)) {
-        foreach ($request->section_name as $key => $sectionName) {
-          // dd($request->all(),$request->question_text[$i] );
-          $sectionDescription = $request->section_description[$key] ?? null;
-          $pillarId = $request->pillar_id[$key] ?? null;
-          $section = Section::create([
-            'form_id' => $form['id'],
-            'section_name' => $sectionName,
-            'section_description' => $sectionDescription,
-            'pillar_id' => $pillarId
-          ]);
+    $request->validate([
+      'pillar_id.*' => 'required|exists:pillar,id',
+      'section_name.*' => 'required|string|max:255',
+      'section_description.*' => 'nullable|string|max:10000',
+      'question_text.*' => 'nullable|array',
+      'question_text.*.*' => 'nullable|string|max:255',
+      'question_description.*' => 'nullable|array',
+      'question_description.*.*' => 'nullable|string|max:5000',
+      'type.*' => 'required|array',
+      'type.*.*' => 'required|string',
+      'options.*' => 'nullable|array',
+    ]);
+    $form = $request->all();
+    // dd($form);
+    $createdSections = [];
+    $i = 1;
+    $orderNo = 1;
+    if (is_array($request->section_name) && is_array($request->section_description)) {
+      foreach ($request->section_name as $key => $sectionName) {
+        // dd($request->all(),$request->question_text[$i] );
+        $sectionDescription = $request->section_description[$key] ?? null;
+        $pillarId = $request->pillar_id[$key] ?? null;
+        $section = Section::create([
+          'form_id' => $form['id'],
+          'section_name' => $sectionName,
+          'section_description' => $sectionDescription,
+          'pillar_id' => $pillarId,
+          'order_no' => $orderNo // Add the order number
+        ]);
+        
+        $orderNo++; 
 
 // dd($section);
-          if (isset($request->question_text[$i]) && is_array($request->question_text[$i])) {
-            foreach ($request->question_text[$i] as $key => $questionText) {
-              $description = $request->question_description[$i][$key] ?? null;
-              $type = $request->type[$i][$key] ?? null;
-              $choiceOptions = $request->options["choice_{$i}_{$key}"] ?? [];
-              $ratingOptions = $request->options["rating_{$i}"] ?? [];
+        if (isset($request->question_text[$i]) && is_array($request->question_text[$i])) {
+          foreach ($request->question_text[$i] as $key => $questionText) {
+            $description = $request->question_description[$i][$key] ?? null;
+            $type = $request->type[$i][$key] ?? null;
+            $choiceOptions = $request->options["choice_{$i}_{$key}"] ?? [];
+            $ratingOptions = $request->options["rating_{$i}"] ?? [];
 
-              // Determine options based on question type
-              $options = null;
-              if ($type === 'radio' || $type === 'checkbox') {
-                  $options = !empty($choiceOptions) ? json_encode($choiceOptions) : null;
-              } elseif ($type === 'rating') {
-                  $options = !empty($ratingOptions) ? json_encode($ratingOptions) : null;
-              }
-              if ($questionText) {
-                $question = Question::create([
-                  'section_id' => $section->id,
-                  'form_id' => $form['id'],
-                  'question_text' => $questionText,
-                  'question_description' => $description,
-                  'type' => $type,
-                  'options' => $options,
-                ]);
-                $createdQuestions[] = $question;
-              }
+            // Determine options based on question type
+            $options = null;
+            if ($type === 'radio' || $type === 'checkbox') {
+                $options = !empty($choiceOptions) ? json_encode($choiceOptions) : null;
+            } elseif ($type === 'rating') {
+                $options = !empty($ratingOptions) ? json_encode($ratingOptions) : null;
+            }
+            if ($questionText) {
+              $question = Question::create([
+                'section_id' => $section->id,
+                'form_id' => $form['id'],
+                'question_text' => $questionText,
+                'question_description' => $description,
+                'type' => $type,
+                'options' => $options,
+              ]);
+              $createdQuestions[] = $question;
             }
           }
-          $i++;
         }
-        // dd($request->all());
+        $i++;
       }
-
-
-      // dd($request->all(), $createdSections, $createdQuestions);
-      return redirect()->route('form-list.index')->with('success', 'Sections and questions created successfully!');
+      // dd($request->all());
     }
 
+
+    // dd($request->all(), $createdSections, $createdQuestions);
+    return redirect()->route('form-list.index')->with('success', 'Sections and questions created successfully!');
+  }
   /**
    * Show the form for editing the specified resource.
    */
@@ -157,7 +161,7 @@ class SectionController extends Controller
 
    public function updateNew(Request $request)
 {
-
+    // dd($request->all());
     $request->validate([
         'pillar_id.*' => 'required|exists:pillar,id',
         'section_id.*' => 'nullable|integer|exists:section,id',
@@ -172,6 +176,7 @@ class SectionController extends Controller
         'type.*' => 'nullable|array',
         'type.*.*' => 'required|string',
         'options.*' => 'nullable|array',
+        'option_text.*.*.*' => 'nullable|string',
     ]);
 
     $formId = $request->id;
@@ -216,6 +221,24 @@ class SectionController extends Controller
                     $options = json_encode($request->options["rating_{$sectionId}"] ?? []);
                 }
 
+                $options_text = null;
+                if ($type === 'radio' || $type === 'checkbox') {
+                  if (isset($request->option_text[$sectionId][$questionIndex]) && 
+                        is_array($request->option_text[$sectionId][$questionIndex])) {
+                        // Filter out any empty option values
+                        $optionValues = array_filter(
+                            $request->option_text[$sectionId][$questionIndex], 
+                            function($value) { return !empty(trim($value)); }
+                        );
+                        
+                        // Convert options to JSON
+                        $options_text = json_encode(array_values($optionValues));
+                    }
+                } elseif ($type === 'rating') {
+                    // Handle rating options if needed
+                    $options_text = json_encode([1, 2, 3, 4, 5]); // Default rating options
+                }
+
                 if ($questionId) {
                     $question = Question::find($questionId);
                     if ($question) {
@@ -225,11 +248,13 @@ class SectionController extends Controller
                             'question_text' => $questionText,
                             'question_description' => $description,
                             'type' => $type,
+                            'options' => $options_text,
                           ],
-                            [
-                            'options' => $options,
+                        //     [
+                        //     'options' => $options,
 
-                        ]);
+                        // ]
+                      );
                     }
 
                 } else {

@@ -460,6 +460,6 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('/');
+        return redirect('/');
     })->name('dashboard');
 });
