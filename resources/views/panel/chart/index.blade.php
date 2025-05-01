@@ -1032,487 +1032,548 @@
         };
     </script>
 <script>
-function printPage() {
-    var printWindow = window.open('', '', 'height=1000,width=1200');
-    var printContent = document.querySelector('.card-body').innerHTML;
-    var companyName = "{{ $company }}"; // Example company name
-    var date = new Date().toLocaleDateString('en-GB');
-    var preparedBy = "{{ $name }}"; // Example user name
-    var dynamicImageSrc = "/assets/img/print/1.jpg";
-    var firstpage = `<div class="dynamic-image-container" style="page-break-after: always;">
-        <img src="${dynamicImageSrc}" alt="Dynamic Image" class="dynamic-image">
-        <div class="company-name">
-            <h3>COMPANY:</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${companyName}</p>
-        </div>
-        <div class="date">
-            <h3>DATE:</h3><p>&nbsp;&nbsp;&nbsp;${date}</p>
-        </div>
-        <div class="prepared-by">
-            <h3>PREPARED BY:</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preparedBy}</p>
-        </div>
-    </div>`;
-    var tablepage = document.querySelector('.table-data').innerHTML;
-    var headerImage = `
-      <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/2.png" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/3.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/4.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/5.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/6.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/7.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-      </div>
-    `;
-    var FooterImage = `
-      <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/11.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-      </div>
-    `;
-    var ContactImage = `
-      <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/13.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-      </div>
-    `;
-
-    var barchartHtml = `
-      <div style="margin-bottom: 10px; width: 100%; text-align: center;">
-        <h2>Results</h2>
-        <div id="bar-chart" style="width: 100%; display: flex; justify-content: center;">${document.querySelector('#bar-chart').outerHTML}</div>
-      </div>
-    `;
-
-    var averageChartHTML = document.querySelector('#average-chart').outerHTML;
-    var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
-
-    var basicchartsHTML = `
-      <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
-        <div id="basiccharts" style="display: inline-block;">${document.querySelector('#basiccharts').outerHTML}</div>
-      </div>
-    `;
-
-    var PillarChartHTML = `
-      <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
-        <div id="PillarChart" style="display: inline-block;">${document.querySelector('#PillarChart').outerHTML}</div>
-      </div>
-    `;
-
-    // Get all charts and structure them two per page
-    var charts = document.querySelectorAll('#questioncharts .chart-container');
-    var questionchartsHTML = "";
-    
-    // Group charts in pairs (two per page) with proper centering
-    for (let i = 0; i < charts.length; i += 2) {
-        questionchartsHTML += `<div style="page-break-after: always;">`;
+    function printPage() {
+        var printWindow = window.open('', '', 'height=1000,width=1200');
+        var printContent = document.querySelector('.card-body').innerHTML;
+        var companyName = "{{ $company }}"; 
+        var date = new Date().toLocaleDateString('en-GB');
+        var preparedBy = "{{ $name }}";
+        var dynamicImageSrc = "/assets/img/print/1.jpg";
         
-        // First chart
-        questionchartsHTML += `
-            <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
-                <div style="display: inline-block;">${charts[i].outerHTML}</div>
+        // First page with company info
+        var firstpage = `<div class="dynamic-image-container" style="page-break-after: always;">
+            <img src="${dynamicImageSrc}" alt="Dynamic Image" class="dynamic-image">
+            <div class="company-name">
+                <h3>COMPANY:</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${companyName}</p>
+            </div>
+            <div class="date">
+                <h3>DATE:</h3><p>&nbsp;&nbsp;&nbsp;${date}</p>
+            </div>
+            <div class="prepared-by">
+                <h3>PREPARED BY:</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preparedBy}</p>
+            </div>
+        </div>`;
+        
+        var tablepage = document.querySelector('.table-data').innerHTML;
+        var headerImage = `
+        <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
+            <img src="/assets/img/print/2.png" alt="OMM" style="max-width: 100%; height: auto;">
+            <img src="/assets/img/print/3.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+            <img src="/assets/img/print/4.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+            <img src="/assets/img/print/5.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+            <img src="/assets/img/print/6.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+            <img src="/assets/img/print/7.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        </div>
+        `;
+        var FooterImage = `
+        <div style="width: 100%; margin-bottom: 20px;">
+            <img src="/assets/img/print/11.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        </div>
+        `;
+        var ContactImage = `
+        <div style="width: 100%; margin-bottom: 20px;">
+            <img src="/assets/img/print/13.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        </div>
+        `;
+
+        var barchartHtml = `
+        <div style="margin-bottom: 10px; width: 100%; text-align: center;">
+            <h2>Results</h2>
+            <div id="bar-chart" style="width: 100%; display: flex; justify-content: center;">${document.querySelector('#bar-chart').outerHTML}</div>
+        </div>
+        `;
+
+        var basicchartsHTML = `
+        <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+            <div id="basiccharts" style="display: inline-block;">${document.querySelector('#basiccharts').outerHTML}</div>
+        </div>
+        `;
+
+        var PillarChartHTML = `
+        <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+            <div id="PillarChart" style="display: inline-block;">${document.querySelector('#PillarChart').outerHTML}</div>
+        </div>
+        `;
+
+        // Get all charts and structure them two per page
+        var charts = document.querySelectorAll('#questioncharts .chart-container');
+        var questionchartsHTML = "";
+        
+        // Group charts in pairs (two per page) with proper centering
+        for (let i = 0; i < charts.length; i += 2) {
+            const isLastSet = i >= charts.length - 2;
+            questionchartsHTML += `<div${!isLastSet ? ' style="page-break-after: always;"' : ''}>`;
+            
+            // First chart
+            questionchartsHTML += `
+                <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+                    <div style="display: inline-block;">${charts[i].outerHTML}</div>
+                </div>
+            `;
+            
+            // Second chart (if available)
+            if (i + 1 < charts.length) {
+                questionchartsHTML += `
+                    <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+                        <div style="display: inline-block;">${charts[i+1].outerHTML}</div>
+                    </div>
+                `;
+            }
+            
+            questionchartsHTML += `</div>`;
+        }
+
+        // Preprocess the content to fix progress bars
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = printContent;
+        
+        // Fix progress bars for printing
+        var progressBars = tempDiv.querySelectorAll('.progress-bar');
+        progressBars.forEach(function(bar) {
+            // Make sure each progress bar is contained within its parent
+            bar.style.pageBreakInside = 'avoid';
+            
+            // Fix the position of value indicators
+            var valueElements = bar.querySelectorAll('.progress-value, .progress-ansvalue');
+            valueElements.forEach(function(element) {
+                // Extract the position from the style
+                var style = element.getAttribute('style');
+                if (style) {
+                    // Make sure the element stays within the bar and positions correctly
+                    element.style.transform = 'none';
+                    element.style.width = 'auto';
+                    element.style.minWidth = '120px';
+                    element.style.maxWidth = '40%';
+                    element.style.position = 'absolute';
+                    
+                    // Use a reliable position calculation
+                    if (element.classList.contains('progress-value')) {
+                        element.style.left = '20%';
+                    } else if (element.classList.contains('progress-ansvalue')) {
+                        element.style.left = '60%';
+                    }
+                }
+            });
+        });
+        
+        var processedContent = tempDiv.innerHTML;
+
+        var titleAndContent = `
+            <div style="padding:20px;margin:0px auto;padding-bottom:10px;">
+                <div class="card-body">${processedContent}</div>
             </div>
         `;
         
-        // Second chart (if available)
-        if (i + 1 < charts.length) {
-            questionchartsHTML += `
-                <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
-                    <div style="display: inline-block;">${charts[i+1].outerHTML}</div>
-                </div>
-            `;
-        }
-        
-        questionchartsHTML += `</div>`;
-    }
-
-    var titleAndContent = `
-        <div style="padding:20px;margin:0px auto;padding-bottom:10px;">
-            <div class="card-body">${printContent}</div>
+        var tablecontent = `
+        <div style="page-break-after: always; width: 100%; height: 80%; margin: 0 auto; padding-bottom: 10px; box-sizing: border-box;">
+            <div class="card-body" style="height: 80%;">${tablepage}</div>
         </div>
-    `;
-    
-    var tablecontent = `
-      <div style="page-break-after: always; width: 100%; height: 80%; margin: 0 auto; padding-bottom: 10px; box-sizing: border-box;">
-        <div class="card-body" style="height: 80%;">${tablepage}</div>
-      </div>
-    `;
+        `;
 
-    var commentSection = `
-      <div class="card-footer" style="margin-top: 20px; padding: 10px;">
-        <h3><strong>Assessment Comments: </strong></h3>
-        <p>${'{{ $comment ?? '  The assessor `s comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.'
- }}'}</p>
-      </div>
-    `;
-    
-    printWindow.document.write('<html><head><title>Six Sigma Report</title>');
+        var commentSection = `
+        <div class="card-footer" style="margin-top: 20px; padding: 10px;">
+            <h3><strong>Assessment Comments: </strong></h3>
+            <p>${'{{ $comment ?? "The assessor\'s comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited." }}'}</p>
+        </div>
+        `;
+        
+        printWindow.document.write('<html><head><title>OMM</title>');
 
-    // Add print styles
-    printWindow.document.write(`
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #fff;
-      }
+        // Add print styles
+        printWindow.document.write(`
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
 
-      @page {
-        size: A3;
-        margin: 5mm;
-      }
-      
-      @page :first {
-        margin: 0.5mm;
-      }
-
-      .image-page {
-        width: 100%;
-        height: 100%;
-        page-break-after: always;
-      }
-
-      .chart-container {
-        display: flex;
-        flex-direction: column;
-        margin-top: 10px;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        width: 100%;
-      }
-
-      .chart-wrapper {
-        display: block;
-        margin-bottom: 30px;
-        page-break-inside: avoid;
-        text-align: center;
-      }
-
-      .apexcharts-toolbar {
-        display: none !important;
-      }
-
-      h4, h5 {
-        margin: 0;
-        padding: 5px 0;
-      }
-      
-      .card-body .comment {
-        display: none;
-      }
-      
-      .dynamic-image-container {
-        position: relative; /* CRITICAL: Positioning context */
-        width: 100%;
-        margin-bottom: 20px;
-      }
-
-      .dynamic-image {
-        max-width: 100%;
-        height: auto;
-      }
-
-      .dynamic-content {
-        position: absolute;
-        font-size: 20pt;
-        font-family: sans-serif;
-      }
-
-      .company-name h3{
-        position: absolute;
-        top: 32%;
-        left: 8%;
-        color: #000000;
-        text-align: left;
-        font-size: 40pt;
-        white-space: nowrap;
-        font-family: sans-serif;
-      }
-      
-      .company-name p{
-        position: absolute;
-        top: 32%;
-        left: 33%;
-        color: #0077cc;
-        text-align: left;
-        font-size: 40pt;
-        white-space: nowrap;
-        font-weight: bold;
-        font-family: sans-serif;
-      }
-
-      .date h3{
-        position: absolute;
-        bottom: 10%;
-        left: 10%;
-        font-size: 30pt;
-        white-space: nowrap;
-        font-family: sans-serif;
-        color: white;
-      }
-      
-      .date p{
-        position: absolute;
-        bottom: 10%;
-        left: 21%;
-        font-size: 30pt;
-        white-space: nowrap;
-        font-family: sans-serif;
-        font-weight: bold;
-        color: white;
-      }
-
-      .prepared-by h3{
-        position: absolute;
-        bottom: 6%;
-        left: 10%;
-        font-size: 30pt;
-        white-space: nowrap;
-        font-family: sans-serif;
-        color: white;
-      }
-      
-      .prepared-by p{
-        position: absolute;
-        bottom: 6%;
-        left: 37%;
-        font-size: 30pt;
-        white-space: nowrap;
-        font-family: sans-serif;
-        color: white;
-        font-weight: bold;
-      }
-
-      /* Print styles (Recommended) */
-      @media print {
-        .dynamic-content {
-          color: black; /* Ensure black text when printing */
+        @page {
+            size: A3;
+            margin: 5mm;
         }
         
-        .chart-wrapper {
-          page-break-inside: avoid;
+        @page :first {
+            margin: 0.5mm;
         }
-      }
-      
-      .card-footer h3{
-        padding: 20px;
-        margin-bottom: 20px;
-        color: #007bff;
-        font-size: 20pt;
-        text-align: center;
-      }
 
-      .card-footer p {
-        margin: 0;
-        padding: 0;
-        color: #333;
-        padding-left: 20px;
-        font-size: 20pt;
-      }
+        .image-page {
+            width: 100%;
+            height: 100%;
+            page-break-after: always;
+        }
 
-      /* Print styles */
-      @media print {
-        /* Ensure the comment section is visible when printing, even if it's hidden normally */
-        .card-footer {
-          display: block !important;
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .chart-wrapper {
+            display: block;
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+            text-align: center;
+        }
+
+        .apexcharts-toolbar {
+            display: none !important;
+        }
+
+        h4, h5 {
+            margin: 0;
+            padding: 5px 0;
         }
         
-        /* Center charts on their own pages */
-        .chart-wrapper {
-          display: flex;
-          justify-content: center;
-          margin: 0 auto;
+        .card-body .comment {
+            display: none;
         }
-      }
-      
-      .centered-chart {
-        text-align: center;
-        margin-bottom: 10px;
-        width: 100%;
-      }
+        
+        .dynamic-image-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            page-break-after: always;
+        }
 
-      .centered-chart h3,h5 {
-        margin-bottom: 10px;
-      }
+        .dynamic-image {
+            max-width: 100%;
+            height: auto;
+        }
 
-      .centered-chart div {
-        display: inline-block;
-      }
+        .company-name h3{
+            position: absolute;
+            top: 32%;
+            left: 8%;
+            color: #000000;
+            text-align: left;
+            font-size: 40pt;
+            white-space: nowrap;
+            font-family: sans-serif;
+        }
+        
+        .company-name p{
+            position: absolute;
+            top: 32%;
+            left: 33%;
+            color: #0077cc;
+            text-align: left;
+            font-size: 40pt;
+            white-space: nowrap;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
 
-      h2 {
-        color: #00a6d5;
-        text-align: center;
-      }
+        .date h3{
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            font-size: 30pt;
+            white-space: nowrap;
+            font-family: sans-serif;
+            color: white;
+        }
+        
+        .date p{
+            position: absolute;
+            bottom: 10%;
+            left: 21%;
+            font-size: 30pt;
+            white-space: nowrap;
+            font-family: sans-serif;
+            font-weight: bold;
+            color: white;
+        }
 
-      .card-body {
-        padding: 40px;
-        line-height: 1.6;
-        font-size: 14pt;
-        color: #333;
-        background-color: #f9f9f9;
-        margin-top: 30px;
-        text-align: center;
-      }
+        .prepared-by h3{
+            position: absolute;
+            bottom: 6%;
+            left: 10%;
+            font-size: 30pt;
+            white-space: nowrap;
+            font-family: sans-serif;
+            color: white;
+        }
+        
+        .prepared-by p{
+            position: absolute;
+            bottom: 6%;
+            left: 37%;
+            font-size: 30pt;
+            white-space: nowrap;
+            font-family: sans-serif;
+            color: white;
+            font-weight: bold;
+        }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 25px;
-      }
+        /* Critical fixes for progress bars */
+        .progress-bar-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
 
-      th,
-      td {
-        padding: 10px;
-        font-size: 11pt;
-        text-align: center;
-        vertical-align: top;
-      }
+        .progress-bar {
+            width: 100%;
+            height: 30px; /* Increased height for better visibility */
+            background-color: #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
 
-      th {
-        color: #00a6d5;
-        font-weight: bold;
-        font-size: 12pt;
-      }
+        .progress-value {
+            position: absolute;
+            top: 0;
+            left: 20% !important; /* Fixed position */
+            height: 30px;
+            transform: none !important; /* Remove transform that causes issues */
+            background-color: #b63881;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 14px;
+            white-space: nowrap;
+            padding: 0px 10px;
+            min-width: 120px;
+            max-width: 40%;
+        }
 
-      .section {
-        margin-bottom: 30px;
-      }
+        .progress-ansvalue {
+            position: absolute;
+            top: 0;
+            left: 60% !important; /* Fixed position, different from progress-value */
+            height: 30px;
+            transform: none !important; /* Remove transform that causes issues */
+            background-color: #244ed8;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 14px;
+            white-space: nowrap;
+            padding: 0px 10px;
+            min-width: 120px;
+            max-width: 40%;
+        }
 
-      .section h5 {
-        color: #00a6d5;
-        background-color: #f1f1f1;
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-      }
+        .card-footer h3{
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #007bff;
+            font-size: 20pt;
+            text-align: center;
+        }
 
-      .section-table {
-        display: table;
-        width: 100%;
-        height: 100%;
-      }
+        .card-footer p {
+            margin: 0;
+            padding: 0;
+            color: #333;
+            padding-left: 20px;
+            font-size: 20pt;
+        }
 
-      .section-table td,
-      .section-table th {
-        vertical-align: top;
-      }
+        /* Print styles */
+        @media print {
+            /* Ensure the progress bars don't break across pages */
+            .progress-bar-container, .progress-bar {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            }
+            
+            /* Force the progress values to show up properly */
+            .progress-value, .progress-ansvalue {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            }
+            
+            /* Ensure sections don't break inappropriately */
+            .section {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            }
+            
+            /* Fix for table rows */
+            tr {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            }
+            
+            /* Ensure comment section is visible */
+            .card-footer {
+            display: block !important;
+            }
+        }
+        
+        .centered-chart {
+            text-align: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
 
-      .section-table td {
-        padding: 12px;
-        width: 18%;
-        font-size: 12pt;
-      }
+        .centered-chart h3,h5 {
+            margin-bottom: 10px;
+        }
 
-      .section-table td:last-child {
-        padding-right: 20px;
-        page-break-inside: avoid;
-      }
+        .centered-chart div {
+            display: inline-block;
+        }
 
-      .progress-bar-container {
-        position: relative;
-        width: 100%;
-        margin-bottom: 15px;
-      }
+        h2 {
+            color: #00a6d5;
+            text-align: center;
+        }
 
-      .progress-bar {
-        width: 100%;
-        height: 20px;
-        background-color: #e0e0e0;
-        border-radius: 12px;
-        overflow: hidden;
-        position: relative;
-      }
+        .card-body {
+            padding: 40px;
+            line-height: 1.6;
+            font-size: 14pt;
+            color: #333;
+            background-color: #f9f9f9;
+            margin-top: 30px;
+            text-align: center;
+        }
 
-      .progress-value {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 20px;
-        transform: translateX(25%);
-        background-color: #b63881;
-        border-radius: 12px;
-        text-align: center;
-        line-height: 20px;
-        color: white;
-        font-size: 14px;
-        white-space: nowrap;
-        padding: 0px 20px 0px 20px;
-        transition: left 0.3s ease;
-      }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
 
-      .progress-bar-checkbox {
-        width: 100%;
-        height: 20px;
-        background-color: #e0e0e0;
-        border-radius: 12px;
-        overflow: hidden;
-        position: relative;
-      }
+        th,
+        td {
+            padding: 10px;
+            font-size: 11pt;
+            text-align: center;
+            vertical-align: top;
+        }
 
-      .progress-value-checkbox {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 21px;
-        background-color: #b63881;
-        border-radius: 12px;
-        text-align: center;
-      }
+        th {
+            color: #00a6d5;
+            font-weight: bold;
+            font-size: 12pt;
+        }
 
-      .progress-ansvalue {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 20px;
-        transform: translateX(18%);
-        background-color: #244ed8;
-        border-radius: 12px;
-        text-align: center;
-        line-height: 20px;
-        color: white;
-        font-size: 14px;
-        white-space: nowrap;
-        padding: 0px 30px 0px 30px;
-        transition: left 0.3s ease;
-      }
-      
-      .selected {
-        background-color: #d3d3d3;
-        border: 2px solid #d3d3d3;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
-      }
-    </style>
-    `);
+        .section {
+            margin-bottom: 30px;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
 
-    // Add content
-    printWindow.document.write('</head><body>');
-    printWindow.document.write(firstpage);
-    printWindow.document.write(headerImage);
-    printWindow.document.write(tablecontent);
-    printWindow.document.write(barchartHtml);
+        .section h5 {
+            color: #00a6d5;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
 
-    // Place the first two charts on their own page
-    printWindow.document.write('<div style="page-break-after: always;">');
-    printWindow.document.write(basicchartsHTML);
-    printWindow.document.write(PillarChartHTML);
-    printWindow.document.write('</div>');
-    
-    // Add the question charts (vertically arranged, two per page)
-    printWindow.document.write(questionchartsHTML);
-    
-    printWindow.document.write(titleAndContent);
-    printWindow.document.write(FooterImage);
-    printWindow.document.write(commentSection);
-    printWindow.document.write(ContactImage);
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
+        .section-table {
+            display: table;
+            width: 100%;
+            height: 100%;
+            page-break-inside: avoid !important;
+        }
 
-    // Wait for content to load and trigger print
-    printWindow.onload = function() {
-        printWindow.print();
-        printWindow.close();
-    };
-}
+        .section-table td,
+        .section-table th {
+            vertical-align: top;
+        }
+
+        .section-table td {
+            padding: 12px;
+            width: 18%;
+            font-size: 12pt;
+        }
+
+        .section-table td:last-child {
+            padding-right: 20px;
+        }
+
+        .selected {
+            background-color: #d3d3d3;
+            border: 2px solid #d3d3d3;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+        }
+        </style>
+        `);
+
+        // Add content
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(firstpage);
+        printWindow.document.write(headerImage);
+        printWindow.document.write(tablecontent);
+        printWindow.document.write(barchartHtml);
+
+        // Place the first two charts on their own page
+        printWindow.document.write('<div style="page-break-after: always;">');
+        printWindow.document.write(basicchartsHTML);
+        printWindow.document.write(PillarChartHTML);
+        printWindow.document.write('</div>');
+        
+        // Add the question charts (vertically arranged, two per page)
+        printWindow.document.write(questionchartsHTML);
+        
+        printWindow.document.write(`<div style="page-break-after: always;">${titleAndContent}</div>`);
+        printWindow.document.write(FooterImage);
+        printWindow.document.write(`<div>${commentSection}</div>`);
+        printWindow.document.write(ContactImage);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Wait for content to load and trigger print
+        printWindow.onload = function() {
+            // Calculate positions and process progress bars before printing
+            const progressBars = printWindow.document.querySelectorAll('.progress-bar');
+            progressBars.forEach(function(bar) {
+                // Make sure each progress bar container takes up its own space
+                const container = bar.closest('.progress-bar-container');
+                if (container) {
+                    container.style.marginBottom = '30px';
+                }
+                
+                // Fix the positions of value indicators
+                const valueElements = bar.querySelectorAll('.progress-value, .progress-ansvalue');
+                valueElements.forEach(function(element) {
+                    // Make sure the element is visible
+                    element.style.opacity = '1';
+                    element.style.visibility = 'visible';
+                    
+                    // Set fixed positions
+                    if (element.classList.contains('progress-value')) {
+                        element.style.left = '20%';
+                    } else if (element.classList.contains('progress-ansvalue')) {
+                        element.style.left = '60%';
+                    }
+                });
+            });
+            
+            // Process sections to prevent breaks
+            const sections = printWindow.document.querySelectorAll('.section');
+            sections.forEach(function(section) {
+                section.style.pageBreakInside = 'avoid';
+                section.style.breakInside = 'avoid';
+            });
+            
+            setTimeout(function() {
+                printWindow.print();
+                printWindow.close();
+            }, 1000);
+        };
+    }
 </script>
 
 
