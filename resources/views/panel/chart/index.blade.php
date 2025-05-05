@@ -1010,7 +1010,7 @@
                             </tr>
                         @endif
                     </tbody>
-                    
+
                 </table>
             </div>
 
@@ -1018,14 +1018,14 @@
 
 
 
-            
+
         </div>
     </div>
     <div class="text-center" style="padding-bottom: 2%; padding-block-end: 2%">
         <a href="{{ route('details-list.index') }}" class="btn btn-secondary rounded-0">Back</a>
 
         <button class="btn btn-dark rounded-0" onclick="printPage()" style="background-color: #00a6d5;">Print</button>
-    </div>    
+    </div>
     <script>
         window.onload = function() {
             printPage();
@@ -1054,22 +1054,22 @@ function printPage() {
     var tablepage = document.querySelector('.table-data').innerHTML;
     var headerImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/2.png" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/3.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/4.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/5.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/6.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/7.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/2.png" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/3.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/4.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/5.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/6.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/7.jpg" alt="OMM" style="max-width: 100%; height: auto;">
       </div>
     `;
     var FooterImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/11.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/11.jpg" alt="OMM" style="max-width: 100%; height: auto;">
       </div>
     `;
     var ContactImage = `
       <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
-        <img src="/assets/img/print/13.jpg" alt="Six Sigma Report" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/13.jpg" alt="OMM" style="max-width: 100%; height: auto;">
       </div>
     `;
 
@@ -1098,18 +1098,18 @@ function printPage() {
     // Get all charts and structure them two per page
     var charts = document.querySelectorAll('#questioncharts .chart-container');
     var questionchartsHTML = "";
-    
+
     // Group charts in pairs (two per page) with proper centering
     for (let i = 0; i < charts.length; i += 2) {
         questionchartsHTML += `<div style="page-break-after: always;">`;
-        
+
         // First chart
         questionchartsHTML += `
             <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
                 <div style="display: inline-block;">${charts[i].outerHTML}</div>
             </div>
         `;
-        
+
         // Second chart (if available)
         if (i + 1 < charts.length) {
             questionchartsHTML += `
@@ -1118,7 +1118,7 @@ function printPage() {
                 </div>
             `;
         }
-        
+
         questionchartsHTML += `</div>`;
     }
 
@@ -1127,7 +1127,7 @@ function printPage() {
             <div class="card-body">${printContent}</div>
         </div>
     `;
-    
+
     var tablecontent = `
       <div style="page-break-after: always; width: 100%; height: 80%; margin: 0 auto; padding-bottom: 10px; box-sizing: border-box;">
         <div class="card-body" style="height: 80%;">${tablepage}</div>
@@ -1141,8 +1141,8 @@ function printPage() {
  }}'}</p>
       </div>
     `;
-    
-    printWindow.document.write('<html><head><title>Six Sigma Report</title>');
+
+    printWindow.document.write('<html><head><title>OMM</title>');
 
     // Add print styles
     printWindow.document.write(`
@@ -1158,7 +1158,7 @@ function printPage() {
         size: A3;
         margin: 5mm;
       }
-      
+
       @page :first {
         margin: 0.5mm;
       }
@@ -1194,11 +1194,11 @@ function printPage() {
         margin: 0;
         padding: 5px 0;
       }
-      
+
       .card-body .comment {
         display: none;
       }
-      
+
       .dynamic-image-container {
         position: relative; /* CRITICAL: Positioning context */
         width: 100%;
@@ -1226,7 +1226,7 @@ function printPage() {
         white-space: nowrap;
         font-family: sans-serif;
       }
-      
+
       .company-name p{
         position: absolute;
         top: 32%;
@@ -1248,7 +1248,7 @@ function printPage() {
         font-family: sans-serif;
         color: white;
       }
-      
+
       .date p{
         position: absolute;
         bottom: 10%;
@@ -1269,7 +1269,7 @@ function printPage() {
         font-family: sans-serif;
         color: white;
       }
-      
+
       .prepared-by p{
         position: absolute;
         bottom: 6%;
@@ -1286,12 +1286,12 @@ function printPage() {
         .dynamic-content {
           color: black; /* Ensure black text when printing */
         }
-        
+
         .chart-wrapper {
           page-break-inside: avoid;
         }
       }
-      
+
       .card-footer h3{
         padding: 20px;
         margin-bottom: 20px;
@@ -1314,7 +1314,7 @@ function printPage() {
         .card-footer {
           display: block !important;
         }
-        
+
         /* Center charts on their own pages */
         .chart-wrapper {
           display: flex;
@@ -1322,7 +1322,19 @@ function printPage() {
           margin: 0 auto;
         }
       }
-      
+
+ .card-body table,
+.card-body tr,
+.card-body td,
+.section,
+.section h5,
+.card-title  {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+
+
       .centered-chart {
         text-align: center;
         margin-bottom: 10px;
@@ -1474,7 +1486,7 @@ function printPage() {
         padding: 0px 30px 0px 30px;
         transition: left 0.3s ease;
       }
-      
+
       .selected {
         background-color: #d3d3d3;
         border: 2px solid #d3d3d3;
@@ -1496,10 +1508,10 @@ function printPage() {
     printWindow.document.write(basicchartsHTML);
     printWindow.document.write(PillarChartHTML);
     printWindow.document.write('</div>');
-    
+
     // Add the question charts (vertically arranged, two per page)
     printWindow.document.write(questionchartsHTML);
-    
+
     printWindow.document.write(titleAndContent);
     printWindow.document.write(FooterImage);
     printWindow.document.write(commentSection);

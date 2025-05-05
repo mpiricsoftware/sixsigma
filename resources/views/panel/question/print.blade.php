@@ -455,6 +455,7 @@
                 background-color: #f9f9f9;
                 margin-top: 20px;
 
+
         }
 
             .card-body {
@@ -539,15 +540,16 @@
                     vertical-align: top;
                 }
 
-                /* Ensure the content inside table cells uses available space */
+
                 .section-table td {
                     padding: 8px;
-                    width: 16%; /* Adjust cell widths to use space effectively */
+                    width: 16%;
                 }
 
                 /* Space between the content */
                 .section-table td:last-child {
-                    padding-right: 15px; /* Add extra space on the right side of the last column */
+                    padding-right: 15px;
+
                 }
             .progress-bar-container {
                 position: relative;
@@ -616,12 +618,18 @@
 @media print {
     .comment {
         page-break-inside: avoid;
-         padding-top:20px;
+         padding-top:30px;
         font-size: 12px;
         width: 100%;
         max-width: 100%;
 
     }
+        .card-body table,
+  .card-body tr,
+  .card-body td {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
         .comment p{
 
         font-size: 12px;
