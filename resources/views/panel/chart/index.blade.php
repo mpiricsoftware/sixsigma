@@ -1057,7 +1057,7 @@ function printPage() {
         <img src="/assets/img/print/2.png" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/3.jpg" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/4.jpg" alt="OMM" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/5.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/5a.jpg" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/6.jpg" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/7.jpg" alt="OMM" style="max-width: 100%; height: auto;">
       </div>
