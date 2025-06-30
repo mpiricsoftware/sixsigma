@@ -19,10 +19,10 @@ class Analytics extends Controller
     $user = auth()->user();
 
     // Check if the user's status is 'approved' or 'pending'
-    if ($user->status === 'pending') {
+    // if ($user->status === 'pending') {
         // Redirect to a page that informs the user their account is pending approval
-        return view('content.dashboard.not-approved');
-    }
+        // return view('content.dashboard.not-approved');
+    // }
 
 
     // dd($forms);

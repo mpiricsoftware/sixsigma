@@ -486,9 +486,22 @@
                             .average_score; // Extract average score for each question in the pillar
                     });
 
-                    var radarLabels = pillar.questions.map(function(question) {
-                        return question.question_text; // Extract question text for labels
+                    // var radarLabels = pillar.questions.map(function(question) {
+                    //     return question.question_text; // Extract question text for labels
+                    // });
+                    var radarLabels = pillar.questions.map(function(question, index) {
+                        if (index === 0) {
+                            return question.question_text;
+                        } else {
+                            var words = question.question_text.split(' ');
+                            var lines = [];
+                            for (var i = 0; i < words.length; i += 3) {
+                                lines.push(words.slice(i, i + 3).join(' '));
+                            }
+                            return lines; // Multiline (array of strings)
+                        }
                     });
+
 
                     // Ensure the data covers all sections
                     var completeRadarData = new Array(radarLabels.length).fill(0); // Initialize with 0 values
@@ -1025,7 +1038,12 @@
         <a href="{{ route('details-list.index') }}" class="btn btn-secondary rounded-0">Back</a>
 
         <button class="btn btn-dark rounded-0" onclick="printPage()" style="background-color: #00a6d5;">Print</button>
+        {{-- <button class="btn btn-dark rounded-0" onclick="downloadPDF()" style="background-color: #00a6d5;">Download</button> --}}
     </div>
+    <!-- Add html2pdf.js library to your page -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
     <script>
         window.onload = function() {
             printPage();
@@ -1057,7 +1075,7 @@ function printPage() {
         <img src="/assets/img/print/2.png" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/3.jpg" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/4.jpg" alt="OMM" style="max-width: 100%; height: auto;">
-        <img src="/assets/img/print/5.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/5a.jpg" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/6.jpg" alt="OMM" style="max-width: 100%; height: auto;">
         <img src="/assets/img/print/7.jpg" alt="OMM" style="max-width: 100%; height: auto;">
       </div>
@@ -1524,6 +1542,553 @@ function printPage() {
         printWindow.print();
         printWindow.close();
     };
+}
+</script>
+
+<script>
+    function downloadPDF() {
+    // Get all content elements
+    var printContent = document.querySelector('.card-body').innerHTML;
+    var companyName = "{{ $company }}"; // Example company name
+    var date = new Date().toLocaleDateString('en-GB');
+    var preparedBy = "{{ $name }}"; // Example user name
+    var dynamicImageSrc = "/assets/img/print/1.jpg";
+    var firstpage = `<div class="dynamic-image-container" style="">
+        <img src="${dynamicImageSrc}" alt="Dynamic Image" class="dynamic-image">
+        <div class="company-name">
+            <h3>COMPANY:</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${companyName}</p>
+        </div>
+        <div class="date">
+            <h3>DATE:</h3><p>&nbsp;&nbsp;&nbsp;${date}</p>
+        </div>
+        <div class="prepared-by">
+            <h3>PREPARED BY:</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preparedBy}</p>
+        </div>
+    </div>`;
+    var tablepage = document.querySelector('.table-data').innerHTML;
+    var headerImage = `
+      <div style=" width: 100%; margin-bottom: 20px;">
+        <img src="/assets/img/print/2.png" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/3.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+        <img src="/assets/img/print/4.jpg" alt="OMM" style="max-width: 100%; margin-top:50px; height: auto;">
+        <img src="/assets/img/print/5a.jpg" alt="OMM" style="max-width: 100%; margin-top:70px; height: auto;">
+        <img src="/assets/img/print/6.jpg" alt="OMM" style="max-width: 100%; margin-top:30px; height: auto;">
+        <img src="/assets/img/print/7.jpg" alt="OMM" style="max-width: 100%; margin-top:70px; height: auto;">
+      </div>
+    `;
+    
+
+    var barchartHtml = `
+      <div style="margin-bottom: 10px; width: 100%; text-align: center;">
+        <h2>Results</h2>
+        <div id="bar-chart" style="width: 100%; display: flex; justify-content: center;">${document.querySelector('#bar-chart').outerHTML}</div>
+      </div>
+    `;
+
+    var averageChartHTML = document.querySelector('#average-chart').outerHTML;
+    var radialChartHTML = document.querySelector('#radial-chart').outerHTML;
+
+    var basicchartsHTML = `
+      <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+        <div id="basiccharts" style="display: inline-block;">${document.querySelector('#basiccharts').outerHTML}</div>
+      </div>
+    `;
+
+    var PillarChartHTML = `
+      <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+        <div id="PillarChart" style="display: inline-block;">${document.querySelector('#PillarChart').outerHTML}</div>
+      </div>
+    `;
+
+    // Get all charts and structure them two per page
+    var charts = document.querySelectorAll('#questioncharts .chart-container');
+    var questionchartsHTML = "";
+
+    // Group charts in pairs (two per page) with proper centering
+    for (let i = 0; i < charts.length; i += 2) {
+        questionchartsHTML += `<div style="page-break-after: always;">`;
+
+        // First chart
+        questionchartsHTML += `
+            <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+                <div style="display: inline-block;">${charts[i].outerHTML}</div>
+            </div>
+        `;
+
+        // Second chart (if available)
+        if (i + 1 < charts.length) {
+            questionchartsHTML += `
+                <div class="chart-wrapper" style="width: 90%; margin: 0 auto 30px auto; text-align: center;">
+                    <div style="display: inline-block;">${charts[i+1].outerHTML}</div>
+                </div>
+            `;
+        }
+
+        questionchartsHTML += `</div>`;
+    }
+
+    var titleAndContent = `
+        <div style="padding:20px;margin:0px auto;padding-bottom:10px;">
+            <div class="card-body">${printContent}</div>
+        </div>
+    `;
+    var FooterImage = `
+      <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
+        <img src="/assets/img/print/11.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+      </div>
+    `;
+    var ContactImage = `
+      <div style="page-break-after: always; width: 100%; margin-bottom: 20px;">
+        <img src="/assets/img/print/13.jpg" alt="OMM" style="max-width: 100%; height: auto;">
+      </div>
+    `;
+
+    var tablecontent = `
+      <div style="page-break-after: always; width: 100%; height: 80%; margin: 0 auto; padding-bottom: 10px; box-sizing: border-box;">
+        <div class="card-body" style="height: 80%;">${tablepage}</div>
+      </div>
+    `;
+
+    var commentSection = `
+      <div class="card-footer" style="margin-top: 20px; padding: 10px;">
+        <h3><strong>Assessment Comments: </strong></h3>
+        <p>${'{{ $comment ?? '  The assessor`s comments will be displayed here only if the assessment has been conducted by Concept Business Excellence Private Limited.' }}'}</p>
+        </div>
+        `;
+
+    // Combine all content
+    var fullHtml = `
+    <html>
+    <head>
+        <title>OMM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+      }
+
+      @page {
+        size: A3;
+        margin: 5mm;
+      }
+
+      @page :first {
+        margin: 0.5mm;
+      }
+
+      .image-page {
+        width: 100%;
+        height: 100%;
+        page-break-after: always;
+      }
+
+      .chart-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        width: 100%;
+      }
+
+      .chart-wrapper {
+        display: block;
+        margin-bottom: 30px;
+        page-break-inside: avoid;
+        text-align: center;
+      }
+
+      .apexcharts-toolbar {
+        display: none !important;
+      }
+
+      h4, h5 {
+        margin: 0;
+        padding: 5px 0;
+      }
+
+      .card-body .comment {
+        display: none;
+      }
+
+      .dynamic-image-container {
+        position: relative; /* CRITICAL: Positioning context */
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .dynamic-image {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .dynamic-content {
+        position: absolute;
+        font-size: 20pt;
+        font-family: sans-serif;
+      }
+
+      .company-name h3{
+        position: absolute;
+        top: 32%;
+        left: 8%;
+        color: #000000;
+        text-align: left;
+        font-size: 40pt;
+        white-space: nowrap;
+        font-family: sans-serif;
+      }
+
+      .company-name p{
+        position: absolute;
+        top: 32%;
+        left: 33%;
+        color: #0077cc;
+        text-align: left;
+        font-size: 40pt;
+        white-space: nowrap;
+        font-weight: bold;
+        font-family: sans-serif;
+      }
+
+      .date h3{
+        position: absolute;
+        bottom: 10%;
+        left: 10%;
+        font-size: 30pt;
+        white-space: nowrap;
+        font-family: sans-serif;
+        color: white;
+      }
+
+      .date p{
+        position: absolute;
+        bottom: 10%;
+        left: 21%;
+        font-size: 30pt;
+        white-space: nowrap;
+        font-family: sans-serif;
+        font-weight: bold;
+        color: white;
+      }
+
+      .prepared-by h3{
+        position: absolute;
+        bottom: 6%;
+        left: 10%;
+        font-size: 30pt;
+        white-space: nowrap;
+        font-family: sans-serif;
+        color: white;
+      }
+
+      .prepared-by p{
+        position: absolute;
+        bottom: 6%;
+        left: 37%;
+        font-size: 30pt;
+        white-space: nowrap;
+        font-family: sans-serif;
+        color: white;
+        font-weight: bold;
+      }
+
+      /* Print styles (Recommended) */
+      @media print {
+        .dynamic-content {
+          color: black; /* Ensure black text when printing */
+        }
+
+        .chart-wrapper {
+          page-break-inside: avoid;
+        }
+      }
+
+      .card-footer h3{
+        padding: 20px;
+        margin-bottom: 20px;
+        color: #007bff;
+        font-size: 20pt;
+        text-align: center;
+      }
+
+      .card-footer p {
+        margin: 0;
+        padding: 0;
+        color: #333;
+        padding-left: 20px;
+        font-size: 20pt;
+      }
+
+      /* Print styles */
+      @media print {
+        /* Ensure the comment section is visible when printing, even if it's hidden normally */
+        .card-footer {
+          display: block !important;
+        }
+
+        /* Center charts on their own pages */
+        .chart-wrapper {
+          display: flex;
+          justify-content: center;
+          margin: 0 auto;
+        }
+      }
+
+ .card-body table,
+.card-body tr,
+.card-body td,
+.section,
+.section h5,
+.card-title  {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+
+
+      .centered-chart {
+        text-align: center;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .centered-chart h3,h5 {
+        margin-bottom: 10px;
+      }
+
+      .centered-chart div {
+        display: inline-block;
+      }
+
+      h2 {
+        color: #00a6d5;
+        text-align: center;
+      }
+
+      .card-body {
+        padding: 40px;
+        line-height: 1.6;
+        font-size: 14pt;
+        color: #333;
+        background-color: #f9f9f9;
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        font-size: 11pt;
+        text-align: center;
+        vertical-align: top;
+      }
+
+      th {
+        color: #00a6d5;
+        font-weight: bold;
+        font-size: 12pt;
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      .section h5 {
+        color: #00a6d5;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .section-table {
+        display: table;
+        width: 100%;
+        height: 100%;
+      }
+
+      .section-table td,
+      .section-table th {
+        vertical-align: top;
+      }
+
+      .section-table td {
+        padding: 12px;
+        width: 18%;
+        font-size: 12pt;
+      }
+
+      .section-table td:last-child {
+        padding-right: 20px;
+        page-break-inside: avoid;
+      }
+
+      .progress-bar-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-value {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        transform: translateX(25%);
+        background-color: #b63881;
+        border-radius: 12px;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+        font-size: 14px;
+        white-space: nowrap;
+        padding: 0px 20px 0px 20px;
+        transition: left 0.3s ease;
+      }
+
+      .progress-bar-checkbox {
+        width: 100%;
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-value-checkbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 21px;
+        background-color: #b63881;
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      .progress-ansvalue {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        transform: translateX(18%);
+        background-color: #244ed8;
+        border-radius: 12px;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+        font-size: 14px;
+        white-space: nowrap;
+        padding: 0px 30px 0px 30px;
+        transition: left 0.3s ease;
+      }
+
+      .selected {
+        background-color: #d3d3d3;
+        border: 2px solid #d3d3d3;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+      }
+    </style>
+    </head>
+        <body>
+        ${firstpage}
+        ${headerImage}
+        <div style="margin-top: 250px;">
+        ${tablecontent}
+        </div>
+        <div style="margin-top: 120px;">
+        ${barchartHtml}
+        </div>
+
+        <div style="">
+        ${basicchartsHTML}
+        ${PillarChartHTML}
+        </div>
+
+        ${questionchartsHTML}
+
+        ${titleAndContent}
+        ${FooterImage}
+        ${commentSection}
+        ${ContactImage}
+        </body></html>
+        `;
+    
+    // Create temporary element
+    var element = document.createElement('div');
+    element.innerHTML = fullHtml;
+    
+    // PDF generation options - optimized
+    var opt = {
+        margin: 10,
+        filename: `${companyName}_OMM_Report_${date.replace(/\//g, '-')}.pdf`,
+        image: { 
+            type: 'jpeg', 
+            quality: 0.98 
+        },
+        html2canvas: { 
+            scale: 2, // Higher scale for better quality
+            logging: false,
+            dpi: 300,
+            letterRendering: true,
+            useCORS: true,
+            allowTaint: false, // Safer than true
+            // backgroundColor: null
+        },
+        jsPDF: { 
+            unit: 'mm', 
+            format: 'a3', 
+            orientation: 'portrait'
+        },     
+    };
+    
+    // Show loading indicator
+    var loadingIndicator = document.createElement('div');
+    loadingIndicator.style.position = 'fixed';
+    loadingIndicator.style.top = '0';
+    loadingIndicator.style.left = '0';
+    loadingIndicator.style.width = '100%';
+    loadingIndicator.style.height = '100%';
+    loadingIndicator.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    loadingIndicator.style.display = 'flex';
+    loadingIndicator.style.justifyContent = 'center';
+    loadingIndicator.style.alignItems = 'center';
+    loadingIndicator.style.zIndex = '9999';
+    loadingIndicator.style.color = 'white';
+    loadingIndicator.style.fontSize = '24px';
+    loadingIndicator.style.fontWeight = 'bold';
+    loadingIndicator.innerHTML = 'Generating PDF... This may take a moment';
+    document.body.appendChild(loadingIndicator);
+    
+    // Generate and download PDF
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Remove loading indicator when done
+        document.body.removeChild(loadingIndicator);
+    }).catch(err => {
+        console.error('PDF generation error:', err);
+        document.body.removeChild(loadingIndicator);
+        alert('Error generating PDF. Please try again or contact support.');
+    });
 }
 </script>
 
