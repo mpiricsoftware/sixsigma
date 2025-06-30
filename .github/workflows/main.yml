@@ -38,7 +38,6 @@ jobs:
       - name: Sync files to newdomain.com
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: 184.107.141.21  # Replace with actual FTP server
-          username: cbepl@cbepl.com  # Replace with actual FTP username
-          password: "${{ secrets.NEW_FTP_PASS }}"  # Store this in GitHub Secrets
-          server-dir: /
+          server: 184.107.141.21
+          username: cbepl@cbepl.com
+          password: "${{ secrets.NEW_FTP_PASS }}"
