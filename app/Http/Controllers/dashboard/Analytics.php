@@ -17,7 +17,7 @@ class Analytics extends Controller
   $inquiry = inquiry::all();
     // Get the currently authenticated user
     $user = auth()->user();
-
+ 
     // Check if the user's status is 'approved' or 'pending'
     // if ($user->status === 'pending') {
         // Redirect to a page that informs the user their account is pending approval
