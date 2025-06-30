@@ -41,4 +41,3 @@ jobs:
           server: 184.107.141.21
           username: cbepl@cbepl.com
           password: "${{ secrets.NEW_FTP_PASS }}"
-          server-dir: /
